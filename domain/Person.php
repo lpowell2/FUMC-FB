@@ -28,6 +28,7 @@ class Person {
 	private $last_name;  // last name as a string
 	private $address;   // address - string
 	private $city;    // city - string
+	private $county; //county - string
 	private $state;   // state - string
 	private $zip;    // zip code - integer
   	private $profile_pic; // image link
