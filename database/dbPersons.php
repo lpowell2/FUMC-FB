@@ -588,9 +588,9 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 
     function find_users($name, $id, $phone, $zip, $type, $status) {
         $where = 'where ';
-        if (!($name || $id || $phone || $zip || $type || $status)) {
-            return [];
-        }
+        //if (!($name || $id || $phone || $zip || $type || $status)) {
+          //  return [];
+        //}
         $first = true;
         if ($name) {
             if (strpos($name, ' ')) {
