@@ -26,11 +26,18 @@ class Person {
 	private $venue;      // portland or bangor
 	private $first_name; // first name as a string
 	private $last_name;  // last name as a string
+
+	private $fbName;
 	private $address;   // address - string
+	private $address2;
 	private $city;    // city - string
 	private $county; //county - string
 	private $state;   // state - string
 	private $zip;    // zip code - integer
+	private $website;
+	private $altServices;
+	private $tag;
+
   	private $profile_pic; // image link
 	private $phone1;   // primary phone -- home, cell, or work
 	private $phone1type; // home, cell, or work
@@ -80,7 +87,9 @@ class Person {
 	private $mustChangePassword;
 	private $gender;
 
-	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, $ts, $comp, $cam, $tran, $cn, $cpn, $rel,
+	//constructor had to be modified, can be found starting at line 221
+
+	function __constructPerson($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, $ts, $comp, $cam, $tran, $cn, $cpn, $rel,
 			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
 			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass,
 			$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
@@ -161,6 +170,60 @@ class Person {
 		$this->gender = $gender;
 	}
 
+	//constructor for food banks
+	function __constructFoodBank($fbn, $p, $w, $a, $a2, $ci, $co, $st, $z, $opnotes, $as, $t, $suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
+	$thus, $thue, $fris, $frie, $sats, $sate){
+
+		$this->fbName = $fbn;
+		$this->phone1 = $p;
+		$this->website = $w;
+		$this->address = $a;
+		$this->address2 = $a2;
+		$this->city = $ci;
+		$this->county = $co;
+		$this->state = $st;
+		$this->zip = $z;
+		$this->notes = $opnotes;
+		$this->altServices = $as;
+		$this->tag = $t;
+
+		$this->sundaysStart = $suns;
+		$this->sundaysEnd = $sune;
+		$this->mondaysStart = $mons;
+		$this->mondaysEnd = $mone;
+		$this->tuesdaysStart = $tues;
+		$this->tuesdaysEnd = $tuee;
+		$this->wednesdaysStart = $weds;
+		$this->wednesdaysEnd = $wede;
+		$this->thursdaysStart = $thus;
+		$this->thursdaysEnd = $thue;
+		$this->fridaysStart = $fris;
+		$this->fridaysEnd = $frie;
+		$this->saturdaysStart = $sats;
+		$this->saturdaysEnd = $sate;
+
+	}
+
+	/*
+	*constructor modified to handle constructing either admin or food banks
+	*if there are less than 30 parameters passed in new Person(), then construct a food bank
+	*/
+	function __construct(){
+		$arguments = func_get_args(); 
+        $numberOfArguments = func_num_args(); 
+  
+		//constructFoodBank has 26 params; constructPerson has 54 params
+        if ($numberOfArguments < 30){ 
+			call_user_func_array('__constructFoodBank', $arguments);
+
+			//$this->__constructFoodBank($arguments);        
+		}else{
+			call_user_func_array('__constructPerson', $arguments);
+
+			//$this->__constructPerson($arguments);
+		} 
+	}
+
 	function get_id() {
 		return $this->id;
 	}
@@ -181,12 +244,24 @@ class Person {
 		return $this->last_name;
 	}
 
+	function get_fb_name() {
+		return $this->fbName;
+	}
+
 	function get_address() {
 		return $this->address;
 	}
 
+	function get_address2() {
+		return $this->address2;
+	}
+
 	function get_city() {
 		return $this->city;
+	}
+
+	function get_county() {
+		return $this->county;
 	}
 
 	function get_state() {
@@ -195,6 +270,18 @@ class Person {
 
 	function get_zip() {
 		return $this->zip;
+	}
+	
+	function get_website() {
+		return $this->website;
+	}
+
+	function get_alt_services() {
+		return $this->city;
+	}
+
+	function get_tag() {
+		return $this->tag;
 	}
 
   function get_profile_pic() {

@@ -65,7 +65,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="text" id="address" name="address" required placeholder="Enter the food bank address">
 
             <label for="address2">Address 2</label>
-            <input type="text" id="address2" name="address2" required placeholder="Enter secondary or additional address">
+            <input type="text" id="address2" name="address2" placeholder="Enter secondary or additional address">
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" required placeholder="Enter the city">
@@ -132,14 +132,12 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
 
 
-            <label for="notes">Operation Notes</label>
-            <br>
-            <input type="textarea" wrap="soft" id="notes" name="notes">
+            <label for="opnotes">Operation Notes</label>
+            <textarea wrap="soft" id="opnotes" name="opnotes" placeholder="Input operation notes"></textarea>
 
-            <br>
 
             <label for="adtl-services">Additional Services Offered</label>
-            <input type="text" id="adlt-services" name="adlt-services">
+            <input type="text" id="adtl-services" name="adtl-services">
 
             <label for="tag"><em>* </em>Tag</label>
             <select id="tag" name="tag" required>
@@ -155,8 +153,10 @@ function buildSelect($name, $disabled=false, $selected=null) {
     
         <fieldset>
             <legend>Food Bank Schedule</legend>
+
             <br>
-            <p>Please enter the dates, times, and frequency of the food bank.</p>
+
+            <p>Please enter the days, times, and frequency of the food bank.</p>
 
             
             <label><em>* </em>Availability</label>
@@ -166,7 +166,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-sundays" name="available-sundays" type="checkbox" required>
+                        <input id="available-sundays" name="available-sundays" type="checkbox" >
                         <label for="available-sundays">Sundays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -181,7 +181,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-mondays" name="available-mondays" type="checkbox" required>
+                        <input id="available-mondays" name="available-mondays" type="checkbox" >
                         <label for="available-mondays">Mondays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -196,7 +196,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-tuesdays" name="available-tuesdays" type="checkbox" required>
+                        <input id="available-tuesdays" name="available-tuesdays" type="checkbox" >
                         <label for="available-tuesdays">Tuesdays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -211,7 +211,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-wednesdays" name="available-wednesdays" type="checkbox" required>
+                        <input id="available-wednesdays" name="available-wednesdays" type="checkbox" >
                         <label for="available-wednesdays">Wednesdays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -226,7 +226,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-thursdays" name="available-thursdays" type="checkbox" required>
+                        <input id="available-thursdays" name="available-thursdays" type="checkbox" >
                         <label for="available-thursdays">Thursdays</label>
                     </p>
                     <p>From</p>
@@ -241,7 +241,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-fridays" name="available-fridays" type="checkbox" required>
+                        <input id="available-fridays" name="available-fridays" type="checkbox" >
                         <label for="available-fridays">Fridays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -256,7 +256,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-saturdays" name="available-saturdays" type="checkbox" required>
+                        <input id="available-saturdays" name="available-saturdays" type="checkbox" >
                         <label for="available-saturdays">Saturdays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
