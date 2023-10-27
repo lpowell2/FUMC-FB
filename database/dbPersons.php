@@ -642,7 +642,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         // echo $query;
         $connection = connect();
         $result = mysqli_query($connection, $query);
-        echo $result;
+    
         if (!$result) {
             mysqli_close($connection);
             return [];
