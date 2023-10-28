@@ -56,6 +56,7 @@
                     } else {
                         echo "<h3>Search Results</h3>";
                         $persons = find_users($name, $id, $phone, $zip, $role, $status);
+                        
                         require_once('include/output.php');
                         if (count($persons) > 0) {
                             echo '

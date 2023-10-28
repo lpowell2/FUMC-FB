@@ -400,6 +400,23 @@ function make_a_person($result_row) {
     return $thePerson;
 }
 
+function make_a_fbank($result_row) {
+    $theFbank = new Person(
+      $result_row['fbName'],
+      $result_row['address'],
+      $result_row['address2'],
+      $result_row['city'],
+      $result_row['county'],
+      $result_row['state'],
+      $result_row['zip'],
+      $result_row['website'],
+      $result_row['altServices'],
+      $result_row['tag']
+    );
+  
+    return $theFbank;
+  }
+  
 function getall_names($status, $type, $venue) {
     $con=connect();
     $result = mysqli_query($con,"SELECT id,first_name,last_name,type FROM dbPersons " .
@@ -637,6 +654,57 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $thePersons;
     }
 
+    function find_fbank($fbname = null, $zip = null, $tag = null, $county = null) {
+        $where = 'where ';
+      
+        if ($fbname !== null) {
+          $where .= "first_name like '%$fbname%'";
+        }
+      
+        if ($zip !== null) {
+          if (!empty($where)) {
+            $where .= ' and ';
+          }
+          $where .= "zip like '%$zip%'";
+        }
+      
+        if ($tag !== null) {
+          if (!empty($where)) {
+            $where .= ' and ';
+          }
+          $where .= "tag like '%$tag%'";
+        }
+      
+        if ($county !== null) {
+          if (!empty($where)) {
+            $where .= ' and ';
+          }
+          $where .= "county like '%$county%'";
+        }
+      
+        $query = "select * from dbPersons $where order by first_name";
+      
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+      
+        if (!$result) {
+          mysqli_close($connection);
+          return [];
+        }
+      
+        $raw = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $persons = [];
+        foreach ($raw as $row) {
+          if ($row['id'] == 'vmsroot') {
+            continue;
+          }
+          $fbanks []= make_a_fbank($row);
+        }
+      
+        mysqli_close($connection);
+        return $fbanks;
+      }
+      
     function find_users($name, $id, $phone, $zip, $type, $status) {
         $where = 'where ';
         //if (!($name || $id || $phone || $zip || $type || $status)) {
