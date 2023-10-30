@@ -73,6 +73,7 @@
         $permission_array['report.php'] = 2;
         $permission_array['reportspage.php'] = 2;
         $permission_array['resetpassword.php'] = 2;
+        $permission_array['deletefoodbankform.php']= 1;
 
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'],"/")+1));
