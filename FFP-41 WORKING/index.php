@@ -10,16 +10,6 @@ thursday_availability_start , thursday_availability_end , friday_availability_st
 
 <?php
 
-
-     // Show all information, defaults to INFO_ALL
-     phpinfo();
-
-     // Show just the module information.
-     // phpinfo(8) yields identical results.
-     phpinfo(INFO_MODULES);
-
-
-
      // Ensure user is logged in
      session_cache_expire(30);
      session_start();
@@ -54,26 +44,30 @@ thursday_availability_start , thursday_availability_end , friday_availability_st
         $id = $userID;
      }
 
+     // NOTE: FOR LATER
      //get food bank's variables from dbPersons
-     include_once('../database/dbPersons.php');
-     //for each food bank existing, set "$user_x = retrieve_person($id);", then print those details
-          //easier to have a single variable that is constantly reassigned, but would be nice to have some way to set a varying number of variables
+     // include_once('../database/dbPersons.php');
+     // //for each food bank existing, set "$user_x = retrieve_person($id);", then print those details
+     //      //easier to have a single variable that is constantly reassigned, but would be nice to have some way to set a varying number of variables
+          
+     //PART 1: Create a page with 
 
      ?>
 
-     <!DOCTYPE html>
-     <html>
-          <head>
-               <?php require_once('../universal.inc') ?>
-               <!-- <link rel="stylesheet" href="css/editprofile.css" type="text/css" /> -->
-               <title>HAC Food Banks | View Food Banks</title>
-          </head>
-          <body>
-               <?php 
-                    require_once('../header.php'); 
-                    require_once('../include/output.php');
-               ?>
-               <h1>Food Banks</h1>
-          </body>
-     </html>
+<!DOCTYPE html>
+<html>
+     <head>
+          <?php require_once('../universal.inc') ?>
+          <!-- <link rel="stylesheet" href="css/editprofile.css" type="text/css" /> -->
+         <title>HAC | View Food Banks</title>
+     </head>
+     <body>
+          <?php 
+               require_once('../header.php'); 
+               require_once('../include/output.php');
+          ?>
+          <h1>View Food Bank</h1>
+          <main class="general">
+     </body>
+</html>
           
