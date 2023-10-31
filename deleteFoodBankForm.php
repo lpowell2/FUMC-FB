@@ -3,6 +3,7 @@
  session_start();
 
  require_once('include/input-validation.php');
+ //require_once('database/dbPersons.php');
 
  $loggedIn = false;
  if (isset($_SESSION['change-password'])) {
@@ -23,3 +24,5 @@
     <body>
         <?php require_once('header.php') ?>
         <h1>Delete a Food Bank</h1>
+            <h2>Are you sure you want to delete?</h2>
+            <a class="button cancel" href="index.php">Cancel</a> <button type="button">Continue</button>
