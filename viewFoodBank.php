@@ -1,10 +1,38 @@
 <!-- Add check for logged in and privleges -->
 <?php
-
 include_once('database/dbPersons.php');
 require_once('include/output.php');
+session_cache_expire(30);
+session_start();
+
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+
+$loggedIn = false;
+$accessLevel = 0;
+$userID = null;
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
+// Require admin privileges
+if ($accessLevel < 2) {
+    header('Location: login.php');
+    echo 'bad access level';
+    die();
+}
+
+
 // This is a placeholder I used a person id from my own database for testing purposes
-$id = "pow@gmail.com";
+if (isset($_POST["id"])) {
+    $id = $_POST["id"];
+}
+//this will be changed to error checking
+else {
+    $id = "pow@gmail.com";
+}
 $foodbank = retrieve_person($id);
 ?>
 <!DOCTYPE html>
@@ -52,7 +80,7 @@ $foodbank = retrieve_person($id);
             <!-- Decide which field for oppnotes and add getter -->
 
             <label for="opnotes">Operation Notes</label>
-            <textarea wrap="soft" id="opnotes" name="opnotes" placeholder="Input operation notes" readonly></textarea>
+            <textarea wrap="soft" id="opnotes" name="opnotes" readonly><?php echo $foodbank->get_notes() ?></textarea>
 
 
             <label for="adtl-services">Additional Services Offered</label>
@@ -75,7 +103,6 @@ $foodbank = retrieve_person($id);
             <legend>Food Bank Schedule</legend>
             <label><em> </em>Availability</label>
 
-            <!-- Uncomment when get foodbank is set up -->
             <?php if ($foodbank->get_sunday_availability_start()) : ?>
                 <label>Sundays</label>
                 <p><?php echo time24hTo12h($foodbank->get_sunday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_sunday_availability_end()) ?></p>
