@@ -30,7 +30,7 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Gwyneth's Gift VMS | Register <?php if ($loggedIn) echo ' New Volunteer' ?></title>
+    <title>Hunger Actions Coalition VMS | Register <?php if ($loggedIn) echo ' New Volunteer' ?></title>
 </head>
 <body>
     <?php
@@ -226,7 +226,9 @@
                 $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
                 $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-                $saturdaysStart, $saturdaysEnd, 0, $gender
+                $saturdaysStart, $saturdaysEnd, 0, $gender,
+
+                null, "", "", null, ""
             );
             $result = add_person($newperson);
             if (!$result) {
