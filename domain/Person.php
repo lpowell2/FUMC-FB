@@ -211,9 +211,11 @@ class Person {
 	function __construct(){
 		$arguments = func_get_args(); 
         $numberOfArguments = func_num_args(); 
-  
+		if (func_num_args() < 26) {
+			throw new Exception('Not enough arguments passed to constructor.');
+		  }
 		//constructFoodBank has 26 params; constructPerson has 54 params
-        if ($numberOfArguments < 30){ 
+        if ($numberOfArguments < 54){ 
 			call_user_func_array('__constructFoodBank', $arguments);
 
 			//$this->__constructFoodBank($arguments);        
