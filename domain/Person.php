@@ -89,11 +89,17 @@ class Person {
 
 	//constructor had to be modified, can be found starting at line 221
 
-	function __constructPerson($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, $ts, $comp, $cam, $tran, $cn, $cpn, $rel,
-			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
-			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass,
+	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, 
+			$p1, $p1t, $p2, $p2t, $e, 
+			$ts, $comp, $cam, $tran, $cn, $cpn, $rel,
+			$ct, $t, $st, $cntm, $pos, $credithours, 
+			$comm, $mot, $spe, $convictions, 
+			$av, $sch, $hrs, 
+			$bd, $sd, $hdyh, $notes, $pass,
 			$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
-			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender) {
+			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender, 
+			$a2, $co, $w, $as, $ta) {
+
 		$this->id = $e;
 		$this->start_date = $sd;
 		$this->venue = $v;
@@ -135,11 +141,14 @@ class Person {
 			$this->type = array();
 			$this->access_level = 0;
 		}
+
 		$this->status = $st;
+
 		if ($av == "")
 			$this->availability = array();
 		else
 			$this->availability = explode(',', $av);
+
 		if ($sch !== "")
 			$this->schedule = explode(',', $sch);
 		else
@@ -168,61 +177,17 @@ class Person {
 		$this->saturdaysStart = $sats;
 		$this->saturdaysEnd = $sate;
 		$this->gender = $gender;
-	}
 
-	//constructor for food banks
-	function __constructFoodBank($fbn, $p, $w, $a, $a2, $ci, $co, $st, $z, $opnotes, $as, $t, $suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
-	$thus, $thue, $fris, $frie, $sats, $sate){
 
-		$this->fbName = $fbn;
-		$this->phone1 = $p;
 		$this->website = $w;
-		$this->address = $a;
 		$this->address2 = $a2;
-		$this->city = $ci;
 		$this->county = $co;
-		$this->state = $st;
-		$this->zip = $z;
-		$this->notes = $opnotes;
 		$this->altServices = $as;
-		$this->tag = $t;
-
-		$this->sundaysStart = $suns;
-		$this->sundaysEnd = $sune;
-		$this->mondaysStart = $mons;
-		$this->mondaysEnd = $mone;
-		$this->tuesdaysStart = $tues;
-		$this->tuesdaysEnd = $tuee;
-		$this->wednesdaysStart = $weds;
-		$this->wednesdaysEnd = $wede;
-		$this->thursdaysStart = $thus;
-		$this->thursdaysEnd = $thue;
-		$this->fridaysStart = $fris;
-		$this->fridaysEnd = $frie;
-		$this->saturdaysStart = $sats;
-		$this->saturdaysEnd = $sate;
-
+		$this->tag = $ta;
 	}
 
-	/*
-	*constructor modified to handle constructing either admin or food banks
-	*if there are less than 30 parameters passed in new Person(), then construct a food bank
-	*/
-	function __construct(){
-		$arguments = func_get_args(); 
-        $numberOfArguments = func_num_args(); 
-  
-		//constructFoodBank has 26 params; constructPerson has 54 params
-        if ($numberOfArguments < 30){ 
-			call_user_func_array('__constructFoodBank', $arguments);
 
-			//$this->__constructFoodBank($arguments);        
-		}else{
-			call_user_func_array('__constructPerson', $arguments);
-
-			//$this->__constructPerson($arguments);
-		} 
-	}
+	
 
 	function get_id() {
 		return $this->id;
@@ -244,9 +209,6 @@ class Person {
 		return $this->last_name;
 	}
 
-	function get_fb_name() {
-		return $this->fbName;
-	}
 
 	function get_address() {
 		return $this->address;
@@ -276,7 +238,7 @@ class Person {
 		return $this->website;
 	}
 
-	function get_alt_services() {
+	function get_altServices() {
 		return $this->city;
 	}
 

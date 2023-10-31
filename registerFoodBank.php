@@ -68,8 +68,8 @@
             $fbName = $args['fb-name'];
            
 
-            $phone1 = validateAndFilterPhoneNumber($args['phone']);
-            if (!$phone1) {
+            $phone = validateAndFilterPhoneNumber($args['phone']);
+            if (!$phone) {
                 $errors = true;
                 echo 'bad phone';
             }
@@ -188,15 +188,26 @@
                 die();
             }
 
+        
+
             // need to incorporate availability here
-            $newfoodbank = new Person($fbName, $phone, $website,
-                $address, $address2, $city, $county, $state, $zipcode, $notes, $altServices, $tags, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
+            $newperson = new Person($fbname, "", 'portland', 
+                $address, $city, $state, $zipcode, "",
+                $phone, null, null, null, null, 
+                null, null, "", "", "", "", "", 
+                "", "volunteer", 'Active', null, "food bank", null,
+                null, null, null, null, 
+                $availability, '', '', 
+                null, $startDate, null, $notes, $password,
+                $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
                 $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-                $saturdaysStart, $saturdaysEnd
+                $saturdaysStart, $saturdaysEnd, 0, "", 
+
+                $address2, $county, $website, $altservices, $tag
             );
 
-            $result = add_foodbank($newfoodbank);
+            $result = add_Person($newperson);
             if (!$result) {
                 echo '<p>Failed to add food bank.</p>';
             } else {

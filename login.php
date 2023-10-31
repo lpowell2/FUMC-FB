@@ -73,7 +73,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Gwyneth's Gift VMS | Log In</title>
+        <title>Hunger Actions Coalition VMS | Log In</title>
     </head>
     <body>
         <?php require_once('header.php') ?>

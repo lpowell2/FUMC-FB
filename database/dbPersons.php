@@ -84,55 +84,13 @@ function add_person($person) {
             $person->get_saturday_availability_end() . '","' .
             $person->get_profile_pic() . '","' .
             $person->is_password_change_required() . '","' .
-            $person->get_gender() .
-            '");'
-        );							
-        mysqli_close($con);
-        return true;
-    }
-    mysqli_close($con);
-    return false;
-}
-
-/*
-* add a food bank to dbPersons table. Do not check if exists, there can be multiple instances
-*/
-function add_foodbank($person){
-    if (!$person instanceof Person)
-        die("Error: add_person type mismatch");
-    $con=connect();
-    $query = "SELECT * FROM dbPersons WHERE id = '" . $person->get_id() . "'";
-    $result = mysqli_query($con,$query);
-    //if there's no entry for this id, add it
-    if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_query($con,'INSERT INTO dbPersons VALUES("' .
-            $person->get_id() . '","' .
-            $person->get_fb_name() . '","' .
-            $person->get_address() . '","' .
+            $person->get_gender() . '","' .
             $person->get_address2() . '","' .
-            $person->get_city() . '","' .
             $person->get_county() . '","' .
-            $person->get_state() . '","' .
-            $person->get_zip() . '","' .
-            $person->get_phone1() . '","' .
             $person->get_website() . '","' .
-            $person->get_alt_services() . '","' .
+            $person->get_altServices() . '","' .
             $person->get_tag() . '","' .
-            $person->get_notes() . '","' .
-            $person->get_sunday_availability_start() . '","' .
-            $person->get_sunday_availability_end() . '","' .
-            $person->get_monday_availability_start() . '","' .
-            $person->get_monday_availability_end() . '","' .
-            $person->get_tuesday_availability_start() . '","' .
-            $person->get_tuesday_availability_end() . '","' .
-            $person->get_wednesday_availability_start() . '","' .
-            $person->get_wednesday_availability_end() . '","' .
-            $person->get_thursday_availability_start() . '","' .
-            $person->get_thursday_availability_end() . '","' .
-            $person->get_friday_availability_start() . '","' .
-            $person->get_friday_availability_end() . '","' .
-            $person->get_saturday_availability_start() . '","' .
-            $person->get_saturday_availability_end() . '","' .
+
             '");'
         );							
         mysqli_close($con);
@@ -395,7 +353,13 @@ function make_a_person($result_row) {
                     $result_row['saturdays_start'],
                     $result_row['saturdays_end'],
                     $result_row['force_password_change'],
-                    $result_row['gender']
+                    $result_row['gender'],
+
+                    $result_row['address2'],
+                    $result_row['county'],
+                    $result_row['website'],
+                    $result_row['alt_services'],
+                    $result_row['tag']
                 );   
     return $thePerson;
 }

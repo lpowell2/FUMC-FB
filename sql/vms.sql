@@ -142,7 +142,14 @@ CREATE TABLE `dbPersons` (
   `saturdays_end` char(5) DEFAULT NULL,
   `profile_pic` text NOT NULL,
   `force_password_change` tinyint(1) NOT NULL,
-  `gender` varchar(6) NOT NULL
+  `gender` varchar(6) NOT NULL,
+  
+  `address2` text,
+  `county` text NOT NULL,
+  `website` text NOT NULL,
+  `alt_services` text,
+  `tag` text NOT NULL
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

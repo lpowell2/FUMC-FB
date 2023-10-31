@@ -25,7 +25,7 @@
 <html>
     <head>
         <?php require('universal.inc'); ?>
-        <title>Hunger Actions Coalition  | Dashboard</title>
+        <title>Gwyneth's Gift VMS | Dashboard</title>
     </head>
     <body>
         <?php require('header.php'); ?>
