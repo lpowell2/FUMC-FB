@@ -34,6 +34,14 @@ else {
     $id = "pow@gmail.com";
 }
 $foodbank = retrieve_person($id);
+
+//if id is wrong, error
+if(!isset($_SESSION["id"])){
+    header("Location: login.php")
+};
+//if id isn't given, error
+
+
 ?>
 <!DOCTYPE html>
 <html>
