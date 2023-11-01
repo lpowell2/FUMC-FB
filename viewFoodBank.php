@@ -31,16 +31,24 @@ if (isset($_POST["id"])) {
 }
 //this will be changed to error checking
 else {
-    $id = "pow@gmail.com";
+    $id = "examp@gmail.com";
 }
+
 $foodbank = retrieve_person($id);
 
-//if id is wrong, error
-if (!isset($_POST["id"])) {
+//if id isn't given, error
+//NOTE: Always shows as no food bank, perhaps because of way testing phaceholder is set
+if (!isset($_SESSION["id"])) {
     echo "no food bank given";
 }
-//if id isn't given, error
 
+//if id is given, but is wrong, error
+//NOTE: Doesn't work, or doesn't appear, likely because there's so far no case to trigger it, should recheck when testing placeholder is replaced
+if(isset($_GET["id"])) {
+    if (retrieve_person($_GET["id"])==false){
+        echo "incorrect food bank given";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -61,7 +69,13 @@ if (!isset($_POST["id"])) {
             <p><?php echo $foodbank->get_first_name() ?> </p>
 
             <label>Phone Number</label>
-            <p><?php echo $foodbank->get_phone1() ?> </p>
+            <p>
+                <!-- formatting phone number -->
+                <?php
+                    $phone_str=strval($foodbank->get_phone1() );
+                    echo '('.substr($phone_str, 0, 3).') '.substr($phone_str, 3, 3).'-'.substr($phone_str,6);
+                ?> 
+            </p>
 
             <label>Website Link</label>
             <!-- Add Functionality/Field for Address -->
