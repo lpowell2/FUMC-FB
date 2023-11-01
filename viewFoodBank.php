@@ -36,9 +36,9 @@ else {
 $foodbank = retrieve_person($id);
 
 //if id is wrong, error
-if(!isset($_SESSION["id"])){
-    header("Location: login.php")
-};
+if (!isset($_POST["id"])) {
+    echo "no food bank given";
+}
 //if id isn't given, error
 
 
