@@ -87,6 +87,7 @@ class Person {
 	private $mustChangePassword;
 	private $gender;
 
+
 	//constructor had to be modified, can be found starting at line 221
 
 	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, 
@@ -191,17 +192,6 @@ class Person {
 	*constructor modified to handle constructing either admin or food banks
 	*if there are less than 30 parameters passed in new Person(), then construct a food bank
 	*/
-	function __construct(){
-		$arguments = func_get_args(); 
-        $numberOfArguments = func_num_args(); 
-		if (func_num_args() < 26) {
-			throw new Exception('Not enough arguments passed to constructor.');
-		  }
-		//constructFoodBank has 26 params; constructPerson has 54 params
-        if ($numberOfArguments < 54){ 
-			call_user_func_array('__constructFoodBank', $arguments);
-
-		}
 
 	
 

@@ -364,9 +364,10 @@ function make_a_person($result_row) {
     return $thePerson;
 }
 
+//custom version of make_a_person
 function make_a_fbank($result_row) {
     $theFbank = new Person(
-      $result_row['fbName'],
+      $result_row['first_name'],
       $result_row['address'],
       $result_row['address2'],
       $result_row['city'],
@@ -618,11 +619,12 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $thePersons;
     }
 
-    function find_fbank($fbname = null, $zip = null, $tag = null, $county = null) {
+    //custom version of find user
+    function find_fbank($name = null, $zip = null, $tag = null, $county = null) {
         $where = 'where ';
       
-        if ($fbname !== null) {
-          $where .= "first_name like '%$fbname%'";
+        if ($name !== null) {
+          $where .= "first_name like '%$name%'";
         }
       
         if ($zip !== null) {
@@ -655,17 +657,27 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           mysqli_close($connection);
           return [];
         }
-      
-        $raw = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $persons = [];
-        foreach ($raw as $row) {
+        //create an empty array to store food banks
+        $fbanks = [];
+
+        // Iterate over the results and create a food bank object for each row.
+        while ($row = mysqli_fetch_assoc($result)) {
+          // Skip the root food bank.
           if ($row['id'] == 'vmsroot') {
             continue;
           }
-          $fbanks []= make_a_fbank($row);
+      
+          // Create a food bank object.
+          $fbank = make_a_person($row);
+      
+          // Add the food bank object to the array.
+          $fbanks[] = $fbank;
         }
       
+        // Close the connection to the database.
         mysqli_close($connection);
+      
+        // Return the array of food bank objects.
         return $fbanks;
       }
       

@@ -37,22 +37,22 @@
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
-                    $required = ['fbName', 'id', 'zip', 'county', 'city'];
+                    $required = ['name', 'id', 'zip', 'county', 'city'];
                     if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                         echo 'Missing expected form elements';
                     }
-                    $name = $args['fbName'];
+                    $name = $args['name'];
                     $id = $args['id'];
                     
 					$zip = $args['zip'];
                     $county = $args['county'];
                     $city = $args['city'];
-                    if (!($fbName || $id || $zip || $county || $city)) {
+                    if (!($name || $id || $zip || $county || $city)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        $persons = find_fbank($fbName, $id, $zip, $county, $city);
+                        $persons = find_fbank($name, $id, $zip, $county, $city);
                         
                         require_once('include/output.php');
                         if (count($persons) > 0) {
@@ -61,7 +61,7 @@
                                 <table class="general">
                                     <thead>
                                         <tr>
-                                            <th>fbName</th>
+                                            <th>name</th>
                                             <th>Phone Number</th>
 											<th>Zip Code</th>
                                             <th>County</th>
@@ -73,7 +73,7 @@
                             foreach ($persons as $person) {
                                 echo '
                                         <tr>
-                                            <td>' . $person->get_fb_name(). '</td>
+                                            <td>' . $person->get_first_name(). '</td>
                                             <td><a href="tel:' . $person->get_phone1() . '">' . formatPhoneNumber($person->get_phone1()) .  '</td>
 											<td>' . $person->get_zip() . '</td>
                                             <td>' . $person->get_county() . '</td>
@@ -93,8 +93,8 @@
                 }
             ?>
             <p>Use the form below to find a volunteer or staff member account. At least one search criterion is required.</p>
-            <label for="fbName">Foodbank Name</label>
-            <input type="text" id="fbName" name="fbName" placeholder="Enter the foodbank name">
+            <label for="name">Foodbank Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter the foodbank name">
 
              <label for="zipCode">Zip Code</label>
             <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
