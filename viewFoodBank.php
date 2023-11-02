@@ -29,23 +29,21 @@ if ($accessLevel < 2) {
 if (isset($_POST["id"])) {
     $id = $_POST["id"];
 }
-//this will be changed to error checking
 else {
+    //this will be changed to error checking
     $id = "examp@gmail.com";
 }
 
 $foodbank = retrieve_person($id);
 
 //if id isn't given, error
-//NOTE: Always shows as no food bank, perhaps because of way testing phaceholder is set
-if (!isset($_SESSION["id"])) {
+if (!isset($_POST["id"])) {
     echo "no food bank given";
 }
 
 //if id is given, but is wrong, error
-//NOTE: Doesn't work, or doesn't appear, likely because there's so far no case to trigger it, should recheck when testing placeholder is replaced
-if(isset($_GET["id"])) {
-    if (retrieve_person($_GET["id"])==false){
+if(isset($_POST["id"])) {
+    if (retrieve_person($_POST["id"])==false){
         echo "incorrect food bank given";
     }
 }
@@ -66,9 +64,18 @@ if(isset($_GET["id"])) {
         <fieldset>
             <legend>Food Bank Information</legend>
             <label>Food Bank Name</label>
+            <!--NOTE: This was changed to fb_name, but this works for now-->
             <p><?php echo $foodbank->get_first_name() ?> </p>
 
             <label>Phone Number</label>
+            <p>
+                <!-- formatting phone number -->
+                <?php
+                    $phone_str=strval($foodbank->get_phone1() );
+                    echo '('.substr($phone_str, 0, 3).') '.substr($phone_str, 3, 3).'-'.substr($phone_str,6);
+                ?> 
+            </p>
+            <label>Alternate Phone Number</label>
             <p>
                 <!-- formatting phone number -->
                 <?php
@@ -98,6 +105,7 @@ if(isset($_GET["id"])) {
 
             <label><em> </em>Zip Code</label>
             <p><?php echo $foodbank->get_zip() ?> </p>
+            
 
             <!-- Decide which field for oppnotes and add getter -->
 
