@@ -3,15 +3,19 @@
  session_start();
 
  require_once('include/input-validation.php');
+ require_once('database/dbPersons.php');
  //require_once('database/dbPersons.php');
 
  $loggedIn = false;
+ $fbID = null;
  if (isset($_SESSION['change-password'])) {
      header('Location: changePassword.php');
      die();
  }
  if (isset($_SESSION['_id'])) {
      $loggedIn = true;
+     $fbID = $_GET['id'];
+
  }
  
 ?>
@@ -25,4 +29,5 @@
         <?php require_once('header.php') ?>
         <h1>Delete a Food Bank</h1>
             <h2>Are you sure you want to delete?</h2>
-            <a class="button cancel" href="index.php">Cancel</a> <button type="button">Continue</button>
+            <a class="button" href="index.php">Cancel</a>
+            <a class="button" onclick="remove_person($fbID);" href="index.php">Continue</a>
