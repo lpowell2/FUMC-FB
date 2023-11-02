@@ -3,8 +3,6 @@
  session_start();
 
  require_once('include/input-validation.php');
- require_once('database/dbPersons.php');
- //require_once('database/dbPersons.php');
 
  $loggedIn = false;
  $fbID = null;
@@ -33,7 +31,10 @@
                 <legend>Delete Information</legend>
                     <h2>Are you sure you want to delete?</h2>
                     <a class="button" href="index.php">Cancel</a>
-                    <a class="button cancel" onclick="<?php remove_person($fbID);?>" href="index.php">Continue</a>
+                    <form action="deleteFoodBank.php" method="post"> 
+                        <input type="hidden" name="id" value="<?php echo $fbID; ?>"> 
+                        <input type="submit" name="submit" value="Delete"> 
+                    </form> 
             </fieldset>
         </main>
     </body>
