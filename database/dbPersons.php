@@ -100,12 +100,12 @@ function add_person($person) {
 
 function remove_person($id) {
     $con=connect();
-    $query = 'SELECT * FROM dbPersons WHERE id = "' . $id . '"';
-    $result = mysqli_query($con,$query);
-    if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_close($con);
-        return false;
-    }
+   // $query = 'SELECT * FROM dbPersons WHERE id = "' . $id . '"';
+   // $result = mysqli_query($con,$query);
+   // if ($result == null || mysqli_num_rows($result) == 0) {
+        //mysqli_close($con);
+        //return false;
+    //}
     $query = 'DELETE FROM dbPersons WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     mysqli_close($con);

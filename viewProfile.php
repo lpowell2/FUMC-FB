@@ -139,7 +139,7 @@
                 <?php if ($id != $userID && $accessLevel >= 2): ?>
                     <?php if ($accessLevel >= 3): ?>
                         <a href="modifyUserRole.php?id=<?php echo $id ?>" class="button">Change Role/Status</a>
-                        <a href="deleteFoodBankForm.php?id=<?php echo $id ?>" class="button">Delete Person/FoodBank</a>
+                        <a href="deleteFoodBankForm.php?id=<?php echo $id ?>" class="button cancel">Delete Person/FoodBank</a>
                     <?php else: ?>
                         <a href="modifyUserRole.php?id=<?php echo $id ?>" class="button">Change Status</a>
                     <?php endif ?>

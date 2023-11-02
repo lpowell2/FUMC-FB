@@ -22,12 +22,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <?php require_once('universal.inc') ?>
+        <?php require_once('universal.inc') ?>
         <title>Hunger Actions Coalition | Delete Food Bank <?php if ($loggedIn) echo ' Delete Food Bank'?></title>
     </head>
     <body>
-        <?php require_once('header.php') ?>
-        <h1>Delete a Food Bank</h1>
-            <h2>Are you sure you want to delete?</h2>
-            <a class="button" href="index.php">Cancel</a>
-            <a class="button" onclick="remove_person($fbID);" href="index.php">Continue</a>
+        <main class="general">
+            <?php require_once('header.php') ?>
+            <h1>Delete a Food Bank</h1>
+            <fieldset>
+                <legend>Delete Information</legend>
+                    <h2>Are you sure you want to delete?</h2>
+                    <a class="button" href="index.php">Cancel</a>
+                    <a class="button cancel" onclick="<?php remove_person($fbID);?>" href="index.php">Continue</a>
+            </fieldset>
+        </main>
+    </body>
+</html>
