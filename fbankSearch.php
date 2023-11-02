@@ -29,7 +29,7 @@
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1>User Search</h1>
+        <h1>Search for Foodbanks in Area</h1>
         <form id="person-search" class="general" method="get">
             <h2>Find Foodbank</h2>
             <?php 
@@ -92,7 +92,7 @@
                     echo '<h3>Search Again</h3>';
                 }
             ?>
-            <p>Use the form below to find a volunteer or staff member account. At least one search criterion is required.</p>
+            <p>Use the form below to find available foodbanks in a specific area. At least one search criterion is required.</p>
             <label for="name">Foodbank Name</label>
             <input type="text" id="name" name="name" placeholder="Enter the foodbank name">
 
