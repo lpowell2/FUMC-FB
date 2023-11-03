@@ -87,8 +87,7 @@ class Person {
 	private $mustChangePassword;
 	private $gender;
 
-	//constructor had to be modified, can be found starting at line 221
-
+	//Person constructor; also construct food banks
 	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, 
 			$p1, $p1t, $p2, $p2t, $e, 
 			$ts, $comp, $cam, $tran, $cn, $cpn, $rel,
@@ -144,7 +143,7 @@ class Person {
 
 		$this->status = $st;
 
-		if ($av == "")
+		if ($av)
 			$this->availability = array();
 		else
 			$this->availability = explode(',', $av);

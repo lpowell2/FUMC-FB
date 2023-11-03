@@ -61,7 +61,7 @@
 
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
-                $errors = true;
+                
             }
 
 
@@ -108,6 +108,7 @@
                 echo 'bad tag';
             }
 
+            $startDate = $args['frequency'];
 
             $days = array('sundays', 'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays');
             $availability = array();
@@ -191,20 +192,20 @@
         
 
             // need to incorporate availability here
-            $newperson = new Person($fbname, "", 'portland', 
+            $newperson = new Person($fbName, " ", 'portland', 
                 $address, $city, $state, $zipcode, "",
                 $phone, null, null, null, null, 
                 null, null, "", "", "", "", "", 
                 "", "volunteer", 'Active', null, "food bank", null,
                 null, null, null, null, 
                 $availability, '', '', 
-                null, $startDate, null, $notes, $password,
+                null, $startDate, null, $notes, "",
                 $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
                 $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
                 $saturdaysStart, $saturdaysEnd, 0, "", 
 
-                $address2, $county, $website, $altservices, $tag
+                $address2, $county, $website, $altServices, $tag
             );
 
             $result = add_Person($newperson);
