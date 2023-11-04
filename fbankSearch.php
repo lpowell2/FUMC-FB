@@ -37,22 +37,21 @@
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
-                    $required = ['name', 'id', 'zip', 'county', 'city'];
+                    $required = ['name', 'zipCode', 'county', 'city'];
                     if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                         echo 'Missing expected form elements';
                     }
                     $name = $args['name'];
-                    $id = $args['id'];
-                    
-					$zip = $args['zip'];
+                    //$id = $args['id'];
+					$zipCode = $args['zipCode'];
                     $county = $args['county'];
                     $city = $args['city'];
-                    if (!($name || $id || $zip || $county || $city)) {
+                    if (!($name || $zipCode || $county || $city)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        $persons = find_fbank($name, $id, $zip, $county, $city);
+                        $persons = find_fbank($name, $zipCode, $county, $city);
                         
                         require_once('include/output.php');
                         if (count($persons) > 0) {

@@ -299,6 +299,7 @@ function make_a_person($result_row) {
 			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
 			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass)
 	 */
+
     $thePerson = new Person(
                     $result_row['first_name'],
                     $result_row['last_name'],
