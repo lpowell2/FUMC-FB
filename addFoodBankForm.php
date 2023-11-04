@@ -268,7 +268,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
                     <p id="saturdays-range-error" class="hidden error">Start time must come before end time.</p>
                 </div>
 
-                <label for="frequency">Frequency</label>
+                <label for="frequency"><em>*</em>Frequency</label>
                 <input type="text" id="frequency" name="frequency">
             </div>
 

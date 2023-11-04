@@ -61,7 +61,7 @@
 
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
-                
+                //TODO put back error check, need to fix required fields
             }
 
 
@@ -78,7 +78,11 @@
 
             $address = $args['address'];
 
-            $address2 = $args['address2'];
+            if($args['address2'] == "" || $args['address2'] == null){
+                $address2 = null;
+            }else{
+                $address2 = $args['address2'];
+            }
 
             $city = $args['city'];
 
@@ -98,9 +102,21 @@
                 echo 'bad zip';
             }
            
-            $notes = $args['opnotes'];
+            //$notes = $args['opnotes'];
 
-            $altServices = $args['adtl-services'];
+            if($args['opnotes'] == "" || $args['opnotes'] == null){
+                $notes = null;
+            }else{
+                $notes = $args['opnotes'];
+            }
+
+            //$altServices = $args['adtl-services'];
+
+            if($args['adtl-services'] == "" || $args['adtl-services'] == null){
+                $altServices = null;
+            }else{
+                $altServices = $args['adtl-services'];
+            }
 
             $tag = $args['tag'];
             if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
@@ -199,7 +215,7 @@
                 "", "volunteer", 'Active', null, "food bank", null,
                 null, null, null, null, 
                 $availability, '', '', 
-                null, $startDate, null, $notes, "",
+                null, $startDate, null, $notes, "fb",
                 $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
                 $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
@@ -209,6 +225,7 @@
             );
 
             $result = add_Person($newperson);
+
             if (!$result) {
                 echo '<p>Failed to add food bank.</p>';
             } else {

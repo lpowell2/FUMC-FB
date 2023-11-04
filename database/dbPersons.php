@@ -198,7 +198,6 @@ function update_birthday($id, $new_birthday) {
  * Updates the profile picture link of the corresponding
  * id.
 */
-
 function update_profile_pic($id, $link) {
   $con = connect();
   $query = 'UPDATE dbPersons SET profile_pic = "'.$link.'" WHERE id ="'.$id.'"';

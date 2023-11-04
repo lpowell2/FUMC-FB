@@ -143,7 +143,7 @@ class Person {
 
 		$this->status = $st;
 
-		if ($av)
+		if ($av !== "")
 			$this->availability = array();
 		else
 			$this->availability = explode(',', $av);
