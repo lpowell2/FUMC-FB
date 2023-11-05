@@ -134,11 +134,16 @@ class Person {
 		$this->specialties = $spe;
 		$this->convictions = $convictions;
 		$this->mustChangePassword = $mcp;
-		if ($t !== "") {
+		//if ($t !== "") {
+		//	$this->type = explode(',', $t);
+		//	global $accessLevelsByRole;
+		//	$this->access_level = $accessLevelsByRole[$t];
+		if (!empty($t)) {
 			$this->type = explode(',', $t);
 			global $accessLevelsByRole;
 			$this->access_level = $accessLevelsByRole[$t];
-		} else {
+		  }
+		 else {
 			$this->type = array();
 			$this->access_level = 0;
 		}
@@ -188,10 +193,7 @@ class Person {
 	}
 
 
-	/*
-	*constructor modified to handle constructing either admin or food banks
-	*if there are less than 30 parameters passed in new Person(), then construct a food bank
-	*/
+
 
 	
 
