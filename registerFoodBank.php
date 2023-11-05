@@ -61,7 +61,7 @@
 
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
-                $errors = true;
+                //TODO put back error check, need to fix required fields
             }
 
 
@@ -78,7 +78,11 @@
 
             $address = $args['address'];
 
-            $address2 = $args['address2'];
+            if($args['address2'] == "" || $args['address2'] == null){
+                $address2 = null;
+            }else{
+                $address2 = $args['address2'];
+            }
 
             $city = $args['city'];
 
@@ -98,9 +102,21 @@
                 echo 'bad zip';
             }
            
-            $notes = $args['opnotes'];
+            //$notes = $args['opnotes'];
 
-            $altServices = $args['adtl-services'];
+            if($args['opnotes'] == "" || $args['opnotes'] == null){
+                $notes = null;
+            }else{
+                $notes = $args['opnotes'];
+            }
+
+            //$altServices = $args['adtl-services'];
+
+            if($args['adtl-services'] == "" || $args['adtl-services'] == null){
+                $altServices = null;
+            }else{
+                $altServices = $args['adtl-services'];
+            }
 
             $tag = $args['tag'];
             if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
@@ -108,6 +124,7 @@
                 echo 'bad tag';
             }
 
+            $startDate = $args['frequency'];
 
             $days = array('sundays', 'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays');
             $availability = array();
@@ -188,26 +205,27 @@
                 die();
             }
 
-        
+            $email=$fbName . $phone . $address;
 
             // need to incorporate availability here
-            $newperson = new Person($fbname, "", 'portland', 
+            $newperson = new Person($fbName, " ", 'portland', 
                 $address, $city, $state, $zipcode, "",
-                $phone, null, null, null, null, 
+                $phone, null, null, null, $email, 
                 null, null, "", "", "", "", "", 
                 "", "volunteer", 'Active', null, "food bank", null,
                 null, null, null, null, 
                 $availability, '', '', 
-                null, $startDate, null, $notes, $password,
+                null, $startDate, null, $notes, "fb",
                 $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
                 $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
                 $saturdaysStart, $saturdaysEnd, 0, "", 
 
-                $address2, $county, $website, $altservices, $tag
+                $address2, $county, $website, $altServices, $tag
             );
 
             $result = add_Person($newperson);
+
             if (!$result) {
                 echo '<p>Failed to add food bank.</p>';
             } else {

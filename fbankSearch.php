@@ -77,6 +77,8 @@
 											<td>' . $person->get_zip() . '</td>
                                             <td>' . $person->get_county() . '</td>
                                             <td>' . $person->get_city() . '</td>
+                                            <td> <a class="button" href="viewfoodbank.php?id=' . $person->get_id() . '">View</a></td>
+
                                         </a></tr>';
                             }
                             echo '

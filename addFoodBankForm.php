@@ -44,7 +44,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 ?>
 
 <h1>Add a Food Bank</h1>
-<main class="addfb-form">
+<main class="general">
     <form class="addfb-form" method="post">
         <h2>Food Bank Information Form</h2>
         <p>Please fill out each section of the following form to add a new food bank.</p>
@@ -267,6 +267,9 @@ function buildSelect($name, $disabled=false, $selected=null) {
                     <!-- <input type="text" id="saturdays-end" name="saturdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
                     <p id="saturdays-range-error" class="hidden error">Start time must come before end time.</p>
                 </div>
+
+                <label for="frequency"><em>*</em>Frequency</label>
+                <input type="text" id="frequency" name="frequency">
             </div>
 
         </fieldset>
