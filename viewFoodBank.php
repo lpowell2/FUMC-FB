@@ -20,33 +20,24 @@ if (isset($_SESSION['_id'])) {
 // Require admin privileges
 if ($accessLevel < 2) {
     header('Location: login.php');
-    echo 'bad access level';
+    echo '<div class="error-toast"><p> Improper access level </p> </div>';
     die();
 }
 
-
+ $foodbank=NULL;
 // This is a placeholder I used a person id from my own database for testing purposes
 if (isset($_POST["id"])) {
     $id = $_POST["id"];
+    $foodbank = retrieve_person($id);
+    if ($foodbank==false){
+        echo '<div class = "error-toast"><p>Incorrect food bank given</p></div>';
+    }
 }
 else {
     //this will be changed to error checking
-    $id = "examp@gmail.com";
-}
+    echo '<div class= "error-toast"><p> No food bank given </p> </div>';}
 
-$foodbank = retrieve_person($id);
 
-//if id isn't given, error
-if (!isset($_POST["id"])) {
-    echo "no food bank given";
-}
-
-//if id is given, but is wrong, error
-if(isset($_POST["id"])) {
-    if (retrieve_person($_POST["id"])==false){
-        echo "incorrect food bank given";
-    }
-}
 
 ?>
 <!DOCTYPE html>
@@ -60,6 +51,7 @@ if(isset($_POST["id"])) {
 <body>
     <?php require_once('header.php') ?>
     <h1>View a Food Bank</h1>
+    <?php if ($foodbank): ?>
     <main class="general">
         <fieldset>
             <legend>Food Bank Information</legend>
@@ -75,30 +67,31 @@ if(isset($_POST["id"])) {
                     echo '('.substr($phone_str, 0, 3).') '.substr($phone_str, 3, 3).'-'.substr($phone_str,6);
                 ?> 
             </p>
+            <?php if($foodbank->get_phone2()):?>
             <label>Alternate Phone Number</label>
             <p>
                 <!-- formatting phone number -->
                 <?php
-                    $phone_str=strval($foodbank->get_phone1() );
+                    $phone_str=strval($foodbank->get_phone2() );
                     echo '('.substr($phone_str, 0, 3).') '.substr($phone_str, 3, 3).'-'.substr($phone_str,6);
                 ?> 
             </p>
-
+            <?php endif; ?>
             <label>Website Link</label>
             <!-- Add Functionality/Field for Address -->
-            <p>WEBSITE CHANGE THIS WHEN WE DECIDE FIELD AND DB CHANGES </p>
+            <p><?php echo $foodbank->get_website() ?>  </p>
 
             <label>Address</label>
             <p><?php echo $foodbank->get_address() ?> </p>
-
+            <?php if($foodbank->get_address2()):?>
             <label>Address 2</label>
-            <p><?php echo $foodbank->get_address() ?> </p>
-
+            <p><?php echo $foodbank->get_address2() ?> </p>
+            <?php endif; ?>
             <label><em> </em>City</label>
             <p><?php echo $foodbank->get_city() ?> </p>
 
             <label><em> </em>County</label>
-            <p>WEBSITE CHANGE THIS WHEN WE DECIDE FIELD AND DB CHANGES </p>
+            <p><?php echo $foodbank->get_county() ?>  </p>
 
             <label><em> </em>State</label>
             <p><?php echo $foodbank->get_state() ?> </p>
@@ -162,9 +155,11 @@ if(isset($_POST["id"])) {
                 <p><?php echo time24hTo12h($foodbank->get_saturday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_saturday_availability_end()) ?></p>
             <?php endif ?>
 
-
+            <label><em> </em>Frequency</label>
+            <p><?php echo $foodbank->get_start_date() ?></p>
         </fieldset>
     </main>
+    <?php endif; ?>
 </body>
 
 </html>
