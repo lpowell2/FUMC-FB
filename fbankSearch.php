@@ -51,10 +51,10 @@
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        $persons = find_fbank($name, $zipCode, $county, $city);
+                        $foodbanks = find_fbank($name, $zipCode, $county, $city);
                         
                         require_once('include/output.php');
-                        if (count($persons) > 0) {
+                        if (count($foodbanks) > 0) {
                             echo '
                             <div class="table-wrapper">
                                 <table class="general">
@@ -69,15 +69,15 @@
                                         </tr>
                                     </thead>
                                     <tbody class="standout">';
-                            foreach ($persons as $person) {
+                            foreach ($foodbanks as $foodbank) {
                                 echo '
                                         <tr>
-                                            <td>' . $person->get_first_name(). '</td>
-                                            <td><a href="tel:' . $person->get_phone1() . '">' . formatPhoneNumber($person->get_phone1()) .  '</td>
-											<td>' . $person->get_zip() . '</td>
-                                            <td>' . $person->get_county() . '</td>
-                                            <td>' . $person->get_city() . '</td>
-                                            <td> <a class="button" href="viewfoodbank.php?id=' . $person->get_id() . '">View</a></td>
+                                            <td>' . $foodbank->get_first_name(). '</td>
+                                            <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
+											<td>' . $foodbank->get_zip() . '</td>
+                                            <td>' . $foodbank->get_county() . '</td>
+                                            <td>' . $foodbank->get_city() . '</td>
+                                            <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
 
                                         </a></tr>';
                             }
