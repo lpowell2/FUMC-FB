@@ -205,12 +205,12 @@
                 die();
             }
 
-        
+            $email=$fbName . $phone . $address;
 
             // need to incorporate availability here
             $newperson = new Person($fbName, " ", 'portland', 
                 $address, $city, $state, $zipcode, "",
-                $phone, null, null, null, null, 
+                $phone, null, null, null, $email, 
                 null, null, "", "", "", "", "", 
                 "", "volunteer", 'Active', null, "food bank", null,
                 null, null, null, null, 
