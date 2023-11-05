@@ -155,7 +155,7 @@
             }
             if ($availabilityCount == 0) {
                 $errors = true;
-                echo 'bad availability - none chosen';
+                echo '<div class="error-toast">bad availability - none chosen</div>';
             }
             $sundaysStart = '';
             $sundaysEnd = '';
@@ -201,7 +201,7 @@
             }
 
             if ($errors) {
-                echo '<p>Your form submission contained unexpected input.</p>';
+                echo '<div class="error-toast"><p>Your form submission contained unexpected input.</p> </div>';
                 die();
             }
 
@@ -227,10 +227,12 @@
             $result = add_Person($newperson);
 
             if (!$result) {
-                echo '<p>Failed to add food bank.</p>';
+                echo '<div class="error-toast"><p>Failed to add food bank.</p></div>';
             } else {
-                echo '<p>Food bank added successfully!</p>';
-            }
+                echo '<div class="happy-toast"<p>Food bank added successfully!</p></div>';
+                Header("refresh:3;url=index.php");
+                
+            }   
         } else {
             require_once('addFoodBankForm.php'); 
         }
