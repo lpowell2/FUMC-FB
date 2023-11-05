@@ -31,7 +31,7 @@
         <?php require_once('header.php') ?>
         <h1>User Search</h1>
         <form id="person-search" class="general" method="get">
-            <h2>Find User</h2>
+            <h2>Find Foodbank</h2>
             <?php 
                 if (isset($_GET['name'])) {
                     require_once('include/input-validation.php');
@@ -56,6 +56,7 @@
                     } else {
                         echo "<h3>Search Results</h3>";
                         $persons = find_users($name, $id, $phone, $zip, $role, $status);
+                        
                         require_once('include/output.php');
                         if (count($persons) > 0) {
                             echo '

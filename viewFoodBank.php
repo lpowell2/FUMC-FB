@@ -26,8 +26,8 @@ if ($accessLevel < 2) {
 
  $foodbank=NULL;
 // This is a placeholder I used a person id from my own database for testing purposes
-if (isset($_POST["id"])) {
-    $id = $_POST["id"];
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
     $foodbank = retrieve_person($id);
     if ($foodbank==false){
         echo '<div class = "error-toast"><p>Incorrect food bank given</p></div>';

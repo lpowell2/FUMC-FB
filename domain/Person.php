@@ -87,6 +87,7 @@ class Person {
 	private $mustChangePassword;
 	private $gender;
 
+
 	//Person constructor; also construct food banks
 	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, 
 			$p1, $p1t, $p2, $p2t, $e, 
@@ -132,11 +133,16 @@ class Person {
 		$this->specialties = $spe;
 		$this->convictions = $convictions;
 		$this->mustChangePassword = $mcp;
-		if ($t !== "") {
+		//if ($t !== "") {
+		//	$this->type = explode(',', $t);
+		//	global $accessLevelsByRole;
+		//	$this->access_level = $accessLevelsByRole[$t];
+		if (!empty($t)) {
 			$this->type = explode(',', $t);
 			global $accessLevelsByRole;
 			$this->access_level = $accessLevelsByRole[$t];
-		} else {
+		  }
+		 else {
 			$this->type = array();
 			$this->access_level = 0;
 		}
@@ -184,6 +190,8 @@ class Person {
 		$this->altServices = $as;
 		$this->tag = $ta;
 	}
+
+
 
 
 	

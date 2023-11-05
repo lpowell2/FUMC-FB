@@ -70,7 +70,7 @@
                     <span>Find Event</span>
                 </div>
                 <?php if ($_SESSION['access_level'] >= 2): ?>
-                    <div class="dashboard-item" data-link="personSearch.php">
+                    <div class="dashboard-item" data-link="fbankSearch.php">
                         <img src="images/person-search.svg">
                         <span>Find Person</span>
                     </div>
