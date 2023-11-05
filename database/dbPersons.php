@@ -19,6 +19,7 @@ include_once(dirname(__FILE__).'/../domain/Person.php');
 
 /*
  * add a person to dbPersons table: if already there, return false
+ * essentially creating a new Person object
  */
 
 function add_person($person) {
@@ -84,7 +85,14 @@ function add_person($person) {
             $person->get_saturday_availability_end() . '","' .
             $person->get_profile_pic() . '","' .
             $person->is_password_change_required() . '","' .
-            $person->get_gender() .
+            $person->get_gender() . '","' .
+
+            //info added for food banks, some is saved in reused fields above
+            $person->get_address2() . '","' .
+            $person->get_county() . '","' .
+            $person->get_website() . '","' .
+            $person->get_altServices() . '","' .
+            $person->get_tag() . 
             '");'
         );							
         mysqli_close($con);
@@ -93,6 +101,9 @@ function add_person($person) {
     mysqli_close($con);
     return false;
 }
+
+
+
 
 /*
  * remove a person from dbPersons table.  If already there, return false
@@ -131,8 +142,10 @@ function retrieve_person($id) {
 //    mysqli_close($con);
     return $thePerson;
 }
+
+
 // Name is first concat with last name. Example 'James Jones'
-// return array of Persons.
+// return array of Persons matching input full name
 function retrieve_persons_by_name ($name) {
 	$persons = array();
 	if (!isset($name) || $name == "" || $name == null) return $persons;
@@ -185,7 +198,6 @@ function update_birthday($id, $new_birthday) {
  * Updates the profile picture link of the corresponding
  * id.
 */
-
 function update_profile_pic($id, $link) {
   $con = connect();
   $query = 'UPDATE dbPersons SET profile_pic = "'.$link.'" WHERE id ="'.$id.'"';
@@ -344,7 +356,13 @@ function make_a_person($result_row) {
                     $result_row['saturdays_start'],
                     $result_row['saturdays_end'],
                     $result_row['force_password_change'],
-                    $result_row['gender']
+                    $result_row['gender'],
+
+                    $result_row['address2'],
+                    $result_row['county'],
+                    $result_row['website'],
+                    $result_row['alt_services'],
+                    $result_row['tag']
                 );   
     return $thePerson;
 }

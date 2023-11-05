@@ -58,6 +58,8 @@
         $permission_array['viewprofile.php'] = 1;
         $permission_array['viewnotification.php'] = 1;
         $permission_array['volunteerreport.php'] = 1;
+        $permission_array['registerfoodbank.php'] = 1 ; //standard and super admin can add food banks
+
         //pages only managers can view
         $permission_array['personsearch.php'] = 2;
         $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
