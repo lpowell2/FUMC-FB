@@ -26,8 +26,8 @@ if ($accessLevel < 2) {
 
 $foodbank = NULL;
 // This is a placeholder I used a person id from my own database for testing purposes
-if (isset($_GET["id"])) {
-    $id = $_GET["id"];
+if (isset($_POST["id"])) {
+    $id = $_POST["id"];
     $foodbank = retrieve_person($id);
     if ($foodbank == false) {
         echo '<div class = "error-toast"><p>Incorrect food bank given</p></div>';
@@ -45,40 +45,28 @@ if (isset($_GET["id"])) {
 
 <head>
     <?php require_once('universal.inc') ?>
-    <title>FUMC FB VMS | View Food Bank</title>
+    <title>FUMC FB VMS | Edit Food Bank</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
-    <h1>View a Food Bank</h1>
+    <h1>Edit a Food Bank</h1>
     <?php if ($foodbank) : ?>
         <main class="general">
             <fieldset>
                 <legend>Food Bank Information</legend>
-                <?php if ($accessLevel >= 2) : ?>
-                    <?php if ($accessLevel >= 3) : ?>
-                        <form action=deleteFoodBankForm.php method="post">
-                            <input type="hidden" name="id" value="<?php echo $id ?>">
-                            <input type="submit" class="button" value="Delete Food Bank">
-                        </form>
-                    <?php endif ?>
-                    <form action=editFoodBank.php method="post">
-                            <input type="hidden" name="id" value="<?php echo $id ?>">
-                            <input type="submit" class="button" value="Edit Food Bank">
-                        </form>
-                <?php endif ?>
-                <label>Food Bank Name</label>
+            <label>Food Bank Name</label>
                 <!--NOTE: This was changed to fb_name, but this works for now-->
                 <p><?php echo $foodbank->get_first_name() ?> </p>
 
                 <label>Phone Number</label>
-                <p>
+                <input type="text">
                     <!-- formatting phone number -->
                     <?php
                     $phone_str = strval($foodbank->get_phone1());
                     echo '(' . substr($phone_str, 0, 3) . ') ' . substr($phone_str, 3, 3) . '-' . substr($phone_str, 6);
                     ?>
-                </p>
+                </input>
                 <?php if ($foodbank->get_phone2()) : ?>
                     <label>Alternate Phone Number</label>
                     <p>
