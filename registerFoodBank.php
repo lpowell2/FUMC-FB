@@ -1,6 +1,6 @@
 <?php
-    // Author: Lauren Knight
-    // Description: Registration page for new volunteers
+    // Author: Sarah Harrington
+    // Description: Registration page for new food banks 
     session_cache_expire(30);
     session_start();
     
@@ -26,12 +26,18 @@
     //     header('Location: personEdit.php?id=new');
     // }
 ?>
+
+
 <!DOCTYPE html>
 <html>
+
+
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Hunger Actions Coalition VMS | Register <?php if ($loggedIn) echo ' New Volunteer' ?></title>
+    <title>Hunger Actions Coalition | Add Food Bank <?php if ($loggedIn) echo ' New Food Bank' ?></title>
 </head>
+
+
 <body>
     <?php
         require_once('header.php');
@@ -48,25 +54,40 @@
             // }
 
             $required = array(
-                'first-name', 'last-name', 'birthdate',
-                'address', 'city', 'state', 'zip', 
-                'email', 'phone', 'phone-type', 'contact-when', 'contact-method',
-                'start-date', 'shirt-size', 'password', 'gender'
+                'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
+                'available-sundays', 'available-mondays', 'available-tuesdays', 'available-wednesday', 'available-thursdays', 'available-fridays',
+                'available-saturdays' 
             );
+
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
-                $errors = true;
-            }
-            $first = $args['first-name'];
-            $last = $args['last-name'];
-            $dateOfBirth = validateDate($args['birthdate']);
-            if (!$dateOfBirth) {
-                $errors = true;
-                echo 'bad dob';
+                //TODO put back error check, need to fix required fields
             }
 
+
+            $fbName = $args['fb-name'];
+           
+
+            $phone = validateAndFilterPhoneNumber($args['phone']);
+            if (!$phone) {
+                $errors = true;
+                echo 'bad phone';
+            }
+
+            $website = $args['website'];
+
             $address = $args['address'];
+
+            if($args['address2'] == "" || $args['address2'] == null){
+                $address2 = null;
+            }else{
+                $address2 = $args['address2'];
+            }
+
             $city = $args['city'];
+
+            $county = $args['county'];
+
             $state = $args['state'];
             if (!valueConstrainedTo($state, array('AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
                     'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME',
@@ -80,62 +101,30 @@
                 $errors = true;
                 echo 'bad zip';
             }
-            $email = strtolower($args['email']);
-            $email = validateEmail($email);
-            if (!$email) {
-                $errors = true;
-                echo 'bad email';
-            }
-            $phone = validateAndFilterPhoneNumber($args['phone']);
-            if (!$phone) {
-                $errors = true;
-                echo 'bad phone';
-            }
-            $phoneType = $args['phone-type'];
-            if (!valueConstrainedTo($phoneType, array('cellphone', 'home', 'work'))) {
-                $errors = true;
-                echo 'bad phone type';
-            }
-            $contactWhen = $args['contact-when'];
-            $contactMethod = $args['contact-method'];
-            if (!valueConstrainedTo($contactMethod, array('phone', 'text', 'email'))) {
-                $errors = true;
-                echo 'bad contact method';
+           
+            //$notes = $args['opnotes'];
+
+            if($args['opnotes'] == "" || $args['opnotes'] == null){
+                $notes = null;
+            }else{
+                $notes = $args['opnotes'];
             }
 
-            $econtactName = $args['econtact-name'];
-            $econtactPhone = validateAndFilterPhoneNumber($args['econtact-phone']);
-            if (!$econtactPhone) {
-                $errors = true;
-                echo 'bad e-contact phone';
-            }
-            $econtactRelation = $args['econtact-relation'];
+            //$altServices = $args['adtl-services'];
 
-            $startDate = validateDate($args['start-date']);
-            if (!$startDate) {
-                $errors = true;
-                echo 'bad start date';
-            }
-            $gender = $args['gender'];
-            if (!valueConstrainedTo($gender, ['Male', 'Female', 'Other'])) {
-                $errors = true;
-                echo 'bad gender';
-            }
-            $skills = '';
-            if (isset($args['skills'])) {
-                $skills = $args['skills'];
-            }
-            $hasComputer = isset($args['has-computer']);
-            $hasCamera = isset($args['has-camera']);
-            $hasTransportation = isset($args['has-transportation']);
-            $shirtSize = $args['shirt-size'];
-            if (!valueConstrainedTo($shirtSize, array('S', 'M', 'L', 'XL', 'XXL'))) {
-                $errors = true;
-                echo 'bad shirt size';
+            if($args['adtl-services'] == "" || $args['adtl-services'] == null){
+                $altServices = null;
+            }else{
+                $altServices = $args['adtl-services'];
             }
 
-            // May want to enforce password requirements at this step
-            $password = password_hash($args['password'], PASSWORD_BCRYPT);
+            $tag = $args['tag'];
+            if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
+                $errors = true;
+                echo 'bad tag';
+            }
+
+            $startDate = $args['frequency'];
 
             $days = array('sundays', 'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays');
             $availability = array();
@@ -166,7 +155,7 @@
             }
             if ($availabilityCount == 0) {
                 $errors = true;
-                echo 'bad availability - none chosen';
+                echo '<div class="error-toast">bad availability - none chosen</div>';
             }
             $sundaysStart = '';
             $sundaysEnd = '';
@@ -212,36 +201,40 @@
             }
 
             if ($errors) {
-                echo '<p>Your form submission contained unexpected input.</p>';
+                echo '<div class="error-toast"><p>Your form submission contained unexpected input.</p> </div>';
                 die();
             }
+
+            $email=$fbName . $phone . $address;
+
             // need to incorporate availability here
-            $newperson = new Person($first, $last, 'portland', 
+            $newperson = new Person($fbName, " ", 'portland', 
                 $address, $city, $state, $zipcode, "",
-                $phone, $phoneType, null, null,
-                $email, $shirtSize, $hasComputer, $hasCamera, $hasTransportation, $econtactName, $econtactPhone, $econtactRelation, 
-                $contactWhen, 'volunteer', 'Active', $contactMethod, null, null,
-                null, null, $skills, null, '', '', '', 
-                $dateOfBirth, $startDate, null, null, $password,
+                $phone, null, null, null, $email, 
+                null, null, "", "", "", "", "", 
+                "", "volunteer", 'Active', null, "food bank", null,
+                null, null, null, null, 
+                $availability, '', '', 
+                null, $startDate, null, $notes, "fb",
                 $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
                 $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-                $saturdaysStart, $saturdaysEnd, 0, $gender,
+                $saturdaysStart, $saturdaysEnd, 0, "", 
 
-                null, "", "", null, ""
+                $address2, $county, $website, $altServices, $tag
             );
-            $result = add_person($newperson);
+
+            $result = add_Person($newperson);
+
             if (!$result) {
-                echo '<p>That e-mail address is already in use.</p>';
+                echo '<div class="error-toast"><p>Failed to add food bank.</p></div>';
             } else {
-                if ($loggedIn) {
-                    echo '<script>document.location = "index.php?registerSuccess";</script>';
-                } else {
-                    echo '<script>document.location = "login.php?registerSuccess";</script>';
-                }
-            }
+                echo '<div class="happy-toast"<p>Food bank added successfully!</p></div>';
+                Header("refresh:3;url=index.php");
+                
+            }   
         } else {
-            require_once('registrationForm.php'); 
+            require_once('addFoodBankForm.php'); 
         }
     ?>
 </body>
