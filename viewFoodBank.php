@@ -37,9 +37,12 @@ if (isset($_GET["id"])) {
     echo '<div class= "error-toast"><p> No food bank given </p> </div>';
 }
 
-
-
+//this is for viewing tags
+// SQL part
+// $sql = mysqli_query($connection, "SELECT tagID FROM dbTags");
+// $data = $sql->fetch_all(MYSQLI_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -117,14 +120,31 @@ if (isset($_GET["id"])) {
                     <label for="adtl-services">Additional Services Offered</label>
                     <p><?php echo $foodbank->get_altServices() ?> </p>
                 <?php endif; ?>
+
                 <!-- **To Be Changed To Show List of Tags** -->
                 <label for="tag"><em> </em>Tag</label>
                 <select id="tag" name="tag" required>
+                    <!-- Show list of Tags-->
                     <option value="">Choose an option</option>
-                    <option value="Male">Male</option>
+                    <!--For tags in tagDB, loop through
+                        get from tagDB in vms.sql, foreach data in row-->
+                    <?php
+                        include_once("sql/vms.sql");
+                        $sql = "SELECT * FROM dbTags";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                              echo "<option value='" . $row['tagID'] . "'>" . $row['rowID'] . "</option>";
+                            }
+                            echo "</select>";
+                        } 
+                    ?>
+
+                    <!-- <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
-                </select>
+                </select> -->
 
 
             </fieldset>
