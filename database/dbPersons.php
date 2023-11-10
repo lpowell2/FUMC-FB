@@ -644,11 +644,11 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
       
         if ($county !== null) {
           if (!empty($where)) {
-            $where .= ' or ';
+            $where .= ' and ';
           }
           $where .= "county like '%$county%'";
         }
-      
+        var_dump($county);
         $query = "select * from dbPersons $where order by first_name";
       
         $connection = connect();
