@@ -20,72 +20,10 @@ $accessLevelsByRole = [
 	'superadmin' => 3
 ];
 
-class Person {
-	private $id;         // id (unique key) = first_name . phone1
-	private $start_date; // format: 99-03-12
-	private $venue;      // portland or bangor
-	private $first_name; // first name as a string
-	private $last_name;  // last name as a string
-
-	private $fbName;
-	private $address;   // address - string
-	private $address2;
-	private $city;    // city - string
-	private $county; //county - string
-	private $state;   // state - string
-	private $zip;    // zip code - integer
-	private $website;
-	private $altServices;
+class Tag {
+	private $e;
 	private $tag;
 
-  	private $profile_pic; // image link
-	private $phone1;   // primary phone -- home, cell, or work
-	private $phone1type; // home, cell, or work
-	private $phone2;   // secondary phone -- home, cell, or work
-	private $phone2type; // home, cell, or work
-	private $birthday;     // format: 64-03-12
-	private $email;   // email address as a string
-	private $shirt_size;   // t-shirt size
-	private $computer;   // computer - yes or no
-	private $camera;   // camera - yes or no
-	private $transportation;   // transportation - yes or no
-	private $contact_name;   // emergency contact name
-	private $contact_num;   // emergency cont. phone number
-	private $relation;   // relation to emergency contact
-	private $contact_time; //best time to contact volunteer
-	private $cMethod;    // best contact method for volunteer (email, phone, text)
-	private $position;    // job title or "student"
-	private $credithours; // hours required if volunteering for academic credit; otherwise blank
-	private $howdidyouhear;  // about RMH; internet, family, friend, volunteer, other (explain)
-	private $commitment;  // App: "year" or "semester" (if student) or N/A (guest chef, events, or projects)
-	private $motivation;   // App: why interested in RMH?
-	private $specialties;  // special training or skills
-	private $convictions;  // App: ever convicted of a felony?  "yes" or blank
-	private $type;       // array of "volunteer", "weekendmgr", "sub", "guestchef", "events", "projects", "manager"
-	private $access_level;
-	private $status;     // a person may be "active" or "inactive"
-	private $availability; // array of day:hours:venue triples; e.g., Mon:9-12:bangor, Sat:afternoon:portland
-	private $schedule;     // array of scheduled shift ids; e.g., 15-01-05:9-12:bangor
-	private $hours;        // array of actual hours logged; e.g., 15-01-05:0930-1300:portland:3.5
-	private $notes;        // notes that only the manager can see and edit
-	private $password;     // password for calendar and database access: default = $id
-	// Volunteer availability start and end for each week day in 24h format, hh:mm
-	private $sundaysStart;
-	private $sundaysEnd;
-	private $mondaysStart;
-	private $mondaysEnd;
-	private $tuesdaysStart;
-	private $tuesdaysEnd;
-	private $wednesdaysStart;
-	private $wednesdaysEnd;
-	private $thursdaysStart;
-	private $thursdaysEnd;
-	private $fridaysStart;
-	private $fridaysEnd;
-	private $saturdaysStart;
-	private $saturdaysEnd;
-	private $mustChangePassword;
-	private $gender;
 
 
 	//Person constructor; also construct food banks
