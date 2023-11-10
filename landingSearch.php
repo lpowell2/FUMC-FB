@@ -33,7 +33,7 @@
         <form id="person-search" class="general" method="get">
             <h2>Find Foodbank</h2>
             <?php 
-                //if (isset($_GET['name'])) {
+                if (isset($_GET['county'])) {
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
@@ -91,7 +91,7 @@
                         }
                     }
                     echo '<h3>Search Again</h3>';
-                //}
+                }
             ?>
             <p>Use the fields bellow to find food or food assistance in your area.</p>
             <label for="county">County</label>
