@@ -37,21 +37,21 @@
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
-                    $required = ['name', 'zipCode', 'county', 'city'];
+                    $required = ['county', 'zipCode', 'tags'];
                     if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                         echo 'Missing expected form elements';
                     }
-                    $name = $args['name'];
+                    //$name = $args['name'];
                     //$id = $args['id'];
-					$zipCode = $args['zipCode'];
-                    $county = $args['county'];
-                    $city = $args['city'];
-                    if (!($name || $zipCode || $county || $city)) {
+					$county = $args['county'];
+                    $zipCode = $args['zipCode'];
+                    $tags = $args['tags'];
+                    if (!($zipCode || $county || $tags)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        $foodbanks = find_fbank($name, $zipCode, $county, $city);
+                        $foodbanks = find_fbank($county, $zipCode, $tags);
                         
                         require_once('include/output.php');
                         if (count($foodbanks) > 0) {
@@ -94,17 +94,14 @@
                 }
             ?>
             <p>Use the form below to find available foodbanks in a specific area. At least one search criterion is required.</p>
-            <label for="name">Foodbank Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter the foodbank name">
-
-             <label for="zipCode">Zip Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
-
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" placeholder="Enter the city">
-
             <label for="county">County</label>
             <input type="text" id="county" name="county" placeholder="Enter the county">
+
+            <label for="zipCode">Zip Code</label>
+            <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
+
+            <label for="tags">Keywords (Tags)</label>
+            <input type="text" id="tags" name="tags" placeholder="Enter keywords or tags">
 
             <input type="submit" value="Search">
             <a class="button cancel" href="index.php">Return to Dashboard</a>
