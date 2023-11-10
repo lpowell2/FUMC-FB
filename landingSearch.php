@@ -24,7 +24,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php require_once('universal.inc') ?>
+        <?php //require_once('universal.inc') ?>
         <title>Gwyneth's Gift VMS | FoodBank Search</title>
     </head>
     <body>
@@ -93,7 +93,7 @@
                     echo '<h3>Search Again</h3>';
                 }
             ?>
-            <p>Use the form below to find available foodbanks in a specific area. At least one search criterion is required.</p>
+            <p>Use the fields bellow to find food or food assistance in your area.</p>
             <label for="county">County</label>
             <input type="text" id="county" name="county" placeholder="Enter the county">
 
