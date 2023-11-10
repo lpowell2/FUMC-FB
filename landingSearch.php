@@ -28,7 +28,7 @@
         <title>Gwyneth's Gift VMS | FoodBank Search</title>
     </head>
     <body>
-        <?php require_once('header.php') ?>
+        <?php //require_once('header.php') ?>
         <h1>Search for Foodbanks in Area</h1>
         <form id="person-search" class="general" method="get">
             <h2>Find Foodbank</h2>
