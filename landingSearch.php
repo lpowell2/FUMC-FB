@@ -23,92 +23,83 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <?php require_once('universal.inc') ?>
-        <title>Gwyneth's Gift VMS | FoodBank Search</title>
-    </head>
-    <body>
-        <?php require_once('header.php') ?>
-        <h1>Search for Foodbanks in Area</h1>
-        <form id="person-search" class="general" method="get">
-            <h2>Find Foodbank</h2>
-            <?php 
-                if (isset($_GET['name'])) {
-                    require_once('include/input-validation.php');
-                    require_once('database/dbPersons.php');
-                    $args = sanitize($_GET);
-                    $required = ['name', 'zipCode', 'county', 'city'];
-                    if (!wereRequiredFieldsSubmitted($args, $required, true)) {
-                        echo 'Missing expected form elements';
-                    }
-                    $name = $args['name'];
-                    //$id = $args['id'];
-					$zipCode = $args['zipCode'];
-                    $county = $args['county'];
-                    $city = $args['city'];
-                    if (!($name || $zipCode || $county || $city)) {
-                        echo '<div class="error-toast">At least one search criterion is required.</div>';
-                    
-                    } else {
-                        echo "<h3>Search Results</h3>";
-                        $foodbanks = find_fbank($name, $zipCode, $county, $city);
-                        
-                        require_once('include/output.php');
-                        if (count($foodbanks) > 0) {
-                            echo '
-                            <div class="table-wrapper">
-                                <table class="general">
-                                    <thead>
-                                        <tr>
-                                            <th>name</th>
-                                            <th>Phone Number</th>
-											<th>Zip Code</th>
-                                            <th>County</th>
-                                            <th>City</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="standout">';
-                            foreach ($foodbanks as $foodbank) {
-                                echo '
-                                        <tr>
-                                            <td>' . $foodbank->get_first_name(). '</td>
-                                            <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
-											<td>' . $foodbank->get_zip() . '</td>
-                                            <td>' . $foodbank->get_county() . '</td>
-                                            <td>' . $foodbank->get_city() . '</td>
-                                            <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
+<?php require_once('universal.inc'); ?>
+<?php require_once('header.php'); ?>
+<h1>Search for Foodbanks in Area</h1>
+<form id="person-search" class="general" method="get">
+  <h2>Find Foodbank</h2>
+  <?php 
+    if (isset($_GET['name'])) {
+      require_once('include/input-validation.php');
+      require_once('database/dbPersons.php');
+      $args = sanitize($_GET);
+      $required = ['county', 'zipCode', 'tags']; // only include county, zipcode, and tags
+      if (!wereRequiredFieldsSubmitted($args, $required, true)) {
+        echo 'Missing expected form elements';
+      }
+      $county = $args['county'];
+      $zipCode = $args['zipCode'];
+      $tags = $args['tags'];
 
-                                        </a></tr>';
-                            }
-                            echo '
-                                    </tbody>
-                                </table>
-                            </div>';
+      if (!($county || $zipCode || $tags)) {
+        echo '<div class="error-toast">At least one search criterion is required.</div>';
+      } else {
+        echo "<h3>Search Results</h3>";
+        $foodbanks = find_fbank($county, $zipCode, $tags); // only include county, zipcode, and tags
 
-                        } else {
-                            echo '<div class="error-toast">Your search returned no results.</div>';
-                        }
-                    }
-                    echo '<h3>Search Again</h3>';
-                }
-            ?>
-            <p>Use the form below to find available foodbanks in a specific area. At least one search criterion is required.</p>
-            <label for="name">Foodbank Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter the foodbank name">
+        require_once('include/output.php');
+        if (count($foodbanks) > 0) {
+          echo '
+            <div class="table-wrapper">
+              <table class="general">
+                <thead>
+                  <tr>
+                    <th>name</th>
+                    <th>Phone Number</th>
+                    <th>Zip Code</th>
+                    <th>County</th>
+                    <th>City</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody> class="standout">';
+          foreach ($foodbanks as $foodbank) {
+            echo '
+              <tr>
+                <td>' . $foodbank->get_first_name(). '</td>
+                <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
+                <td>' . $foodbank->get_zip() . '</td>
+                <td>' . $foodbank->get_county() . '</td>
+                <td>' . $foodbank->get_city() . '</td>
+                <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
 
-             <label for="zipCode">Zip Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
+              </tr>';
+          }
+          echo '
+                </tbody>
+              </table>
+            </div>';
 
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" placeholder="Enter the city">
+        } else {
+          echo '<div class="error-toast">Your search returned no results.</div>';
+        }
+      }
+      echo '<h3>Search Again</h3>';
+    }
+  ?>
+  <p>Use the form below to find available foodbanks in a specific area. At least one search criterion is required.</p>
+  <label for="county">County</label>
+  <input type="text" id="county" name="county" placeholder="Enter the county">
 
-            <label for="county">County</label>
-            <input type="text" id="county" name="county" placeholder="Enter the county">
+  <label for="zipCode">Zip Code</label>
+  <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
 
-            <input type="submit" value="Search">
-            <a class="button cancel" href="index.php">Return to Dashboard</a>
+  <label for="tags">Keywords (Tags)</label>
+  <input type="text" id="tags" name="tags" placeholder="Enter keywords or tags">
 
-        </form>
-    </body>
+  <input type="submit" value="Search">
+  <a class="button cancel" href="index.php">Return to Dashboard</a>
+
+</form>
+
 </html>
