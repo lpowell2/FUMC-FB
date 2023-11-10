@@ -78,7 +78,7 @@
         $permission_array['fbanksearch.php'] = 1;
         $permission_array['viewfoodbank.php']=2;
         $permission_array['deletefoodbankform.php']= 3;
-        $permission_array['landingsearch.php'] = 1; // set as 0 so anyone can use search
+        $permission_array['landingsearch.php'] = 0; // set as 0 so anyone can use search
 
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'],"/")+1));
