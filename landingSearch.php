@@ -48,7 +48,6 @@
         <form id="person-search" class="general" method="get">
             <div class="headings-all">
             <h2>Find Foodbank</h2>
-            </div>
             <?php 
                 if (isset($_GET['county'])) {
                     require_once('include/input-validation.php');
@@ -128,6 +127,7 @@
                     <a class="button cancel" href="index.php">Return to Dashboard</a>
                 </div>
             </div>
+        </div>    
         </form>
     </body>
 </html>
