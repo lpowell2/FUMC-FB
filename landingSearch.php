@@ -12,8 +12,14 @@
 <html>
     <head>
         <?php //require_once('universal.inc') ?>
-        <title>Gwyneth's Gift VMS | FoodBank Search</title>
+        <title>FUMC/HAC Food Bank Finder</title>
+
         <style>
+            img {
+                width: 200px;
+                height: 200px;
+                margin: 10px;
+            }
             .headings-all {
                 margin: 0 auto;
             }
@@ -41,6 +47,7 @@
                 margin-bottom: 10px;
             }
     </style>
+    
     </head>
     <body>
         <?php //require_once('header.php') ?>
