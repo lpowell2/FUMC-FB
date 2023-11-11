@@ -47,7 +47,9 @@
                 margin-bottom: 10px;
             }
     </style>
-        <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.jpg" alt="My Image">
+        <div class="img">
+            <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.jpg" alt="My Image">
+        </div>
     </head>
     <body>
         <?php //require_once('header.php') ?>
