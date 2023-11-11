@@ -14,29 +14,29 @@
         <?php //require_once('universal.inc') ?>
         <title>Gwyneth's Gift VMS | FoodBank Search</title>
         <style>
-    .foodbank-search {
-      width: 500px;
-      margin: 0 auto;
-    }
+            .foodbank-search {
+            width: 500px;
+            margin: 0 auto;
+            }
 
-    .search-fields {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 10px;
-    }
+            .search-fields {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            }
 
-    .submit-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+            .submit-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            }
 
-    .foodbank-search input,
-    .foodbank-search button,
-    .foodbank-search a {
-      width: 100%;
-      margin-bottom: 10px;
-     }
+            .foodbank-search input,
+            .foodbank-search button,
+            .foodbank-search a {
+                width: 100%;
+                margin-bottom: 10px;
+            }
     </style>
     </head>
     <body>
