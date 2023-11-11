@@ -14,6 +14,9 @@
         <?php //require_once('universal.inc') ?>
         <title>Gwyneth's Gift VMS | FoodBank Search</title>
         <style>
+            .headings-all {
+                margin: 0 auto;
+            }
             .foodbank-search {
             width: 500px;
             margin: 0 auto;
@@ -43,7 +46,9 @@
         <?php //require_once('header.php') ?>
         <h1>Search for Foodbanks in Area</h1>
         <form id="person-search" class="general" method="get">
+            <div class="headings-all">
             <h2>Find Foodbank</h2>
+            </div>
             <?php 
                 if (isset($_GET['county'])) {
                     require_once('include/input-validation.php');
