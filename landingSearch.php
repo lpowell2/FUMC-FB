@@ -107,18 +107,22 @@
                 }
             ?>
             <p>Use the fields bellow to find food or food assistance in your area.</p>
-            <label for="county">County</label>
-            <input type="text" id="county" name="county" placeholder="Enter the county">
+            <div class="foodbank-search">
+                <div class="search-fields">
+                    <label for="county">County</label>
+                    <input type="text" id="county" name="county" placeholder="Enter the county">
 
-            <label for="zipCode">Zip Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
+                    <label for="zipCode">Zip Code</label>
+                    <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
 
-            <label for="tags">Keywords (Tags)</label>
-            <input type="text" id="tags" name="tags" placeholder="Enter keywords or tags">
-
-            <input type="submit" value="Search">
-            <a class="button cancel" href="index.php">Return to Dashboard</a>
-
+                    <label for="tags">Keywords (Tags)</label>
+                    <input type="text" id="tags" name="tags" placeholder="Enter keywords or tags">
+                </div>
+                <div class="submit-buttons">
+                    <input type="submit" value="Search">
+                    <a class="button cancel" href="index.php">Return to Dashboard</a>
+                </div>
+            </div>
         </form>
     </body>
 </html>
