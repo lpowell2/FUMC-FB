@@ -6,26 +6,38 @@
     session_cache_expire(30);
     session_start();
 
-   // $loggedIn = false;
-   // $accessLevel = 0;
-   // $userID = null;
-   // if (isset($_SESSION['_id'])) {
-   //     $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-   //     $accessLevel = $_SESSION['access_level'];
-   //     $userID = $_SESSION['_id'];
-   // }
-    // admin-only access
-   // if ($accessLevel < 2) {
-   //     header('Location: index.php');
-   //     die();
-   // }
+
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <?php //require_once('universal.inc') ?>
         <title>Gwyneth's Gift VMS | FoodBank Search</title>
+        <style>
+    .foodbank-search {
+      width: 500px;
+      margin: 0 auto;
+    }
+
+    .search-fields {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+
+    .submit-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .foodbank-search input,
+    .foodbank-search button,
+    .foodbank-search a {
+      width: 100%;
+      margin-bottom: 10px;
+     }
+    </style>
     </head>
     <body>
         <?php //require_once('header.php') ?>
