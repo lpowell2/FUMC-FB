@@ -68,7 +68,7 @@
                     }
                     //$name = $args['name'];
                     //$id = $args['id'];
-                    $county = $_Get['county'];
+                    $county = $_GET['county'];
 					//$county = $args['county'];
                     $zipCode = $args['zipCode'];
                     $tags = $args['tags'];
