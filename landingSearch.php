@@ -48,13 +48,9 @@
                 width: 100%;
                 margin-bottom: 10px;
             }
-            body {
-            outline: 5px solid purple;
-            }
+            
     </style>
-        <div class="img">
-            <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.png" alt="My Image">
-        </div>
+        <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.png" alt="My Image">
     </head>
     <body style="background-color: lightblue;">
         <?php //require_once('header.php') ?>
