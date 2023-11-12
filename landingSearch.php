@@ -51,7 +51,7 @@
             <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.jpg" alt="My Image">
         </div>
     </head>
-    <body>
+    <body style="background-color: lightblue;">
         <?php //require_once('header.php') ?>
         <h1>Search for Foodbanks in Area</h1>
         <form id="person-search" class="general" method="get">
