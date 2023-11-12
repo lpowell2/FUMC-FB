@@ -137,7 +137,7 @@
                 </div>
                 <div class="submit-buttons">
                     <input type="submit" value="Search">
-                    <a class="button cancel" href="index.php">Return to Dashboard</a>
+                    
                 </div>
             </div>
         </div>    
