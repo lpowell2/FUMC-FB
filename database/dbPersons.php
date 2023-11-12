@@ -689,67 +689,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
       }
       
 
-      function find_fbank_landing($zip = null, $tag = null, $county = null) {
-        //var_dump($name);
-        var_dump($county);
-        //var_dump($tag);
-        //var_dump($zip);
-        $where = 'where ';
-      
-        if ($zip !== null) {
-          if (!empty($where)) {
-            $where .= ' and ';
-          }
-          $where .= "zip like '%$zip%'";
-        }
-      
-        if ($tag !== null) {
-          if (!empty($where)) {
-            $where .= ' and ';
-          }
-          $where .= "tag like '%$tag%'";
-        }
-      
-        if ($county !== null) {
-            var_dump($county);
-          if (!empty($where)) {
-            $where .= ' and ';
-          }
-          $where .= "county like '%$county%'";
-        }
-        //var_dump($county);
-        $query = "select * from dbPersons $where order by first_name";
-      
-        $connection = connect();
-        $result = mysqli_query($connection, $query);
-      
-        if (!$result) {
-          mysqli_close($connection);
-          return [];
-        }
-        //create an empty array to store food banks
-        $fbanks = [];
-
-        // Iterate over the results and create a food bank object for each row.
-        while ($row = mysqli_fetch_assoc($result)) {
-          // Skip the root food bank.
-          if ($row['id'] == 'vmsroot') {
-            continue;
-          }
-      
-          // Create a food bank object.
-          $fbank = make_a_person($row);
-      
-          // Add the food bank object to the array.
-          $fbanks[] = $fbank;
-        }
-      
-        // Close the connection to the database.
-        mysqli_close($connection);
-      
-        // Return the array of food bank objects.
-        return $fbanks;
-      } 
+   
     function find_users($name, $id, $phone, $zip, $type, $status) {
         $where = 'where ';
         //if (!($name || $id || $phone || $zip || $type || $status)) {
