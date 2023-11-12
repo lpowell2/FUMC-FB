@@ -62,6 +62,8 @@
         <h1>Search for Foodbanks in Area</h1>
         </div>
         <form id="person-search" class="general" method="get">
+            <div class="headings-all">
+            <h2> </h2>
             <?php 
                 //if (isset($_GET['county'])) {
                     require_once('include/input-validation.php');
