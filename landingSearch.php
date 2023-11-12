@@ -68,8 +68,8 @@
                     }
                     //$name = $args['name'];
                     //$id = $args['id'];
-                    $county = $_GET['county'];
-					//$county = $args['county'];
+                    //$county = $_GET['county'];
+					$county = $args['county'];
                     $zipCode = $args['zipCode'];
                     $tags = $args['tags'];
                     if (!($zipCode || $county || $tags)) {
