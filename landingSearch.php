@@ -22,16 +22,13 @@
             }
             .headings-all {
                 margin: 0 auto;
+                width: 500px
             }
             .foodbank-search {
             width: 500px;
             margin: 0 auto;
             }
-            .foodbank-search {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            }   
+
 
             .search-fields {
             display: flex;
