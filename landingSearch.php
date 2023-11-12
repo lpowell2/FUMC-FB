@@ -50,7 +50,7 @@
             }
             
     </style>
-        <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.png" alt="My Image">
+        <img src="/images/food_pic.png" alt="My Image">
     </head>
     <body style="background-color: lightblue;">
         <?php //require_once('header.php') ?>
