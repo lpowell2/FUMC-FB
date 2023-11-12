@@ -59,6 +59,7 @@
             <h2>Find Foodbank</h2>
             <?php 
                 if (isset($_GET['county'])) {
+                    $county = null;
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
