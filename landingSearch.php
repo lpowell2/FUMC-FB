@@ -27,6 +27,11 @@
             width: 500px;
             margin: 0 auto;
             }
+            .foodbank-search {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            }   
 
             .search-fields {
             display: flex;
@@ -47,7 +52,7 @@
                 margin-bottom: 10px;
             }
             body {
-            outline: 5px solid red;
+            outline: 5px solid purple;
             }
     </style>
         <div class="img">
