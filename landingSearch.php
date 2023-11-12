@@ -77,6 +77,7 @@
                     
                     } else {
                         echo "<h3>Search Results</h3>";
+                        var_dump($county);
                         $foodbanks = find_fbank($county, $zipCode, $tags);
                         
                         require_once('include/output.php');
