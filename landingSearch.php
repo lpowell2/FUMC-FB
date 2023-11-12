@@ -46,6 +46,9 @@
                 width: 100%;
                 margin-bottom: 10px;
             }
+            body {
+            outline: 5px solid red;
+            }
     </style>
         <div class="img">
             <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.jpg" alt="My Image">
