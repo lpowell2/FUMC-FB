@@ -58,7 +58,9 @@
     </head>
     <body style="background-color: lightblue;">
         <?php //require_once('header.php') ?>
+        <div class="headings-all">
         <h1>Search for Foodbanks in Area</h1>
+        </div>
         <form id="person-search" class="general" method="get">
             <div class="headings-all">
             <h2>Find Foodbank</h2>
