@@ -621,7 +621,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
     }
 
     //custom version of find user
-    function find_fbank($name = null, $zip = null, $tag = null, $county) {
+    function find_fbank($name = null, $zip = null, $tag = null, $county = null) {
         $where = 'where ';
       
         if ($name !== null) {
