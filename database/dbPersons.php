@@ -648,7 +648,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         }
       
         if ($county !== null) {
-            var_dump($county);
+            //var_dump($county);
           if (!empty($where)) {
             $where .= ' and ';
           }
