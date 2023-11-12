@@ -622,9 +622,9 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 
     //custom version of find user
     function find_fbank($name = null, $zip = null, $tag = null, $county = null) {
-        var_dump($county);
-        var_dump($tag);
-        var_dump($zip);
+        //var_dump($county);
+        //var_dump($tag);
+        //var_dump($zip);
         $where = 'where ';
       
         if ($name !== null) {
@@ -646,12 +646,13 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         }
       
         if ($county !== null) {
+            var_dump($county);
           if (!empty($where)) {
             $where .= ' and ';
           }
           $where .= "county like '%$county%'";
         }
-        //var_dump($county);
+        var_dump($county);
         $query = "select * from dbPersons $where order by first_name";
       
         $connection = connect();
