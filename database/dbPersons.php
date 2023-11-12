@@ -369,22 +369,23 @@ function make_a_person($result_row) {
 }
 
 //custom version of make_a_person
-function make_a_fbank($result_row) {
-    $theFbank = new Person(
-      $result_row['first_name'],
-      $result_row['address'],
-      $result_row['address2'],
-      $result_row['city'],
-      $result_row['county'],
-      $result_row['state'],
-      $result_row['zip'],
-      $result_row['website'],
-      $result_row['altServices'],
-      $result_row['tag']
-    );
+//NOTE: Commented out because not working
+// function make_a_fbank($result_row) {
+//     $theFbank = new Person(
+//       $result_row['first_name'],
+//       $result_row['address'],
+//       $result_row['address2'],
+//       $result_row['city'],
+//       $result_row['county'],
+//       $result_row['state'],
+//       $result_row['zip'],
+//       $result_row['website'],
+//       $result_row['altServices'],
+//       $result_row['tag']
+//     );
   
-    return $theFbank;
-  }
+//     return $theFbank;
+//   }
   
 function getall_names($status, $type, $venue) {
     $con=connect();

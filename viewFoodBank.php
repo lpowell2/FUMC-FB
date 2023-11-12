@@ -25,9 +25,10 @@ if ($accessLevel < 2) {
 }
 
 $foodbank = NULL;
-// This is a placeholder I used a person id from my own database for testing purposes
+//id is fbname,phone number, address for some reason, works fine though
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
+    // echo $id;
     $foodbank = retrieve_person($id);
     if ($foodbank == false) {
         echo '<div class = "error-toast"><p>Incorrect food bank given</p></div>';
@@ -121,7 +122,7 @@ if (isset($_GET["id"])) {
                     <p><?php echo $foodbank->get_altServices() ?> </p>
                 <?php endif; ?>
 
-                <!-- **To Be Changed To Show List of Tags** -->
+                
                 <label for="tag"><em> </em>Tag</label>
                 <select id="tag" name="tag" required>
                     <!-- Show list of Tags-->
