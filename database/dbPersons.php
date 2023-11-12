@@ -652,7 +652,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           }
           $where .= "county like '%$county%'";
         }
-        var_dump($county);
+        //var_dump($county);
         $query = "select * from dbPersons $where order by first_name";
       
         $connection = connect();
