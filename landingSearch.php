@@ -53,7 +53,7 @@
             }
     </style>
         <div class="img">
-            <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.jpg" alt="My Image">
+            <img src="C:\xampp\htdocs\FUMC-FB\images\food_pic.png" alt="My Image">
         </div>
     </head>
     <body style="background-color: lightblue;">
