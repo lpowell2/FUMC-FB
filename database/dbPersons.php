@@ -629,6 +629,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         $where = 'where ';
       
         if ($name !== null) {
+            var_dump($name);
           $where .= "first_name like '%$name%'";
         }
       
