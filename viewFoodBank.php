@@ -124,6 +124,28 @@ if (isset($_GET["id"])) {
 
                 
                 <label for="tag"><em> </em>Tag</label>
+                <!-- <?php
+                    // include_once("sql/vms.sql");
+                    // include_once('database/dbinfo.php');
+                    
+                    // $result = mysqli_query($con, "SELECT id, tagID, userID, tagText
+                    //     FROM dbFBTags
+                    //     left outer join dbTags
+                    //     on dbFBTags.id = dbTags.tagID
+                    //     union all      -- Using `union all` instead of `union`
+                    //     select id, tagID, userID, tagText
+                    //     from dbTags
+                    //     left outer join dbFBTags
+                    //     on dbFBTags.id = dbTags.tagID
+                    //     where
+                    //     dbFBTags.id IS NULL
+                    //     ");
+                    // while($row = mysqli_fetch_array($result)) {
+                    //         echo $row['id'].$row['tagID'].$row['userID'].$row['tagText']; 
+                    // }
+                        
+                ?> -->
+
                 <select id="tag" name="tag" required>
                     <!-- Show list of Tags-->
                     <option value="">Choose an option</option>
@@ -131,33 +153,25 @@ if (isset($_GET["id"])) {
                         get from tagDB in vms.sql, foreach data in row-->
                     <?php
                         include_once("sql/vms.sql");
-                        include_once('dbinfo.php');
-                        // $sql = "SELECT * FROM dbTags";
-                        // echo "the tags are:".$sql;
-                        // $result = $conn->query($sql);
-                        // if ($result->num_rows > 0) {
-                        //     // output data of each row
-                        //     while($row = $result->fetch_assoc()) {
-                        //       echo "<option value='" . $row['tagID'] . "'>" . $row['rowID'] . "</option>";
-                        //     }
-                        //     echo "</select>";
-                        // } 
+                        include_once('database/dbinfo.php');
 
                         //SQL edited from dbPersons
                         $con=connect();
-                        $result = $sql = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        //working query to get from dbTags directly
+                        // $result = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        $result = mysqli_query($con, "SELECT a.id, b.tagID, a.userID, b.tagText
+                        FROM dbTags b
+                        INNER JOIN dbFBTags a
+                        ON b.tagID = a.id
+                        ORDER BY b.tagID
+                        ");
                         while ($row = mysqli_fetch_array($result)) {
-                            echo "<option value='" .$row['tagID']."'> ".$row['tagText'] . "</option>";
+                            if ($row['userID']==$id):
+                                echo "<option value='" .$row['id']."'> ".$row['tagText'] . "</option>";
+                            endif;
                         }
                         echo "</select>";
                     ?>
-
-                    <!-- <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select> -->
-
-
             </fieldset>
 
             <br>
