@@ -25,7 +25,7 @@ if ($accessLevel < 2) {
 }
 
 $foodbank = NULL;
-//id is fbname,phone number, address for some reason, works fine though
+//id is fbname,phone number, address for some reason, think it has to do with the Person constructor in Person.php, works fine though
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
     // echo $id;
@@ -40,7 +40,7 @@ if (isset($_GET["id"])) {
 
 //this is for viewing tags
 // SQL part
-// $sql = mysqli_query($connection, "SELECT tagID FROM dbTags");
+// 
 // $data = $sql->fetch_all(MYSQLI_ASSOC);
 ?>
 
@@ -131,15 +131,25 @@ if (isset($_GET["id"])) {
                         get from tagDB in vms.sql, foreach data in row-->
                     <?php
                         include_once("sql/vms.sql");
-                        $sql = "SELECT * FROM dbTags";
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            // output data of each row
-                            while($row = $result->fetch_assoc()) {
-                              echo "<option value='" . $row['tagID'] . "'>" . $row['rowID'] . "</option>";
-                            }
-                            echo "</select>";
-                        } 
+                        include_once('dbinfo.php');
+                        // $sql = "SELECT * FROM dbTags";
+                        // echo "the tags are:".$sql;
+                        // $result = $conn->query($sql);
+                        // if ($result->num_rows > 0) {
+                        //     // output data of each row
+                        //     while($row = $result->fetch_assoc()) {
+                        //       echo "<option value='" . $row['tagID'] . "'>" . $row['rowID'] . "</option>";
+                        //     }
+                        //     echo "</select>";
+                        // } 
+
+                        //SQL edited from dbPersons
+                        $con=connect();
+                        $result = $sql = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "<option value='" .$row['tagID']."'> ".$row['tagText'] . "</option>";
+                        }
+                        echo "</select>";
                     ?>
 
                     <!-- <option value="Male">Male</option>
