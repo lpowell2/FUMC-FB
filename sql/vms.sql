@@ -68,6 +68,28 @@ CREATE TABLE `dbEventVolunteers` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dbTags`
+--
+
+CREATE TABLE `dbTags` (
+  `tagID` int(11) NOT NULL,
+  `tagText` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbFBTags`
+--
+
+CREATE TABLE `dbFBTags` (
+  `ID` int(11) NOT NULL,
+  `userID` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dbMessages`
 --
 

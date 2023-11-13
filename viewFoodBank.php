@@ -55,7 +55,15 @@ if (isset($_GET["id"])) {
         <main class="general">
             <fieldset>
                 <legend>Food Bank Information</legend>
-                <label>Food Bank Name</label>
+                <?php if ($accessLevel >= 2): ?>
+                    <?php if ($accessLevel >= 3): ?>
+                        <form action=deleteFoodBankForm.php method="post">
+                            <input type="hidden" name="id" value="<?php echo $id?>">
+                            <input type="submit" class="button" value="Delete Food Bank">
+                    </form>
+                        <?php endif ?>
+                <?php endif ?>
+            <label>Food Bank Name</label>
                 <!--NOTE: This was changed to fb_name, but this works for now-->
                 <p><?php echo $foodbank->get_first_name() ?> </p>
 
