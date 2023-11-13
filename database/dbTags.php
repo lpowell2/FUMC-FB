@@ -41,15 +41,19 @@ function make_a_tag($result_row) {
  */
 
 function add_tag($tag) {
+
+    //id = " " will be autoincremented by table
+    $id = " ";
+
     if (!$tag instanceof Tag)
         die("Error: add_tag type mismatch");
     $con=connect();
-    $query = "SELECT * FROM dbTags WHERE id = '" . $tag->get_id() . "'";
+    $query = "SELECT * FROM dbTags WHERE tag = '" . $tag->get_tag() . "'";
     $result = mysqli_query($con,$query);
-    //if there's no entry for this id, add it
+    //if there's no entry for this id, add it, if tag already exists result is > 0
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con,'INSERT INTO dbTags VALUES("' .
-            $tag->get_id() . '","' .
+            $id . '","' .
             $tag->get_tag() . 
             '");'
         );							
@@ -61,10 +65,8 @@ function add_tag($tag) {
 }
 
 
-
-
 /*
- * remove a person from dbPersons table.  If already there, return false
+ * remove a tag from dbTags table.  If already there, return false
  */
 
 function remove_tag($id) {
@@ -82,7 +84,7 @@ function remove_tag($id) {
 }
 
 /*
- * @return a Person from dbPersons table matching a particular id.
+ * @return a Tag from dbTags table matching a particular id.
  * if not in table, return false
  */
 

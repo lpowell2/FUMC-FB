@@ -21,21 +21,17 @@ $accessLevelsByRole = [
 ];
 
 class Tag {
-	private $id;
+	//private $id;
 	private $tag;
 
 
 
 	//Person constructor; also construct food banks
-	function __construct($e, $ta) {
+	function __construct($ta) {
 
-		$this->id = $e;
 
+		//tag value
 		$this->tag = $ta;
-	}
-
-	function get_id() {
-		return $this->id;
 	}
 
 	function get_tag() {

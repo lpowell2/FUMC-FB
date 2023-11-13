@@ -72,7 +72,7 @@ CREATE TABLE `dbEventVolunteers` (
 --
 
 CREATE TABLE `dbTags` (
-  `tagID` int(11) NOT NULL,
+  `tagID` int(11) NOT NULL AUTO_INCREMENT,
   `tagText` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -83,7 +83,7 @@ CREATE TABLE `dbTags` (
 --
 
 CREATE TABLE `dbFBTags` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `userID` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

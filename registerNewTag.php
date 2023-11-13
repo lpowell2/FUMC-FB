@@ -1,9 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <?php require_once('universal.inc'); ?>
+    <title>Hunger Actions Coalition | Add New Tag <?php if ($loggedIn) echo ' New Tag' ?></title>
+</head>
 
 <body>
     <?php
         require_once('header.php');
-        require_once('domain/Person.php');
-        require_once('database/dbPersons.php');
+        require_once('domain/Tag.php');
+        require_once('database/dbTags.php');
+        require_once('include/input-validation.php');
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // make every submitted field SQL-safe except for password
             $ignoreList = array('password');
@@ -25,6 +34,7 @@
 
 
             $tag = $args['tag'];
+
            
 
             
@@ -32,12 +42,12 @@
             // need to incorporate availability here
             $newTag = new Tag($tag);
 
-            $result = add_Person($newperson);
+            $result = add_tag($newTag);
 
             if (!$result) {
-                echo '<div class="error-toast"><p>Failed to add food bank.</p></div>';
+                echo '<div class="error-toast"><p>Failed to add tag.</p></div>';
             } else {
-                echo '<div class="happy-toast"<p>Food bank added successfully!</p></div>';
+                echo '<div class="happy-toast"<p>New tag added successfully!</p></div>';
                 Header("refresh:3;url=index.php");
                 
             }   
