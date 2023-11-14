@@ -60,9 +60,10 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #374c1c;
-    --accent-color: #d0d4c8;
-    --secondary-accent-color: #f57f04;
+    --main-color: #25408f;
+    --accent-color: #009ac6;
+    --secondary-accent-color: #f6871f;
+    --tertiary-accent-color:#5a8da4;
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
@@ -519,7 +520,11 @@ button.cancel, a.cancel {
     background-color: var(--cancel-button-background-color);
 }
 
-button.cancel:hover, a.cancel:hover {
+button.cancel:hover, a.can
+
+
+
+cel:hover {
     background-color: var(--accent-color);
 }
 
@@ -569,11 +574,19 @@ main.dashboard > p {
     background-color: var(--accent-color);
     cursor: pointer;
     text-shadow: 0px 0px .25rem black;
+    color: var(--secondary-accent-color)
 }
 
 .dashboard-item > img {
     filter: invert();
     height: 4rem;
+}
+
+.dashboard-item:hover > img{
+    /* change color of img */
+    filter: invert();
+    filter: invert(64%) sepia(38%) saturate(3921%) hue-rotate(348deg) brightness(101%) contrast(93%);
+
 }
 
 @media only screen and (max-width: 680px) {
