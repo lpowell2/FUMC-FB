@@ -77,6 +77,7 @@
         $permission_array['resetpassword.php'] = 2;
         $permission_array['fbanksearch.php'] = 1;
         $permission_array['viewfoodbank.php']=2;
+        $permission_array['registernewtag.php']=2;
         $permission_array['deletefoodbankform.php']= 3;
 
         //Check if they're at a valid page for their access level.
