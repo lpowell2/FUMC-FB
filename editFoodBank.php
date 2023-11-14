@@ -226,113 +226,150 @@ if (isset($_POST["id"])) {
                     <p>Enter the days and times the food bank is available each week.</p>
 
                     <div class="availability-container">
-
+                        <?php
+                        $start = $foodbank->get_sunday_availability_start();
+                        $end = $foodbank->get_sunday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-sundays" name="available-sundays" type="checkbox">
+                                <input id="available-sundays" name="available-sundays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-sundays">Sundays</label>
                             </p>
                             <p><em class="hidden">* </em>From</p>
-                            <!-- <input type="text" id="sundays-start" name="sundays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
-                            <?php echo buildSelect('sundays-start', true) ?>
+                            <?php echo buildSelect('sundays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="sundays-start" name="sundays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                    else echo 'required'; ?>> -->
                             <p><em class="hidden">* </em>to</p>
-                            <?php echo buildSelect('sundays-end', true) ?>
-                            <!-- <input type="text" id="sundays-end" name="sundays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <?php echo buildSelect('sundays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="sundays-end" name="sundays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                else echo 'required'; ?>> -->
                             <p id="sundays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
-
-
+                        <?php
+                        $start = $foodbank->get_monday_availability_start();
+                        $end = $foodbank->get_monday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-mondays" name="available-mondays" type="checkbox">
+                                <input id="available-mondays" name="available-mondays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-mondays">Mondays</label>
                             </p>
                             <p><em class="hidden">* </em>From</p>
-                            <?php echo buildSelect('mondays-start', true) ?>
-                            <!-- <input type="text" id="mondays-start" name="mondays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                            <?php echo buildSelect('mondays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="mondays-start" name="mondays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                    else echo 'required'; ?>> -->
                             <p><em class="hidden">* </em>to</p>
-                            <?php echo buildSelect('mondays-end', true) ?>
-                            <!-- <input type="text" id="mondays-end" name="mondays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <?php echo buildSelect('mondays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="mondays-end" name="mondays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                else echo 'required'; ?>> -->
                             <p id="mondays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
-
-
+                        <?php
+                        $start = $foodbank->get_tuesday_availability_start();
+                        $end = $foodbank->get_tuesday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-tuesdays" name="available-tuesdays" type="checkbox">
+                                <input id="available-tuesdays" name="available-tuesdays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-tuesdays">Tuesdays</label>
                             </p>
                             <p><em class="hidden">* </em>From</p>
-                            <?php echo buildSelect('tuesdays-start', true) ?>
-                            <!-- <input type="text" id="tuesdays-start" name="tuesdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                            <?php echo buildSelect('tuesdays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="tuesdays-start" name="tuesdays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                        else echo 'required'; ?>> -->
                             <p><em class="hidden">* </em>to</p>
-                            <?php echo buildSelect('tuesdays-end', true) ?>
-                            <!-- <input type="text" id="tuesdays-end" name="tuesdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <?php echo buildSelect('tuesdays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="tuesdays-end" name="tuesdays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                else echo 'required'; ?>> -->
                             <p id="tuesdays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
-
-
+                        <?php
+                        $start = $foodbank->get_wednesday_availability_start();
+                        $end = $foodbank->get_wednesday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-wednesdays" name="available-wednesdays" type="checkbox">
+                                <input id="available-wednesdays" name="available-wednesdays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-wednesdays">Wednesdays</label>
                             </p>
                             <p><em class="hidden">* </em>From</p>
-                            <?php echo buildSelect('wednesdays-start', true) ?>
-                            <!-- <input type="text" id="wednesdays-start" name="wednesdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                            <?php echo buildSelect('wednesdays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="wednesdays-start" name="wednesdays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                            else echo 'required'; ?>> -->
                             <p><em class="hidden">* </em>to</p>
-                            <?php echo buildSelect('wednesdays-end', true) ?>
-                            <!-- <input type="text" id="wednesdays-end" name="wednesdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <?php echo buildSelect('wednesdays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="wednesdays-end" name="wednesdays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                    else echo 'required'; ?>> -->
                             <p id="wednesdays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
-
-
+                        <?php
+                        $start = $foodbank->get_thursday_availability_start();
+                        $end = $foodbank->get_thursday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-thursdays" name="available-thursdays" type="checkbox">
+                                <input id="available-thursdays" name="available-thursdays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-thursdays">Thursdays</label>
                             </p>
-                            <p>From</p>
-                            <?php echo buildSelect('thursdays-start', true) ?>
-                            <!-- <input type="text" id="thursdays-start" name="thursdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
-                            <p>to</p>
-                            <?php echo buildSelect('thursdays-end', true) ?>
-                            <!-- <input type="text" id="thursdays-end" name="thursdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <p><em class="hidden">* </em>From</p>
+                            <?php echo buildSelect('thursdays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="thursdays-start" name="thursdays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                        else echo 'required'; ?>> -->
+                            <p><em class="hidden">* </em>to</p>
+                            <?php echo buildSelect('thursdays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="thursdays-end" name="thursdays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                    else echo 'required'; ?>> -->
                             <p id="thursdays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
-
-
+                        <?php
+                        $start = $foodbank->get_friday_availability_start();
+                        $end = $foodbank->get_friday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-fridays" name="available-fridays" type="checkbox">
+                                <input id="available-fridays" name="available-fridays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-fridays">Fridays</label>
                             </p>
                             <p><em class="hidden">* </em>From</p>
-                            <?php echo buildSelect('fridays-start', true) ?>
-                            <!-- <input type="text" id="fridays-start" name="fridays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                            <?php echo buildSelect('fridays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="fridays-start" name="fridays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                    else echo 'required'; ?>> -->
                             <p><em class="hidden">* </em>to</p>
-                            <?php echo buildSelect('fridays-end', true) ?>
-                            <!-- <input type="text" id="fridays-end" name="fridays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <?php echo buildSelect('fridays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="fridays-end" name="fridays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                else echo 'required'; ?>> -->
                             <p id="fridays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
-
-
+                        <?php
+                        $start = $foodbank->get_saturday_availability_start();
+                        $end = $foodbank->get_saturday_availability_end();
+                        $day = $start && $end;
+                        ?>
                         <div class="availability-day">
                             <p class="availability-day-header">
-                                <input id="available-saturdays" name="available-saturdays" type="checkbox">
+                                <input id="available-saturdays" name="available-saturdays" type="checkbox" <?php if ($day) echo 'checked'; ?>>
                                 <label for="available-saturdays">Saturdays</label>
                             </p>
                             <p><em class="hidden">* </em>From</p>
-                            <?php echo buildSelect('saturdays-start', true) ?>
-                            <!-- <input type="text" id="saturdays-start" name="saturdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                            <?php echo buildSelect('saturdays-start', !$day, $start) ?>
+                            <!-- <input type="text" id="saturdays-start" name="saturdays-start" value="<?php echo time24hTo12h($start); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                        else echo 'required'; ?>> -->
                             <p><em class="hidden">* </em>to</p>
-                            <?php echo buildSelect('saturdays-end', true) ?>
-                            <!-- <input type="text" id="saturdays-end" name="saturdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                            <?php echo buildSelect('saturdays-end', !$day, $end) ?>
+                            <!-- <input type="text" id="saturdays-end" name="saturdays-end" value="<?php echo time24hTo12h($end); ?>" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" <?php if (!$day) echo 'disabled';
+                                                                                                                                                                                                                    else echo 'required'; ?>> -->
                             <p id="saturdays-range-error" class="hidden error">Start time must come before end time.</p>
                         </div>
+                    </div>
 
-                        <label for="frequency"><em>*</em>Frequency</label>
-                        <input type="text" id="frequency" name="frequency" value="<?php echo $foodbank->get_start_date();?>">
+                    <label for="frequency"><em>*</em>Frequency</label>
+                    <input type="text" id="frequency" name="frequency" value="<?php echo $foodbank->get_start_date(); ?>">
                     </div>
 
                 </fieldset>

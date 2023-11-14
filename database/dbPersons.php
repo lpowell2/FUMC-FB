@@ -1079,3 +1079,26 @@ function find_user_names($name) {
         mysqli_close($connection);
         return $row['first_name'] . ' ' . $row['last_name'];
     }
+
+    function update_food_bank(
+        $id,
+        $first,  $address, $city, $state, $zipcode, $phone, $frequency,  $notes,
+        $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
+        $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
+        $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
+        $saturdaysStart, $saturdaysEnd, $gender, $address2, $county, $website, $altServices
+    ) {
+        $query = "update dbPersons set 
+            first_name='$first', address='$address', city='$city', zip='$zipcode', state ='$state',
+            phone1='$phone',start_date=' $frequency ', notes=' $notes ',  
+            sundays_start='$sundaysStart', sundays_end='$sundaysEnd', mondays_start='$mondaysStart', mondays_end='$mondaysEnd',
+            tuesdays_start='$tuesdaysStart', tuesdays_end='$tuesdaysEnd', wednesdays_start='$wednesdaysStart', wednesdays_end='$wednesdaysEnd',
+            thursdays_start='$thursdaysStart', thursdays_end='$thursdaysEnd', fridays_start='$fridaysStart', fridays_end='$fridaysEnd',
+            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', tag='$gender',address2='$address2,'county='$county',website='$website', alt_services='$altServices'
+            where id='$id'";
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+        mysqli_commit($connection);
+        mysqli_close($connection);
+        return $result;
+    }
