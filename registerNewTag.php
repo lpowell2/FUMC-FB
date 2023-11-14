@@ -1,6 +1,6 @@
 <?php
     // Author: Sarah Harrington
-    // Description: Registration page for new food banks 
+    // Description: Registration page for new tags 
     session_cache_expire(30);
     session_start();
     
@@ -52,8 +52,6 @@
             //     echo "<p>$key: $value</p>";
             // }
 
-
-            //this may be unnecessary
             $required = array(
                 'tag' 
             );
@@ -63,6 +61,7 @@
                 //TODO put back error check, need to fix required fields
             }
 
+            //set it to next autoincrement value
 
             $tag = $args['tag'];
 
@@ -71,8 +70,8 @@
             
 
             // need to incorporate availability here
-            $newTag = create_tag($tag);
-            //possibly redundant, based off of EVENTS structure
+            $newTag = new Tag($tag);
+
             $result = add_tag($newTag);
 
             if (!$result) {

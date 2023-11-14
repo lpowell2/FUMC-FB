@@ -26,8 +26,8 @@ class Tag {
 
 
 	//Person constructor; also construct food banks
-	function __construct($id, $tag) {
-		$this->tagID = $id;
+	function __construct( $tag) {
+		//$this->tagID = $id;
 		$this->tagText = $tag;
 	}
 
