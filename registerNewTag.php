@@ -23,6 +23,8 @@
             //     echo "<p>$key: $value</p>";
             // }
 
+
+            //this may be unnecessary
             $required = array(
                 'tag' 
             );
@@ -40,8 +42,8 @@
             
 
             // need to incorporate availability here
-            $newTag = new Tag($tag);
-
+            $newTag = create_tag($tag);
+            //possibly redundant, based off of EVENTS structure
             $result = add_tag($newTag);
 
             if (!$result) {

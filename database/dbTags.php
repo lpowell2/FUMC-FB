@@ -1,18 +1,11 @@
 <?php
 /*
- * Copyright 2013 by Jerrick Hoang, Ivy Xing, Sam Roberts, James Cook, 
- * Johnny Coster, Judy Yang, Jackson Moniaga, Oliver Radwan, 
- * Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker. 
- * This program is part of RMH Homebase, which is free software.  It comes with 
- * absolutely no warranty. You can redistribute and/or modify it under the terms 
- * of the GNU General Public License as published by the Free Software Foundation
- * (see <http://www.gnu.org/licenses/ for more information).
- * 
+ * This program is based off of the RMH codebase.
  */
 
 /**
- * @version March 1, 2012
- * @author Oliver Radwan and Allen Tucker
+ * @version November 13, 2023
+ * @author Sarah Harrington and Nick Annunziata
  */
 include_once('dbinfo.php');
 include_once(dirname(__FILE__).'/../domain/Tag.php');
@@ -39,21 +32,34 @@ function make_a_tag($result_row) {
  * add a person to dbPersons table: if already there, return false
  * essentially creating a new Person object
  */
+function create_tag($tag) {
+    $connection = connect();
+    $tagText = $tag;
+    $query = "
+        insert into dbTags (tagText)
+        values ('$tagText')
+    ";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        return null;
+    }
+    $id = mysqli_insert_id($connection);
+    mysqli_commit($connection);
+    mysqli_close($connection);
+    return $id;
+}
 
 function add_tag($tag) {
-
-    //id = " " will be autoincremented by table
-    $id = " ";
-
+    
     if (!$tag instanceof Tag)
         die("Error: add_tag type mismatch");
     $con=connect();
-    $query = "SELECT * FROM dbTags WHERE tag = '" . $tag->get_tag() . "'";
+    $query = "SELECT * FROM dbTags WHERE tag_ID = '" . $tag->get_id() . "'";
     $result = mysqli_query($con,$query);
-    //if there's no entry for this id, add it, if tag already exists result is > 0
+    //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con,'INSERT INTO dbTags VALUES("' .
-            $id . '","' .
+            $tag->get_id(). '","' .
             $tag->get_tag() . 
             '");'
         );							

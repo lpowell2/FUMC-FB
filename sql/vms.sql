@@ -199,6 +199,12 @@ ALTER TABLE `dbEvents`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dbTags`
+--
+ALTER TABLE `dbTags`
+  ADD PRIMARY KEY(`id`);
+
+--
 -- Indexes for table `dbEventVolunteers`
 --
 ALTER TABLE `dbEventVolunteers`
@@ -232,6 +238,13 @@ ALTER TABLE `dbEventMedia`
 --
 ALTER TABLE `dbEvents`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dbTags`
+--
+ALTER TABLE `dbEvents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT for table `dbMessages`

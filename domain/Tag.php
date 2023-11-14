@@ -9,11 +9,10 @@
  */
 
 /*
- * Created on Mar 28, 2008
- * @author Oliver Radwan <oradwan@bowdoin.edu>, Sam Roberts, Allen Tucker
- * @version 3/28/2008, revised 7/1/2015
+ * 
  */
 
+//unsure if this is needed, leftover from Persons.php, but these do not necessarily need their own access levels
 $accessLevelsByRole = [
 	'volunteer' => 1,
 	'admin' => 2,
@@ -21,22 +20,24 @@ $accessLevelsByRole = [
 ];
 
 class Tag {
-	//private $id;
-	private $tag;
+	private $tagID;
+	private $tagText;
 
 
 
 	//Person constructor; also construct food banks
-	function __construct($ta) {
-
-
-		//tag value
-		$this->tag = $ta;
+	function __construct($id, $tag) {
+		$this->tagID = $id;
+		$this->tagText = $tag;
 	}
 
 	function get_tag() {
-		return $this->tag;
+		return $this->tagText;
+	}
+	function get_id(){
+		return $this->tagID;
 	}
 
   
 }
+?>
