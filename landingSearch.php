@@ -66,7 +66,7 @@
             <div class="headings-all">
             <h2> </h2>
             <?php 
-                //if (isset($_GET['county'])) {
+                if (isset($_GET['county'])) {
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
@@ -128,7 +128,7 @@
                         }
                     }
                     echo '<h3>Search Again</h3>';
-                //}
+                }
             ?>
             <p>Use the fields bellow to find food or food assistance in your area.</p>
             <div class="foodbank-search">
