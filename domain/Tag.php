@@ -21,18 +21,18 @@ $accessLevelsByRole = [
 
 class Tag {
 	private $tagID;
-	private $tagText;
+	private $tag;
 
 
 
 	//Person constructor; also construct food banks
-	function __construct( $tag) {
+	function __construct( $ta) {
 		//$this->tagID = $id;
-		$this->tagText = $tag;
+		$this->tag = $ta;
 	}
 
 	function get_tag() {
-		return $this->tagText;
+		return $this->tag;
 	}
 	function get_id(){
 		return $this->tagID;

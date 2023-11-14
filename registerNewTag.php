@@ -65,11 +65,6 @@
 
             $tag = $args['tag'];
 
-           
-
-            
-
-            // need to incorporate availability here
             $newTag = new Tag($tag);
 
             $result = add_tag($newTag);
