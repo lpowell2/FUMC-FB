@@ -365,24 +365,6 @@ function make_a_person($result_row) {
     return $thePerson;
 }
 
-//custom version of make_a_person
-function make_a_fbank($result_row) {
-    $theFbank = new Person(
-      $result_row['first_name'],
-      $result_row['address'],
-      $result_row['address2'],
-      $result_row['city'],
-      $result_row['county'],
-      $result_row['state'],
-      $result_row['zip'],
-      $result_row['website'],
-      $result_row['altServices'],
-      $result_row['tag']
-    );
-  
-    return $theFbank;
-  }
-  
 function getall_names($status, $type, $venue) {
     $con=connect();
     $result = mysqli_query($con,"SELECT id,first_name,last_name,type FROM dbPersons " .
@@ -403,7 +385,7 @@ function getall_type($t) {
         mysqli_close($con);
         return false;
     }
-    mysqli_close;
+    mysqli_close($con);
     return $result;
 }
 
@@ -506,7 +488,7 @@ function get_people_for_export($attr, $first_name, $last_name, $type, $status, $
 //return an array of "last_name:first_name:birth_date", and sorted by month and day
 function get_birthdays($name_from, $name_to, $venue) {
 	$con=connect();
-   	$query = "SELECT * FROM dbPersons WHERE availability LIKE '%" . $venue . "%'" . 
+   	$query = "SELECT * FROM dbPersons WHERE availability LIKE '%" . $venue . "%'" ;
    	$query.= " AND last_name BETWEEN '" .$name_from. "' AND '" .$name_to. "'";
     $query.= " ORDER BY birthday";
 	$result = mysqli_query($con,$query);
