@@ -72,7 +72,7 @@ CREATE TABLE `dbEventVolunteers` (
 --
 
 CREATE TABLE `dbTags` (
-  `tagID` int(11) NOT NULL AUTO_INCREMENT,
+  `tagID` int(11) NOT NULL,
   `tagText` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -83,7 +83,7 @@ CREATE TABLE `dbTags` (
 --
 
 CREATE TABLE `dbFBTags` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL, 
   `userID` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -202,7 +202,7 @@ ALTER TABLE `dbEvents`
 -- Indexes for table `dbTags`
 --
 ALTER TABLE `dbTags`
-  ADD PRIMARY KEY(`id`);
+  ADD PRIMARY KEY(`tagID`);
 
 --
 -- Indexes for table `dbEventVolunteers`
@@ -242,8 +242,8 @@ ALTER TABLE `dbEvents`
 --
 -- AUTO_INCREMENT for table `dbTags`
 --
-ALTER TABLE `dbEvents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `dbTags`
+  MODIFY `tagID` int(11) NOT NULL AUTO_INCREMENT;
 
 
 --
