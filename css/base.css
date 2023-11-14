@@ -60,9 +60,9 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #2f4159;
-    --accent-color: #f5c16e;
-    --secondary-accent-color: #f6a4b5;
+    --main-color: #374c1c;
+    --accent-color: #d0d4c8;
+    --secondary-accent-color: #f57f04;
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
