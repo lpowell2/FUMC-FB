@@ -35,7 +35,7 @@ class Tag {
 		return $this->tag;
 	}
 	function get_id(){
-		return $this->tagID;
+		return 0;
 	}
 
   

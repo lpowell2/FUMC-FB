@@ -57,17 +57,18 @@ function make_tag($result_row){
 function add_tag($tag) {
 
     //id will autoincrement in table
-    //$id;
+   // $id;
     
     if (!$tag instanceof Tag)
         die("Error: add_tag type mismatch, not an instance of Tag");
     $con=connect();
-    $query = "SELECT * FROM dbTags WHERE tagID >= 1";
+    $query = "SELECT * FROM dbTags WHERE tagID = '" . $tag->get_id() . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con,'INSERT INTO dbTags VALUES("' .
             //$id. '","' .
+            $tag->get_id(). '","' .
             $tag->get_tag() . 
             '");'
         );							
