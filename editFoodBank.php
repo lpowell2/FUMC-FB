@@ -376,9 +376,9 @@ if (isset($_POST["id"])) {
 
 
                 <p>By pressing Submit below, the food bank and assciated information you have input will be added to the system.</p>
-                <input type="submit" name="addfb-form" value="Submit">
+                <input type="submit" name="editfb-form" value="Submit">
             </form>
-            <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
+            <a class="button cancel" href="fbanksearch.php" style="margin-top: .5rem">Cancel</a>
 
         </main>
     <?php endif; ?>
