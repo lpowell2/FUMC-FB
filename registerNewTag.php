@@ -1,3 +1,32 @@
+<?php
+    // Author: Sarah Harrington
+    // Description: Registration page for new food banks 
+    session_cache_expire(30);
+    session_start();
+    
+    require_once('include/input-validation.php');
+
+    $loggedIn = false;
+    if (isset($_SESSION['change-password'])) {
+        header('Location: changePassword.php');
+        die();
+    }
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
+    }
+
+    // if (isset($_SESSION['_id'])) {
+    //     header('Location: index.php');
+    // } else {
+    //     $_SESSION['logged_in'] = 1;
+    //     $_SESSION['access_level'] = 0;
+    //     $_SESSION['venue'] = "";
+    //     $_SESSION['type'] = "";
+    //     $_SESSION['_id'] = "guest";
+    //     header('Location: personEdit.php?id=new');
+    // }
+?>
+
 <!DOCTYPE html>
 <html>
 
