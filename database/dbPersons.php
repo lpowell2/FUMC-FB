@@ -607,12 +607,13 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         //var_dump($name);
         //var_dump($county);
         //var_dump($tag);
-        //var_dump($zip);
+        var_dump($zip);
         $where = 'where ';
       
         if ($name !== "") {
             //var_dump($name);
           $where .= "first_name like '%$name%'";
+          var_dump($where);
         }
       
         if ($zip !== "") {
@@ -620,6 +621,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             $where .= ' and ';
           }
           $where .= "zip like '%$zip%'";
+          var_dump($where);
         }
       
         if ($tag !== "") {
@@ -627,6 +629,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             $where .= ' and ';
           }
           $where .= "tag like '%$tag%'";
+          var_dump($where);
         }
       
         if ($county !== "") {
@@ -635,7 +638,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             $where .= ' and ';
           }
           $where .= "county like '%$county%'";
-          //var_dump($where);
+          var_dump($where);
         }
         //var_dump($county);
         $query = "select * from dbPersons $where order by first_name";
