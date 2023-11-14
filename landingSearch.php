@@ -16,9 +16,10 @@
 
         <style>
             img {
+                display: block;
                 width: 200px;
                 height: 200px;
-                margin: 10px;
+                margin: 0 auto;
             }
             .headings-all {
                 margin: 0 auto;
@@ -48,11 +49,15 @@
                 width: 100%;
                 margin-bottom: 10px;
             }
+            body {
+            background-color: #D0D4C8;
+            }
             
+
     </style>
-        <img src="../images/food_pic.png" alt="My Image">
+        <img src="images/food_pic.png" alt="My Image">
     </head>
-    <body style="background-color: lightblue;">
+    <body>
         <?php //require_once('header.php') ?>
         <div class="headings-all">
         <h1>Search for Foodbanks in Area</h1>
@@ -69,7 +74,7 @@
                     if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                         echo 'Missing expected form elements';
                     }
-                    //$name = $args['name'];
+                    $name = null;
                     //$id = $args['id'];
                     //$county = $_GET['county'];
 					$county = $args['county'];
@@ -80,11 +85,11 @@
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        //var_dump($county);
-                        $foodbanks = find_fbank($county, $zipCode, $tags);
-                        var_dump($county);
-                        var_dump($tags);
-                        var_dump($zipCode);
+                       // var_dump($county);
+                        $foodbanks = find_fbank($name,$zipCode, $tags, $county);
+                        //var_dump($county);w
+                        //var_dump($tags);
+                        //var_dump($zipCode);
                         require_once('include/output.php');
                         if (count($foodbanks) > 0) {
                             echo '
@@ -92,11 +97,11 @@
                                 <table class="general">
                                     <thead>
                                         <tr>
-                                            <th>name</th>
-                                            <th>Phone Number</th>
-											<th>Zip Code</th>
-                                            <th>County</th>
-                                            <th>City</th>
+                                            <th>Name </th>
+                                            <th>| Phone Number |</th>
+											<th> Zip Code |</th>
+                                        
+                                            <th> City</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -107,8 +112,8 @@
                                             <td>' . $foodbank->get_first_name(). '</td>
                                             <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
 											<td>' . $foodbank->get_zip() . '</td>
-                                            <td>' . $foodbank->get_county() . '</td>
                                             <td>' . $foodbank->get_city() . '</td>
+                                        
                                             <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
 
                                         </a></tr>';
