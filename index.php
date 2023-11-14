@@ -4,6 +4,7 @@
 
     date_default_timezone_set("America/New_York");
     
+    //check session and access level
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
         if (isset($_SESSION['change-password'])) {
             header('Location: changePassword.php');
@@ -30,6 +31,7 @@
     <body>
         <?php require('header.php'); ?>
         <h1>Dashboard</h1>
+
         <main class='dashboard'>
             <?php if (isset($_GET['pcSuccess'])): ?>
                 <div class="happy-toast">Password changed successfully!</div>
@@ -60,14 +62,14 @@
                     <span>View Calendar</span>
                 </div>
                 <?php if ($_SESSION['access_level'] >= 2): ?>
-                    <div class="dashboard-item" data-link="addEvent.php">
+                    <div class="dashboard-item" data-link="registerFoodBank.php">
                         <img src="images/new-event.svg">
-                        <span>Create Event</span>
+                        <span>Add Food Bank</span>
                     </div>
                 <?php endif ?>
-                <div class="dashboard-item" data-link="eventSearch.php">
+                <div class="dashboard-item" data-link="fBankSearch.php">
                     <img src="images/search.svg">
-                    <span>Find Event</span>
+                    <span>Find Food Bank</span>
                 </div>
                 <?php if ($_SESSION['access_level'] >= 2): ?>
                     <div class="dashboard-item" data-link="fbankSearch.php">
