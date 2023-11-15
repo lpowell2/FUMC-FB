@@ -62,10 +62,7 @@ if (isset($_GET["id"])) {
                             <input type="submit" class="button" value="Delete Food Bank">
                         </form>
                     <?php endif ?>
-                    <form action=editFoodBank.php method="post">
-                            <input type="hidden" name="id" value="<?php echo $id ?>">
-                            <input type="submit" class="button" value="Edit Food Bank">
-                        </form>
+                    <a class="button" href="editfoodbank.php?id=<?php echo $id ?>">Edit Food Bank</a>
                 <?php endif ?>
                 <label>Food Bank Name</label>
                 <!--NOTE: This was changed to fb_name, but this works for now-->
