@@ -1,38 +1,81 @@
 <?php
-$times = [
-    '12:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM',
-    '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM',
-    '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM',
-    '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM',
-    '11:59 PM'
-];
-$values = [
-    "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", 
-    "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", 
-    "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", 
-    "18:00", "19:00", "20:00", "21:00", "22:00", "23:00",
-    "23:59"
-];
+    // Author: Sarah Harrington
+    // Description: Registration page for new tags 
+    session_cache_expire(30);
+    session_start();
+    
+    require_once('include/input-validation.php');
 
-function buildSelect($name, $disabled=false, $selected=null) {
-    global $times;
-    global $values;
-    if ($disabled) {
-        $select = '
-            <select id="' . $name . '" name="' . $name . '" disabled>';
-    } else {
-        $select = '
-            <select id="' . $name . '" name="' . $name . '">';
+    $loggedIn = false;
+    if (isset($_SESSION['change-password'])) {
+        header('Location: changePassword.php');
+        die();
     }
-    if (!$selected) {
-        $select .= '<option disabled selected value>Select a time</option>';
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
     }
-    $n = count($times);
-    for ($i = 0; $i < $n; $i++) {
-        $value = $values[$i];
-        if ($selected == $value) {
-            $select .= '
-                <option value="' . $values[$i] . '" selected>' . $times[$i] . '</option>';
+
+    // if (isset($_SESSION['_id'])) {
+    //     header('Location: index.php');
+    // } else {
+    //     $_SESSION['logged_in'] = 1;
+    //     $_SESSION['access_level'] = 0;
+    //     $_SESSION['venue'] = "";
+    //     $_SESSION['type'] = "";
+    //     $_SESSION['_id'] = "guest";
+    //     header('Location: personEdit.php?id=new');
+    // }
+?>
+
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <?php require_once('universal.inc'); ?>
+    <title>Hunger Actions Coalition | Add New Tag <?php if ($loggedIn) echo ' New Tag' ?></title>
+</head>
+
+<body>
+    <?php
+        require_once('header.php');
+        require_once('domain/Tag.php');
+        require_once('database/dbTags.php');
+        require_once('include/input-validation.php');
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // make every submitted field SQL-safe except for password
+            $ignoreList = array('password');
+            $args = sanitize($_POST, $ignoreList);
+
+            // echo "<p>The form was submitted:</p>";
+            // foreach ($args as $key => $value) {
+            //     echo "<p>$key: $value</p>";
+            // }
+
+            $required = array(
+                'tag' 
+            );
+
+            $errors = false;
+            if (!wereRequiredFieldsSubmitted($args, $required)) {
+                //TODO put back error check, need to fix required fields
+            }
+
+            //set it to next autoincrement value
+
+            $tag = $args['tag'];
+
+            $newTag = new Tag($tag);
+
+            $result = add_tag($newTag);
+
+            if (!$result) {
+                echo '<div class="error-toast"><p>Failed to add tag.</p></div>';
+            } else {
+                echo '<div class="happy-toast"<p>New tag added successfully!</p></div>';
+                Header("refresh:3;url=index.php");
+                
+            }   
         } else {
             $select .= '
                 <option value="' . $values[$i] . '">' . $times[$i] . '</option>';
