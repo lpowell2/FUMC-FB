@@ -515,7 +515,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 		if ($result_row['hours']!="") {
 			$shifts = explode(',',$result_row['hours']);
 			$goodshifts = array();
-			foreach ($shifts as $shift) 
+			foreach ($shifts as $shift){
 			    if (($from == "" || substr($shift,0,8) >= $from) && ($to =="" || substr($shift,0,8) <= $to))
 			    	$goodshifts[] = $shift;
 			if (count($goodshifts)>0) {
@@ -527,7 +527,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
    	mysqli_close($con);
    	return $thePersons;
 }
-
+}
     function update_person_profile(
         $id,
         $first, $last, $dateOfBirth, $address, $city, $state, $zipcode,
@@ -537,7 +537,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
         $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
         $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-        $saturdaysStart, $saturdaysEnd, $gender
+        $saturdaysStart, $saturdaysEnd, $gender, $address2, $county, $website, $altServices,$frequency,$notes
     ) {
         $query = "update dbPersons set 
             first_name='$first', last_name='$last', birthday='$dateOfBirth', address='$address', city='$city', zip='$zipcode',
@@ -547,7 +547,8 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             sundays_start='$sundaysStart', sundays_end='$sundaysEnd', mondays_start='$mondaysStart', mondays_end='$mondaysEnd',
             tuesdays_start='$tuesdaysStart', tuesdays_end='$tuesdaysEnd', wednesdays_start='$wednesdaysStart', wednesdays_end='$wednesdaysEnd',
             thursdays_start='$thursdaysStart', thursdays_end='$thursdaysEnd', fridays_start='$fridaysStart', fridays_end='$fridaysEnd',
-            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', gender='$gender'
+            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', gender='$gender', address2='$address2',
+            county='$county', website='$website', alt_services='$altServices', state='$state', start_date='$frequency', notes= '$notes'
             where id='$id'";
         $connection = connect();
         $result = mysqli_query($connection, $query);
@@ -1066,27 +1067,4 @@ function find_user_names($name) {
         $row = mysqli_fetch_assoc($result);
         mysqli_close($connection);
         return $row['first_name'] . ' ' . $row['last_name'];
-    }
-
-    function update_food_bank(
-        $id,
-        $first,  $address, $city, $state, $zipcode, $phone, $frequency,  $notes,
-        $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
-        $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
-        $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-        $saturdaysStart, $saturdaysEnd, $gender, $address2, $county, $website, $altServices
-    ) {
-        $query = "update dbPersons set 
-            first_name='$first', address='$address', city='$city', zip='$zipcode', state ='$state',
-            phone1='$phone',start_date=' $frequency ', notes=' $notes ',  
-            sundays_start='$sundaysStart', sundays_end='$sundaysEnd', mondays_start='$mondaysStart', mondays_end='$mondaysEnd',
-            tuesdays_start='$tuesdaysStart', tuesdays_end='$tuesdaysEnd', wednesdays_start='$wednesdaysStart', wednesdays_end='$wednesdaysEnd',
-            thursdays_start='$thursdaysStart', thursdays_end='$thursdaysEnd', fridays_start='$fridaysStart', fridays_end='$fridaysEnd',
-            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', tag='$gender',address2='$address2,'county='$county',website='$website', alt_services='$altServices'
-            where id='$id'";
-        $connection = connect();
-        $result = mysqli_query($connection, $query);
-        mysqli_commit($connection);
-        mysqli_close($connection);
-        return $result;
     }

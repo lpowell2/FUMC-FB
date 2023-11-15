@@ -2,6 +2,11 @@
 <?php
 include_once('database/dbPersons.php');
 require_once('include/output.php');
+require_once('domain/Person.php');
+require_once('include/input-validation.php');
+require_once('universal.inc');
+require_once('header.php');
+
 session_cache_expire(30);
 session_start();
 
@@ -25,9 +30,8 @@ if ($accessLevel < 2) {
 }
 
 $foodbank = NULL;
-// This is a placeholder I used a person id from my own database for testing purposes
-if (isset($_POST["id"])) {
-    $id = $_POST["id"];
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
     $foodbank = retrieve_person($id);
     if ($foodbank == false) {
         echo '<div class = "error-toast"><p>Incorrect food bank given</p></div>';
@@ -37,19 +41,193 @@ if (isset($_POST["id"])) {
     echo '<div class= "error-toast"><p> No food bank given </p> </div>';
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // make every submitted field SQL-safe except for password
+    $ignoreList = array('password');
+    $args = sanitize($_POST, $ignoreList);
+
+    // echo "<p>The form was submitted:</p>";
+    // foreach ($args as $key => $value) {
+    //     echo "<p>$key: $value</p>";
+    // }
+
+    $required = array(
+        'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
+        'available-sundays', 'available-mondays', 'available-tuesdays', 'available-wednesday', 'available-thursdays', 'available-fridays',
+        'available-saturdays'
+    );
+
+    $errors = false;
+    if (!wereRequiredFieldsSubmitted($args, $required)) {
+        //TODO put back error check, need to fix required fields
+    }
+
+    $id = $args['id'];
+    $fbName = $args['fb-name'];
 
 
+    $phone = validateAndFilterPhoneNumber($args['phone']);
+    if (!$phone) {
+        $errors = true;
+        echo 'bad phone';
+    }
+
+    $website = $args['website'];
+
+    $address = $args['address'];
+
+    if ($args['address2'] == "" || $args['address2'] == null) {
+        $address2 = null;
+    } else {
+        $address2 = $args['address2'];
+    }
+
+    $city = $args['city'];
+
+    $county = $args['county'];
+
+    $state = $args['state'];
+    if (!valueConstrainedTo($state, array(
+        'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
+        'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME',
+        'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM',
+        'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
+        'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'
+    ))) {
+        $errors = true;
+    }
+    $zipcode = $args['zip'];
+    if (!validateZipcode($zipcode)) {
+        $errors = true;
+        echo 'bad zip';
+    }
+
+    //$notes = $args['opnotes'];
+
+    if ($args['opnotes'] == "" || $args['opnotes'] == null) {
+        $notes = null;
+    } else {
+        $notes = $args['opnotes'];
+    }
+
+    //$altServices = $args['adtl-services'];
+
+    if ($args['adtl-services'] == "" || $args['adtl-services'] == null) {
+        $altServices = null;
+    } else {
+        $altServices = $args['adtl-services'];
+    }
+
+    $tag = $args['tag'];
+    if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
+        $errors = true;
+        echo 'bad tag';
+    }
+
+    $startDate = $args['frequency'];
+
+    $days = array('sundays', 'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays');
+    $availability = array();
+    $availabilityCount = 0;
+    foreach ($days as $day) {
+        if (isset($args['available-' . $day])) {
+            $startKey = $day . '-start';
+            $endKey = $day . '-end';
+            if (!isset($args[$startKey]) || !isset($args[$endKey])) {
+                $errors = true;
+            }
+            $start = $args[$startKey];
+            $end = $args[$endKey];
+            // $range24h = validate12hTimeRangeAndConvertTo24h($start, $end);
+            $range24h = null;
+            if (validate24hTimeRange($start, $end)) {
+                $range24h = [$start, $end];
+            }
+            if (!$range24h) {
+                $errors = true;
+                echo "bad $day availability";
+            }
+            $availability[$day] = $range24h;
+            $availabilityCount++;
+        } else {
+            $availability[$day] = null;
+        }
+    }
+    if ($availabilityCount == 0) {
+        $errors = true;
+        echo '<div class="error-toast">bad availability - none chosen</div>';
+    }
+    $sundaysStart = '';
+    $sundaysEnd = '';
+    if ($availability['sundays']) {
+        $sundaysStart = $availability['sundays'][0];
+        $sundaysEnd = $availability['sundays'][1];
+    }
+    $mondaysStart = '';
+    $mondaysEnd = '';
+    if ($availability['mondays']) {
+        $mondaysStart = $availability['mondays'][0];
+        $mondaysEnd = $availability['mondays'][1];
+    }
+    $tuesdaysStart = '';
+    $tuesdaysEnd = '';
+    if ($availability['tuesdays']) {
+        $tuesdaysStart = $availability['tuesdays'][0];
+        $tuesdaysEnd = $availability['tuesdays'][1];
+    }
+    $wednesdaysStart = '';
+    $wednesdaysEnd = '';
+    if ($availability['wednesdays']) {
+        $wednesdaysStart = $availability['wednesdays'][0];
+        $wednesdaysEnd = $availability['wednesdays'][1];
+    }
+    $thursdaysStart = '';
+    $thursdaysEnd = '';
+    if ($availability['thursdays']) {
+        $thursdaysStart = $availability['thursdays'][0];
+        $thursdaysEnd = $availability['thursdays'][1];
+    }
+    $fridaysStart = '';
+    $fridaysEnd = '';
+    if ($availability['fridays']) {
+        $fridaysStart = $availability['fridays'][0];
+        $fridaysEnd = $availability['fridays'][1];
+    }
+    $saturdaysStart = '';
+    $saturdaysEnd = '';
+    if ($availability['saturdays']) {
+        $saturdaysStart = $availability['saturdays'][0];
+        $saturdaysEnd = $availability['saturdays'][1];
+    }
+
+    if ($errors) {
+        echo '<div class="error-toast"><p>Your form submission contained unexpected input.</p> </div>';
+        die();
+    }
+
+
+    // $result = update_food_bank($id,$fbName,$address,$city,$state,$zipcode,$phone,$startDate,$notes,$sundaysStart,$sundaysEnd,$mondaysStart,$mondaysEnd,$tuesdaysStart,$tuesdaysEnd,$wednesdaysStart,$wednesdaysEnd,$thursdaysStart,$thursdaysEnd,$fridaysStart,$fridaysEnd,$saturdaysStart,$saturdaysEnd,null,$address2,$county,$website,$altServices);
+    $result = update_person_profile($id, $fbName, '', '', $address, $city, $state, $zipcode, NULL, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, $website, $altServices, $startDate, $notes);
+    if (!$result) {
+        echo '<div class="error-toast"><p>Failed to  update food bank.</p></div>';
+    } else {
+        echo '<div class="happy-toast"<p>Food bank updated successfully!</p></div>';
+        Header("refresh:2;url=viewfoodbank.php?id=" . $id);
+    }
+}
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <?php require_once('universal.inc') ?>
     <title>FUMC FB VMS | Edit Food Bank</title>
 </head>
 
 <body>
-    <?php require_once('header.php') ?>
     <h1>Edit a Food Bank</h1>
     <?php if ($foodbank) : ?>
         <?php
@@ -105,6 +283,7 @@ if (isset($_POST["id"])) {
                 <p>An asterisk (<label><em>*</em></label>) indicates a required field.</p>
                 <fieldset>
                     <legend>Food Bank Information</legend>
+                    <input type="hidden" name="id" value="<?php echo $id ?>">
                     <label for="fb-name"><em>* </em>Food Bank Name</label>
                     <input type="text" id="fb-name" name="fb-name" value="<?php echo $foodbank->get_first_name(); ?> " required placeholder="Enter the food bank name">
 
@@ -132,57 +311,23 @@ if (isset($_POST["id"])) {
 
                     <label for="state"><em>* </em>State</label>
                     <select id="state" name="state" required>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA" selected>Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
+                        <?php
+                        $state = $foodbank->get_state();
+                        $states = array(
+                            'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District Of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+                        );
+                        $abbrevs = array(
+                            'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+                        );
+                        $length = count($states);
+                        for ($i = 0; $i < $length; $i++) {
+                            if ($abbrevs[$i] == $state) {
+                                echo '<option value="' . $abbrevs[$i] . '" selected>' . $states[$i] . '</option>';
+                            } else {
+                                echo '<option value="' . $abbrevs[$i] . '">' . $states[$i] . '</option>';
+                            }
+                        }
+                        ?>
                     </select>
 
                     <label for="zip"><em>* </em>Zip Code</label>
@@ -378,7 +523,7 @@ if (isset($_POST["id"])) {
                 <p>By pressing Submit below, the food bank and assciated information you have input will be added to the system.</p>
                 <input type="submit" name="editfb-form" value="Submit">
             </form>
-            <a class="button cancel" href="fbanksearch.php" style="margin-top: .5rem">Cancel</a>
+            <a class="button cancel" href="viewfoodbank.php?id=<?php echo $id ?>" style="margin-top: .5rem">Cancel</a>
 
         </main>
     <?php endif; ?>
