@@ -79,7 +79,6 @@
         $permission_array['viewfoodbank.php']=2;
         $permission_array['deletefoodbankform.php']= 3;
         $permission_array['editfoodbank.php']=2;
-        $permission_array['updatefoodbank.php']=2;
         $permission_array['landingsearch.php'] = 0; // set as 0 so anyone can use search
 
         //Check if they're at a valid page for their access level.
