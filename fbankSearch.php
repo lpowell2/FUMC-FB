@@ -78,6 +78,7 @@
                                             <td>' . $foodbank->get_county() . '</td>
                                             <td>' . $foodbank->get_city() . '</td>
                                             <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
+                                            <td> <a class="button" href="editfoodbank.php?id=' . $foodbank->get_id() . '">Edit</a></td>
 
                                         </a></tr>';
                             }
