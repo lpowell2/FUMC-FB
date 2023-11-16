@@ -172,6 +172,27 @@ if (isset($_GET["id"])) {
                         }
                         echo "</select>";
                     ?>
+                <?php
+                    // include_once("sql/vms.sql");
+                    // include_once('database/dbinfo.php');
+
+                    // $con=connect();
+                    // $result = mysqli_query($con, "SELECT a.id, b.tagID, a.userID, b.tagText
+                    // FROM dbTags b
+                    // INNER JOIN dbFBTags a
+                    // ON b.tagID = a.id
+                    // ORDER BY b.tagID
+                    // ");
+
+                    // //try to display them as individual buttons
+                    // //NOTE: Does work, but they're all on different lines
+                    // while ($row = mysqli_fetch_array($result)) {
+                    //     // echo "found";
+                    //     if ($row['userID']==$id):
+                    //         echo "<button class='tag-btn', value='" .$row['id']."'> ".$row['tagText'] ."</button>";
+                    //     endif;
+                    // }
+                ?>
             </fieldset>
 
             <br>

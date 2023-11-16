@@ -915,3 +915,18 @@ img.profile-pic {
         display: none;
     }
 }
+
+/*Tags*/
+.tag-btn{
+    
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: fit-content;
+
+    /*Margins, likely to be edited*/
+    margin-right: 10px;
+    
+}
