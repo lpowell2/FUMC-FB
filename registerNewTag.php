@@ -61,8 +61,6 @@
                 //TODO put back error check, need to fix required fields
             }
 
-            //set it to next autoincrement value
-
             $tag = $args['tag'];
 
             $newTag = new Tag($tag);

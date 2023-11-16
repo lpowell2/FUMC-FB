@@ -48,6 +48,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
     <form class="addfb-form" method="post">
         <h2>Food Bank Information Form</h2>
         <p>Please fill out each section of the following form to add a new food bank.</p>
+        <p>All fields must be filled in. For empty values input "n/a".</p>
         <p>An asterisk (<label><em>*</em></label>) indicates a required field.</p>
         <fieldset>
             <legend>Food Bank Information</legend>
@@ -64,7 +65,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="address"><em>* </em>Address</label>
             <input type="text" id="address" name="address" required placeholder="Enter the food bank address">
 
-            <label for="address2">Address 2</label>
+            <label for="address2"><em>* </em>Address 2</label>
             <input type="text" id="address2" name="address2" placeholder="Enter secondary or additional address">
 
             <label for="city"><em>* </em>City</label>
@@ -132,11 +133,11 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
 
 
-            <label for="opnotes">Operation Notes</label>
+            <label for="opnotes"><em>* </em>Operation Notes</label>
             <textarea wrap="soft" id="opnotes" name="opnotes" placeholder="Input operation notes"></textarea>
 
 
-            <label for="adtl-services">Additional Services Offered</label>
+            <label for="adtl-services"><em>* </em>Additional Services Offered</label>
             <input type="text" id="adtl-services" name="adtl-services">
 
             <label for="tag"><em>* </em>Tag</label>

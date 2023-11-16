@@ -62,6 +62,7 @@ function add_tag($tag) {
     if (!$tag instanceof Tag)
         die("Error: add_tag type mismatch, not an instance of Tag");
     $con=connect();
+    //autoincrement starts at 1, get_id always returns 0
     $query = "SELECT * FROM dbTags WHERE tagID = '" . $tag->get_id() . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
