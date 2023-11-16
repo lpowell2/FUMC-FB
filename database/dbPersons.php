@@ -607,13 +607,13 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         //var_dump($name);
         //var_dump($county);
         //var_dump($tag);
-        var_dump($zip);
+        //var_dump($zip);
         $where = 'where ';
       
         if ($name !== "") {
             //var_dump($name);
           $where .= "first_name like '%$name%'";
-          var_dump($where);
+          //var_dump($where);
         }
       
         if ($zip !== "") {
@@ -626,7 +626,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
       
         if ($tag !== "") {
           if (!empty($where)) {
-            $where .= ' and ';
+            //$where .= ' and ';
           }
           $where .= "tag like '%$tag%'";
           var_dump($where);
@@ -638,7 +638,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             $where .= ' and ';
           }
           $where .= "county like '%$county%'";
-          var_dump($where);
+          //var_dump($where);
         }
         //var_dump($county);
         $query = "select * from dbPersons $where order by first_name";
@@ -674,7 +674,63 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $fbanks;
       }
       
-
+      function find_fbank2($name, $zipcode, $tag, $county) {
+        $first = true;
+        $where = 'where ';
+      
+        if ($name) {
+          $where .= "first_name like '%$name%'";
+          var_dump($where);
+        }
+      
+        if ($zipcode) {
+          if (!$first) {
+            $where .= ' and ';
+          }
+          $where .= "zip like '%$zipcode%'";
+          var_dump($where);
+        }
+      
+        if ($tag) {
+          if (!$first) {
+            $where .= ' and ';
+          }
+          
+          $where .= "tag like '%$tag%'";
+          var_dump($where);
+        }
+      
+        if ($county) {
+          if (!$first) {
+            $where .= ' and ';
+          }
+          $where .= "county='$county'";
+          var_dump($where);
+        }
+      
+        $query = "select * from dbPersons $where order by last_name, first_name";
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+      
+        if (!$result) {
+          mysqli_close($connection);
+          return [];
+        }
+      
+        $raw = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $persons = [];
+      
+        foreach ($raw as $row) {
+          if ($row['id'] == 'vmsroot') {
+            continue;
+          }
+          $persons[] = make_a_person($row);
+        }
+      
+        mysqli_close($connection);
+        return $persons;
+      }
+      
    
     function find_users($name, $id, $phone, $zip, $type, $status) {
         $where = 'where ';

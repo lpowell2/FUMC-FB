@@ -86,7 +86,7 @@
                     } else {
                         echo "<h3>Search Results</h3>";
                        // var_dump($county);
-                        $foodbanks = find_fbank($name,$zipCode, $tags, $county);
+                        $foodbanks = find_fbank2($name,$zipCode, $tags, $county);
                         //var_dump($county);w
                         //var_dump($tags);
                         //var_dump($zipCode);

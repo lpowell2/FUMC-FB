@@ -51,7 +51,7 @@
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        $foodbanks = find_fbank($name, $zipCode, $tag, $county);
+                        $foodbanks = find_fbank2($name, $zipCode, $tag, $county);
                         
                         require_once('include/output.php');
                         if (count($foodbanks) > 0) {
