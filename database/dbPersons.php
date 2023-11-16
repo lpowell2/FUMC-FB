@@ -19,7 +19,6 @@ include_once(dirname(__FILE__).'/../domain/Person.php');
 
 /*
  * add a person to dbPersons table: if already there, return false
- * essentially creating a new Person object
  */
 
 function add_person($person) {
@@ -86,13 +85,12 @@ function add_person($person) {
             $person->get_profile_pic() . '","' .
             $person->is_password_change_required() . '","' .
             $person->get_gender() . '","' .
-
-            //info added for food banks, some is saved in reused fields above
             $person->get_address2() . '","' .
             $person->get_county() . '","' .
             $person->get_website() . '","' .
             $person->get_altServices() . '","' .
-            $person->get_tag() . 
+            $person->get_tag() . '","' .
+
             '");'
         );							
         mysqli_close($con);
@@ -142,10 +140,8 @@ function retrieve_person($id) {
 //    mysqli_close($con);
     return $thePerson;
 }
-
-
 // Name is first concat with last name. Example 'James Jones'
-// return array of Persons matching input full name
+// return array of Persons.
 function retrieve_persons_by_name ($name) {
 	$persons = array();
 	if (!isset($name) || $name == "" || $name == null) return $persons;
@@ -198,6 +194,7 @@ function update_birthday($id, $new_birthday) {
  * Updates the profile picture link of the corresponding
  * id.
 */
+
 function update_profile_pic($id, $link) {
   $con = connect();
   $query = 'UPDATE dbPersons SET profile_pic = "'.$link.'" WHERE id ="'.$id.'"';
@@ -518,7 +515,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 		if ($result_row['hours']!="") {
 			$shifts = explode(',',$result_row['hours']);
 			$goodshifts = array();
-			foreach ($shifts as $shift) 
+			foreach ($shifts as $shift){
 			    if (($from == "" || substr($shift,0,8) >= $from) && ($to =="" || substr($shift,0,8) <= $to))
 			    	$goodshifts[] = $shift;
 			if (count($goodshifts)>0) {
@@ -530,7 +527,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
    	mysqli_close($con);
    	return $thePersons;
 }
-
+}
     function update_person_profile(
         $id,
         $first, $last, $dateOfBirth, $address, $city, $state, $zipcode,
@@ -540,7 +537,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
         $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
         $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-        $saturdaysStart, $saturdaysEnd, $gender
+        $saturdaysStart, $saturdaysEnd, $gender, $address2, $county, $website, $altServices,$frequency,$notes
     ) {
         $query = "update dbPersons set 
             first_name='$first', last_name='$last', birthday='$dateOfBirth', address='$address', city='$city', zip='$zipcode',
@@ -550,7 +547,8 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             sundays_start='$sundaysStart', sundays_end='$sundaysEnd', mondays_start='$mondaysStart', mondays_end='$mondaysEnd',
             tuesdays_start='$tuesdaysStart', tuesdays_end='$tuesdaysEnd', wednesdays_start='$wednesdaysStart', wednesdays_end='$wednesdaysEnd',
             thursdays_start='$thursdaysStart', thursdays_end='$thursdaysEnd', fridays_start='$fridaysStart', fridays_end='$fridaysEnd',
-            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', gender='$gender'
+            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', gender='$gender', address2='$address2',
+            county='$county', website='$website', alt_services='$altServices', state='$state', start_date='$frequency', notes= '$notes'
             where id='$id'";
         $connection = connect();
         $result = mysqli_query($connection, $query);
@@ -607,33 +605,40 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 
     //custom version of find user
     function find_fbank($name = null, $zip = null, $tag = null, $county = null) {
+        //var_dump($name);
+        //var_dump($county);
+        //var_dump($tag);
+        //var_dump($zip);
         $where = 'where ';
       
-        if ($name !== null) {
+        if ($name !== "") {
+            //var_dump($name);
           $where .= "first_name like '%$name%'";
         }
       
-        if ($zip !== null) {
+        if ($zip !== "") {
           if (!empty($where)) {
             $where .= ' and ';
           }
           $where .= "zip like '%$zip%'";
         }
       
-        if ($tag !== null) {
+        if ($tag !== "") {
           if (!empty($where)) {
             $where .= ' and ';
           }
           $where .= "tag like '%$tag%'";
         }
       
-        if ($county !== null) {
+        if ($county !== "") {
+            //var_dump($county);
           if (!empty($where)) {
             $where .= ' and ';
           }
           $where .= "county like '%$county%'";
+          //var_dump($where);
         }
-      
+        //var_dump($county);
         $query = "select * from dbPersons $where order by first_name";
       
         $connection = connect();
@@ -667,6 +672,8 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $fbanks;
       }
       
+
+   
     function find_users($name, $id, $phone, $zip, $type, $status) {
         $where = 'where ';
         //if (!($name || $id || $phone || $zip || $type || $status)) {
