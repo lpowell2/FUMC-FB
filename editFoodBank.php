@@ -207,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // $result = update_food_bank($id,$fbName,$address,$city,$state,$zipcode,$phone,$startDate,$notes,$sundaysStart,$sundaysEnd,$mondaysStart,$mondaysEnd,$tuesdaysStart,$tuesdaysEnd,$wednesdaysStart,$wednesdaysEnd,$thursdaysStart,$thursdaysEnd,$fridaysStart,$fridaysEnd,$saturdaysStart,$saturdaysEnd,null,$address2,$county,$website,$altServices);
-    $result = update_person_profile($id, $fbName, '', '', $address, $city, $state, $zipcode, NULL, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, $website, $altServices, $startDate, $notes);
+    $result = update_person_profile($id, $fbName,NULL, '', $address, $city, $state, $zipcode, $id, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, $website, $altServices, $startDate, $notes);
     if (!$result) {
         echo '<div class="error-toast"><p>Failed to  update food bank.</p></div>';
     } else {
