@@ -33,25 +33,25 @@
         <form id="person-search" class="general" method="get">
             <h2>Find Foodbank</h2>
             <?php 
-                if (isset($_GET['name'])) {
+                if (isset($_GET['name']) || isset($_GET['zipCode']) || isset($_GET['tag']) || isset($_GET['county'])) {
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
-                    $required = ['name', 'zipCode', 'county', 'city'];
+                    $required = ['name', 'zipCode', 'tag', 'county'];
                     if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                         echo 'Missing expected form elements';
                     }
                     $name = $args['name'];
                     //$id = $args['id'];
 					$zipCode = $args['zipCode'];
+                    $tag = $args['tag'];
                     $county = $args['county'];
-                    $city = $args['city'];
-                    if (!($name || $zipCode || $county || $city)) {
+                    if (!($name || $zipCode || $tag || $county)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                        $foodbanks = find_fbank($name, $zipCode, $county, $city);
+                        $foodbanks = find_fbank2($name, $zipCode, $tag, $county);
                         
                         require_once('include/output.php');
                         if (count($foodbanks) > 0) {
@@ -101,8 +101,8 @@
              <label for="zipCode">Zip Code</label>
             <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
 
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" placeholder="Enter the city">
+            <label for="tag">Tag</label>
+            <input type="text" id="tag" name="tag" placeholder="Enter the tag">
 
             <label for="county">County</label>
             <input type="text" id="county" name="county" placeholder="Enter the county">
