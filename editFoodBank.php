@@ -119,10 +119,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $tag = $args['tag'];
-    if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
-        $errors = true;
-        echo 'bad tag';
-    }
+    // if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
+    //     $errors = true;
+    //     echo 'bad tag';
+    // }
 
     $startDate = $args['frequency'];
 
@@ -354,7 +354,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                     </select>
+                    <!-- Show list of Tags-->
+                    <?php
+                        $con=connect();
 
+                        $result = mysqli_query($con, "SELECT a.id, b.tagID, a.userID, b.tagText
+                        FROM dbTags b
+                        INNER JOIN dbFBTags a
+                        ON b.tagID = a.id
+                        ORDER BY b.tagID
+                        ");
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "<input type='checkbox' value='" .$row['id']."'/> ".$row['tagText'];
+                        }
+                        
+                        // for($row = mysqli_fetch_array($result)):
+                        //     if 
+                    ?>
 
                 </fieldset>
 
