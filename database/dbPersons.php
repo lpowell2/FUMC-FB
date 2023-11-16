@@ -89,7 +89,7 @@ function add_person($person) {
             $person->get_county() . '","' .
             $person->get_website() . '","' .
             $person->get_altServices() . '","' .
-            $person->get_tag() . '","' .
+            $person->get_tag() . 
 
             '");'
         );							
