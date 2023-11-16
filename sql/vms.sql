@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `dbEventMedia`
 --
 
-CREATE TABLE `dbEventMedia` (
+CREATE TABLE IF NOT EXISTS `dbEventMedia` (
   `id` int(11) NOT NULL,
   `eventID` int(11) NOT NULL,
   `url` text NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `dbEventMedia` (
 -- Table structure for table `dbEvents`
 --
 
-CREATE TABLE `dbEvents` (
+CREATE TABLE IF NOT EXISTS `dbEvents` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `abbrevName` text NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `dbEvents` (
 -- Table structure for table `dbEventVolunteers`
 --
 
-CREATE TABLE `dbEventVolunteers` (
+CREATE TABLE IF NOT EXISTS `dbEventVolunteers` (
   `eventID` int(11) NOT NULL,
   `userID` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -71,7 +71,7 @@ CREATE TABLE `dbEventVolunteers` (
 -- Table structure for table `dbTags`
 --
 
-CREATE TABLE `dbTags` (
+CREATE TABLE IF NOT EXISTS `dbTags` (
   `tagID` int(11) NOT NULL,
   `tagText` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -82,8 +82,8 @@ CREATE TABLE `dbTags` (
 -- Table structure for table `dbFBTags`
 --
 
-CREATE TABLE `dbFBTags` (
-  `ID` int(11) NOT NULL, 
+CREATE TABLE IF NOT EXISTS `dbFBTags` (
+  `ID` int(11) NOT NULL,
   `userID` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -93,7 +93,7 @@ CREATE TABLE `dbFBTags` (
 -- Table structure for table `dbMessages`
 --
 
-CREATE TABLE `dbMessages` (
+CREATE TABLE IF NOT EXISTS `dbMessages` (
   `id` int(11) NOT NULL,
   `senderID` varchar(256) NOT NULL,
   `recipientID` varchar(256) NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `dbMessages` (
 -- Table structure for table `dbPersons`
 --
 
-CREATE TABLE `dbPersons` (
+CREATE TABLE IF NOT EXISTS `dbPersons` (
   `id` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `start_date` text,
   `venue` text,
