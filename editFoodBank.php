@@ -23,7 +23,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
 // Require admin privileges
-if ($accessLevel < 2) {
+if ($accessLevel < 1) {
     header('Location: login.php');
     echo '<div class="error-toast"><p> Improper access level </p> </div>';
     die();
@@ -123,6 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors = true;
         echo 'bad tag';
     }
+
+
 
     $startDate = $args['frequency'];
 
@@ -354,6 +356,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                     </select>
+                    <a class="button" href="registerNewTag.php">Add New Tag</a>
 
 
                 </fieldset>

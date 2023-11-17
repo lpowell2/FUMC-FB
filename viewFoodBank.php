@@ -18,7 +18,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
 // Require admin privileges
-if ($accessLevel < 2) {
+if ($accessLevel < 1) {
     header('Location: login.php');
     echo '<div class="error-toast"><p> Improper access level </p> </div>';
     die();
@@ -55,14 +55,14 @@ if (isset($_GET["id"])) {
         <main class="general">
             <fieldset>
                 <legend>Food Bank Information</legend>
-                <?php if ($accessLevel >= 2) : ?>
-                    <?php if ($accessLevel >= 3) : ?>
+                <?php if ($accessLevel >= 1) : ?>
+                    <?php if ($accessLevel >= 1) : ?>
                         <form action=deleteFoodBankForm.php method="post">
                             <input type="hidden" name="id" value="<?php echo $id ?>">
                             <input type="submit" class="button" value="Delete Food Bank">
                         </form>
                     <?php endif ?>
-                    <a class="button" href="editfoodbank.php?id=<?php echo $id ?>">Edit Food Bank</a>
+                    <a class="button" href="editFoodBank.php?id=<?php echo $id ?>">Edit Food Bank</a>
                 <?php endif ?>
                 <label>Food Bank Name</label>
                 <!--NOTE: This was changed to fb_name, but this works for now-->

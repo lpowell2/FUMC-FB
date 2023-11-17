@@ -59,6 +59,12 @@
         $permission_array['viewnotification.php'] = 1;
         $permission_array['volunteerreport.php'] = 1;
         $permission_array['registerfoodbank.php'] = 1 ; //standard and super admin can add food banks
+        $permission_array['fbanksearch.php'] = 1;
+        $permission_array['viewfoodbank.php']=1;
+        $permission_array['registernewtag.php']=1;
+        $permission_array['deletefoodbankform.php']= 1;
+        $permission_array['importfoodbankform.php']= 1;
+        $permission_array['editfoodbank.php']=1;
 
         //pages only managers can view
         $permission_array['personsearch.php'] = 2;
@@ -75,12 +81,7 @@
         $permission_array['report.php'] = 2;
         $permission_array['reportspage.php'] = 2;
         $permission_array['resetpassword.php'] = 2;
-        $permission_array['fbanksearch.php'] = 1;
-        $permission_array['viewfoodbank.php']=2;
-        $permission_array['registernewtag.php']=2;
-        $permission_array['deletefoodbankform.php']= 3;
-        $permission_array['importfoodbankform.php']= 3;
-        $permission_array['editfoodbank.php']=2;
+        
         $permission_array['landingsearch.php'] = 0; // set as 0 so anyone can use search
 
         //Check if they're at a valid page for their access level.
