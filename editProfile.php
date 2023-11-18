@@ -208,7 +208,7 @@
             $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
             $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
             $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-            $saturdaysStart, $saturdaysEnd, $gender
+            $saturdaysStart, $saturdaysEnd, $gender,NULL,NULL,NULL,NULL,NULL,NULL
         );
         if ($result) {
             if ($editingSelf) {
