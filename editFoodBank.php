@@ -213,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<div class="error-toast"><p>Failed to  update food bank.</p></div>';
     } else {
         echo '<div class="happy-toast"<p>Food bank updated successfully!</p></div>';
-        // Header("refresh:2;url=viewfoodbank.php?id=" . $id);
+        Header("refresh:2;url=viewfoodbank.php?id=" . $id);
     }
 }
 ?>
