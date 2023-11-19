@@ -13,13 +13,14 @@
     <?PHP
     //Log-in security
     //If they aren't logged in, display our log-in form.
+    //TODO: Need to change gwyneth's gifts to FUMC
     $showing_login = false;
     if (!isset($_SESSION['logged_in'])) {
         echo '
         <nav>
             <span id="nav-top">
                 <span class="logo">
-                    <img src="images/gwynethsgift.png">
+                    <img src="images/fumc-logo.png">
                     <span id="vms-logo">VMS</span>
                 </span>
                 <img id="menu-toggle" src="images/menu.png">
@@ -106,10 +107,10 @@
         }
         else {
             echo('<nav>');
-            echo('<span id="nav-top"><span class="logo"><a class="navbar-brand" href="' . $path . 'index.php"><img src="images/gwynethsgift.png"></a>');
-            echo('<a class="navbar-brand" id="vms-logo">VMS</a></span><img id="menu-toggle" src="images/menu.png"></span>');
+            echo('<span id="nav-top"><span class="logo"><a class="navbar-brand" href="' . $path . 'index.php"><img src="images/Food_Services.png"></a>');
+            echo('<a class="navbar-brand" id="vms-logo"></a></span><img id="menu-toggle" src="images/menu.png"></span>');
             echo('<ul>');
-            //echo " <br><b>"."Gwyneth's Gift Homebase"."</b>|"; //changed: 'Homebase' to 'Gwyneth's Gift Homebase'
+            
 	        if ($_SESSION['access_level'] >= 1) {
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
                 // echo('<li class="nav-item"><a class="nav-link active" aria-current="page" href="' . $path . 'about.php">About</a></li>');
