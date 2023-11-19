@@ -43,7 +43,7 @@ if (isset($_GET["id"])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // make every submitted field SQL-safe except for password
-    $ignoreList = array('password');
+    $ignoreList = array('password','tag');
     $args = sanitize($_POST, $ignoreList);
 
     // echo "<p>The form was submitted:</p>";
@@ -118,11 +118,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $altServices = $args['adtl-services'];
     }
 
-    $tag = $args['tag'];
-    if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
-        $errors = true;
-        echo 'bad tag';
-    }
+    // $tag = $args['tag'];
+    // if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
+    //     $errors = true;
+    //     echo 'bad tag';
+    // }
+    
 
     $startDate = $args['frequency'];
 
@@ -212,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<div class="error-toast"><p>Failed to  update food bank.</p></div>';
     } else {
         echo '<div class="happy-toast"<p>Food bank updated successfully!</p></div>';
-        Header("refresh:2;url=viewfoodbank.php?id=" . $id);
+        // Header("refresh:2;url=viewfoodbank.php?id=" . $id);
     }
 }
 ?>
@@ -347,14 +348,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php else : ?>
                         <?php echo '<input type="text" id="adtl-services" name="adtl-services">'; ?>
                     <?php endif; ?>
-                    <label for="tag"><em>* </em>Tag</label>
+                    <!-- <label for="tag"><em>* </em>Tag</label>
                     <select id="tag" name="tag" required>
                         <option value="">Choose an option</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
-                    </select>
+                    </select> -->
 
+                    <!-- Show list of Tags-->
+                    <label for="tag"><em>* </em>Tags</label>
+                    <?php
+                        $con=connect();
+
+                        $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        
+                        while ($row = mysqli_fetch_array($resulting)) {
+                            echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText'];
+                        }
+                        //after submission, check if checkboxes checked, if so, add to dbFBTags
+                        //post only gets all checked 
+                        if(isset($_POST['tag'])){
+                            foreach ($_POST['tag'] as $selected) {
+                                // echo "<br>".$selected. "was checked.<br>";
+                                //TODO: Error checking to prevent repeat tags from being added
+                                mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
+                            }
+                        }
+                    ?>
 
                 </fieldset>
 

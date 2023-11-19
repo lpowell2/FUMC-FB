@@ -25,7 +25,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Gwyneth's Gift VMS | User Search</title>
+        <title>FUMC-First United Methodist Church | User Search</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
