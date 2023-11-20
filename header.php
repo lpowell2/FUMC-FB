@@ -126,6 +126,7 @@
 	            //echo('<br>master schedules: <a href="' . $path . 'viewSchedule.php?venue=portland'."".'">Portland, </a>');
 	            //echo('<a href="' . $path . 'viewSchedule.php?venue=bangor'."".'">Bangor</a>');
 	            echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'registerFoodBank.php">Add</a></li>');
+                echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'importFoodBankForm.php">Import</a></li>');
 	            echo('<span class="nav-divider">|</span>');
 	            echo('<span class="navbar-brand">Volunteers</span>');
                 echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'personSearch.php">Search</a></li>
