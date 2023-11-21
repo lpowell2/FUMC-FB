@@ -46,6 +46,7 @@
         $permission_array['apply.php'] = 0;
         $permission_array['logout.php'] = 0;
         $permission_array['register.php'] = 0;
+        
         //pages volunteers can view
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
