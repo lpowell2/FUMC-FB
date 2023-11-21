@@ -146,6 +146,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
             </select>
+            <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
 
         </fieldset>

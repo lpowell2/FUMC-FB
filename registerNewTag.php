@@ -1,30 +1,34 @@
 <?php
     // Author: Sarah Harrington
     // Description: Registration page for new tags 
+    require_once('universal.inc');
+    require_once('include/input-validation.php');
+    require_once('header.php');
+    require_once('domain/Tag.php');
+    require_once('database/dbTags.php');
+    require_once('include/input-validation.php');
+  
     session_cache_expire(30);
     session_start();
-    
-    require_once('include/input-validation.php');
+
+    ini_set("display_errors", 1);
+    error_reporting(E_ALL);
 
     $loggedIn = false;
-    if (isset($_SESSION['change-password'])) {
-        header('Location: changePassword.php');
-        die();
-    }
+    $accessLevel = 0;
+    $userID = null;
     if (isset($_SESSION['_id'])) {
         $loggedIn = true;
+        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+        $accessLevel = $_SESSION['access_level'];
+        $userID = $_SESSION['_id'];
     }
-
-    // if (isset($_SESSION['_id'])) {
-    //     header('Location: index.php');
-    // } else {
-    //     $_SESSION['logged_in'] = 1;
-    //     $_SESSION['access_level'] = 0;
-    //     $_SESSION['venue'] = "";
-    //     $_SESSION['type'] = "";
-    //     $_SESSION['_id'] = "guest";
-    //     header('Location: personEdit.php?id=new');
-    // }
+    // Require admin privileges
+    if ($accessLevel < 1) {
+        header('Location: login.php');
+        echo '<div class="error-toast"><p> Improper access level </p> </div>';
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -32,16 +36,13 @@
 
 
 <head>
-    <?php require_once('universal.inc'); ?>
-    <title>Hunger Actions Coalition | Add New Tag <?php if ($loggedIn) echo ' New Tag' ?></title>
+    
+    <title>Hunger Actions Coalition | Add New Tag</title>
 </head>
 
 <body>
     <?php
-        require_once('header.php');
-        require_once('domain/Tag.php');
-        require_once('database/dbTags.php');
-        require_once('include/input-validation.php');
+        
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // make every submitted field SQL-safe except for password
             $ignoreList = array('password');

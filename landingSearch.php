@@ -114,7 +114,7 @@
 											<td>' . $foodbank->get_zip() . '</td>
                                             <td>' . $foodbank->get_city() . '</td>
                                         
-                                            <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
+                                            <td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">View</a></td>
 
                                         </a></tr>';
                             }
