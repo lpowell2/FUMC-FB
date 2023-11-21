@@ -6,12 +6,14 @@
     session_cache_expire(30);
     session_start();
 
+    //require_once("/opt/lampp/htdocs/FUMC-FB/css/base.css");
+
 
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <?php //require_once('universal.inc') ?>
+        <?php require_once('universal.inc') ?>
         <title>FUMC/HAC Food Bank Finder</title>
 
         <style>
@@ -55,7 +57,7 @@
             
 
     </style>
-        <img src="images/food_pic.png" alt="My Image">
+        <img src="images/Food_Services.png" alt="My Image">
     </head>
     <body>
         <?php //require_once('header.php') ?>
@@ -141,6 +143,7 @@
 
                     <label for="tags">Keywords (Tags)</label>
                     <input type="text" id="tags" name="tags" placeholder="Enter keywords or tags">
+               
                 </div>
                 <div class="submit-buttons">
                     <input type="submit" value="Search">

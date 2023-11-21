@@ -76,7 +76,7 @@
 
                 <?php endif ?>
 
-                <div class="dashboard-item" data-link="fBankSearch.php">
+                <div class="dashboard-item" data-link="fbankSearch.php">
                     <img src="images/search.svg">
                     <span>Find Food Bank</span>
                 </div>
