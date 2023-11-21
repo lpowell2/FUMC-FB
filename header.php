@@ -45,6 +45,8 @@
         $permission_array['apply.php'] = 0;
         $permission_array['logout.php'] = 0;
         $permission_array['register.php'] = 0;
+        $permission_array['landingsearch.php'] = 0; // set as 0 so anyone can use search
+
         //pages volunteers can view
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
@@ -59,6 +61,16 @@
         $permission_array['viewnotification.php'] = 1;
         $permission_array['volunteerreport.php'] = 1;
         $permission_array['registerfoodbank.php'] = 1 ; //standard and super admin can add food banks
+<<<<<<< Updated upstream
+=======
+        $permission_array['fbanksearch.php'] = 1;
+        $permission_array['viewfoodbank.php']=1;
+        $permission_array['registernewtag.php']=1;
+        $permission_array['deletefoodbankform.php']= 1;
+        $permission_array['importfoodbankform.php']= 1;
+        $permission_array['editfoodbank.php']=1;
+        $permission_array['manageTags.php']=1;
+>>>>>>> Stashed changes
 
         //pages only managers can view
         $permission_array['personsearch.php'] = 2;
@@ -75,6 +87,7 @@
         $permission_array['report.php'] = 2;
         $permission_array['reportspage.php'] = 2;
         $permission_array['resetpassword.php'] = 2;
+<<<<<<< Updated upstream
         $permission_array['fbanksearch.php'] = 1;
         $permission_array['viewfoodbank.php']=2;
         $permission_array['registernewtag.php']=2;
@@ -82,6 +95,9 @@
         $permission_array['importfoodbankform.php']= 3;
         $permission_array['editfoodbank.php']=2;
         $permission_array['landingsearch.php'] = 0; // set as 0 so anyone can use search
+=======
+        
+>>>>>>> Stashed changes
 
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'],"/")+1));
@@ -114,9 +130,15 @@
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
                 // echo('<li class="nav-item"><a class="nav-link active" aria-current="page" href="' . $path . 'about.php">About</a></li>');
                 // echo('<li class="nav-item"><a class="nav-link active" aria-current="page" href="' . $path . 'help.php?helpPage=' . $current_page . '" target="_BLANK">Help</a></li>');
+                
                 echo('<span class="nav-divider">|</span>');
                 echo('<span class="navbar-brand">Food Banks</span>');
                 echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'fbankSearch.php">Search</a></li>');
+                
+                //echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'registerFoodBank.php">Add Food Bank</a></li>');
+                //echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'registerNewTag.php">Add Tag</a></li>');
+
+
                 //echo('<button type="button" class="btn btn-link"><a href="' . $path . 'index.php" class="link-primary">home</a></button>');
 	        	//echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'about.php">about</a></button>');
 	            //echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'help.php?helpPage=' . $current_page . '" target="_BLANK">help</a></button>');
