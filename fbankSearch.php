@@ -24,14 +24,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php require_once('universal.inc') ?>
+        
+        <?php
+        $lang="eng";
+        if(isset($_GET["lang"])){
+            $lang=$_GET["lang"];
+        }
+        $Language=parse_ini_file("languages/$lang.ini");
+        require_once('universal.inc') 
+         ?>
         <title>Gwyneth's Gift VMS | FoodBank Search</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1>Search for Foodbanks in Area</h1>
+        <h1><?=$Language["fbSearch1"]?></h1>
         <form id="person-search" class="general" method="get">
-            <h2>Find Foodbank</h2>
+            <h2><?=$Language["fbSearch2"]?></h2>
             <?php 
                 if (isset($_GET['name']) || isset($_GET['zipCode']) || isset($_GET['tag']) || isset($_GET['county'])) {
                     require_once('include/input-validation.php');
@@ -95,22 +103,26 @@
                     echo '<h3>Search Again</h3>';
                 }
             ?>
-            <p>Use the form below to find available foodbanks in a specific area. At least one search criterion is required.</p>
-            <label for="name">Foodbank Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter the foodbank name">
+            <p><?=$Language["fbSearch3"]?></p>
+            <label for="name"><?=$Language["fbSearch4"]?></label>
+            <input type="text" id="name" name="name" placeholder=<?=$Language["fbSearch4inp"]?>>
 
-             <label for="zipCode">Zip Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
+             <label for="zipCode"><?=$Language["fbSearch5"]?></label>
+            <input type="text" id="zipCode" name="zipCode" placeholder=<?=$Language["fbSearch5inp"]?>>
 
-            <label for="tag">Tag</label>
-            <input type="text" id="tag" name="tag" placeholder="Enter the tag">
+            <label for="tag"><?=$Language["fbSearch6"]?></label>
+            <input type="text" id="tag" name="tag" placeholder=<?=$Language["fbSearch6inp"]?>>
 
-            <label for="county">County</label>
-            <input type="text" id="county" name="county" placeholder="Enter the county">
+            <label for="county"><?=$Language["fbSearch7"]?></label>
+            <input type="text" id="county" name="county" placeholder=<?=$Language["fbSearch7inp"]?>>
 
-            <input type="submit" value="Search">
-            <a class="button cancel" href="index.php">Return to Dashboard</a>
+            <input type="submit" value="<?=$Language["fbSearch8"]?>">
+            <a class="button cancel" href="index.php"><?=$Language["fbSearch9"]?></a>
+
 
         </form>
+        <a href = "?lang=eng">English</a>
+        <a href = "?lang=esp">Espanol</a>
+        <a href = "?lang=dar">&#1583;&#1585;&#1740;</a>
     </body>
 </html>
