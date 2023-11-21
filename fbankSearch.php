@@ -80,8 +80,8 @@ if ($accessLevel < 1) {
 											<td>' . $foodbank->get_zip() . '</td>
                                             <td>' . $foodbank->get_county() . '</td>
                                             <td>' . $foodbank->get_city() . '</td>
-                                            <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
-                                            <td> <a class="button" href="editfoodbank.php?id=' . $foodbank->get_id() . '">Edit</a></td>
+                                            <td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">View</a></td>
+                                            <td> <a class="button" href="editFoodBank.php?id=' . $foodbank->get_id() . '">Edit</a></td>
 
                                         </a></tr>';
                     }
@@ -149,6 +149,8 @@ if ($accessLevel < 1) {
             //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
 
         ?>
+        <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
+
 
         <input type="submit" value="Search">
         <a class="button cancel" href="index.php">Return to Dashboard</a>
