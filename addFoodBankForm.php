@@ -139,14 +139,28 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="adtl-services">Additional Services Offered</label>
             <input type="text" id="adtl-services" name="adtl-services">
 
-            <label for="tag"><em>* </em>Tag</label>
-            <select id="tag" name="tag" required>
-                <option value="">Choose an option</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-            </select>
-            <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
+         
+            <!-- Show list of Tags-->
+            <label for="tag"><em>* </em>Tags</label>
+                    <?php
+                        $con=connect();
+
+                        $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        
+                        while ($row = mysqli_fetch_array($resulting)) {
+                            echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText'];
+                        }
+                        //after submission, check if checkboxes checked, if so, add to dbFBTags
+                        //post only gets all checked 
+                        if(isset($_POST['tag'])){
+                            foreach ($_POST['tag'] as $selected) {
+                                // echo "<br>".$selected. "was checked.<br>";
+                                //TODO: Error checking to prevent repeat tags from being added
+                                mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
+                            }
+                        }
+                    ?>
+                     <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
 
         </fieldset>

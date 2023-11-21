@@ -358,8 +358,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="Other">Other</option>
 
                     </select>
-                    <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
                     </select> -->
+                   
+                    
 
 
                     <!-- Show list of Tags-->
@@ -382,6 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             }
                         }
                     ?>
+                     <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
                 </fieldset>
 
