@@ -66,6 +66,7 @@
                                             <th>County</th>
                                             <th>City</th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="standout">';
