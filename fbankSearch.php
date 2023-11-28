@@ -26,9 +26,16 @@
     <head>
         
         <?php
-        $lang="eng";
+
         if(isset($_GET["lang"])){
+            $_SESSION['lang']=$_GET["lang"];
             $lang=$_GET["lang"];
+        }
+        else if(isset($_SESSION['lang'])){
+            $lang=$_SESSION['lang'];
+        }
+        else{
+        $lang="eng";
         }
         $Language=parse_ini_file("languages/$lang.ini");
         require_once('universal.inc') 
@@ -37,9 +44,9 @@
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1><?=$Language["fbSearch1"]?></h1>
+        <h1><?=$Language["Search_for_Foodbanks_in_Area"]?></h1>
         <form id="person-search" class="general" method="get">
-            <h2><?=$Language["fbSearch2"]?></h2>
+            <h2><?=$Language["Find_Foodbank"]?></h2>
             <?php 
                 if (isset($_GET['name']) || isset($_GET['zipCode']) || isset($_GET['tag']) || isset($_GET['county'])) {
                     require_once('include/input-validation.php');
@@ -54,13 +61,17 @@
 					$zipCode = $args['zipCode'];
                     $tag = $args['tag'];
                     $county = $args['county'];
+                    $thName=$Language["Foodbank_Name"];
+                    $thZip=$Language["Zip_Code"];
+                    $thCounty=$Language["County"];
+                    $thPhone=$Language["Phone_Number"];
+                    $thCity=$Language["City"];
                     if (!($name || $zipCode || $tag || $county)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
                         $foodbanks = find_fbank2($name, $zipCode, $tag, $county);
-                        
                         require_once('include/output.php');
                         if (count($foodbanks) > 0) {
                             echo '
@@ -68,11 +79,11 @@
                                 <table class="general">
                                     <thead>
                                         <tr>
-                                            <th>name</th>
-                                            <th>Phone Number</th>
-											<th>Zip Code</th>
-                                            <th>County</th>
-                                            <th>City</th>
+                                            <th>'.$thName.'</th>
+                                            <th>'.$thPhone.'</th>
+											<th>'.$thZip.'</th>
+                                            <th>'.$thCounty.'</th>
+                                            <th>'.$thCity.'</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -86,7 +97,7 @@
 											<td>' . $foodbank->get_zip() . '</td>
                                             <td>' . $foodbank->get_county() . '</td>
                                             <td>' . $foodbank->get_city() . '</td>
-                                            <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">View</a></td>
+                                            <td> <a class="button" href="viewfoodbank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>
                                             <td> <a class="button" href="editfoodbank.php?id=' . $foodbank->get_id() . '">Edit</a></td>
 
                                         </a></tr>';
@@ -97,27 +108,27 @@
                             </div>';
 
                         } else {
-                            echo '<div class="error-toast">Your search returned no results.</div>';
+                            echo '<div class="error-toast">'.$Language["Found_No_Results"].'</div>';
                         }
                     }
                     echo '<h3>Search Again</h3>';
                 }
             ?>
-            <p><?=$Language["fbSearch3"]?></p>
-            <label for="name"><?=$Language["fbSearch4"]?></label>
-            <input type="text" id="name" name="name" placeholder=<?=$Language["fbSearch4inp"]?>>
+            <p><?=$Language["Use_the_form_below_to_find"]?></p>
+            <label for="name"><?=$Language["Foodbank_Name"]?></label>
+            <input type="text" id="name" name="name" placeholder=<?=$Language["Enter_Foodbank_Name"]?>>
 
-             <label for="zipCode"><?=$Language["fbSearch5"]?></label>
-            <input type="text" id="zipCode" name="zipCode" placeholder=<?=$Language["fbSearch5inp"]?>>
+             <label for="zipCode"><?=$Language["Zip_Code"]?></label>
+            <input type="text" id="zipCode" name="zipCode" placeholder=<?=$Language["Enter_Zip_Code"]?>>
 
-            <label for="tag"><?=$Language["fbSearch6"]?></label>
-            <input type="text" id="tag" name="tag" placeholder=<?=$Language["fbSearch6inp"]?>>
+            <label for="tag"><?=$Language["Tag"]?></label>
+            <input type="text" id="tag" name="tag" placeholder=<?=$Language["Enter_Tag"]?>>
 
-            <label for="county"><?=$Language["fbSearch7"]?></label>
-            <input type="text" id="county" name="county" placeholder=<?=$Language["fbSearch7inp"]?>>
+            <label for="county"><?=$Language["County"]?></label>
+            <input type="text" id="county" name="county" placeholder=<?=$Language["Enter_County"]?>>
 
-            <input type="submit" value="<?=$Language["fbSearch8"]?>">
-            <a class="button cancel" href="index.php"><?=$Language["fbSearch9"]?></a>
+            <input type="submit" value="<?=$Language["Search"]?>">
+            <a class="button cancel" href="index.php"><?=$Language["Return_to_Dashboard"]?></a>
 
 
         </form>

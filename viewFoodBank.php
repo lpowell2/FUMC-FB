@@ -48,17 +48,31 @@ if (isset($_GET["id"])) {
 <html>
 
 <head>
-    <?php require_once('universal.inc') ?>
+    <?php 
+    if(isset($_GET["lang"])){
+        $_SESSION['lang']=$_GET["lang"];
+        $lang=$_GET["lang"];
+    }
+    else if(isset($_SESSION['lang'])){
+        $lang=$_SESSION['lang'];
+    }
+    else{
+    $lang="eng";
+    }
+    $Language=parse_ini_file("languages/$lang.ini");
+    require_once('universal.inc') 
+     ?>
+    require_once('universal.inc') ?>
     <title>FUMC FB VMS | View Food Bank</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
-    <h1>View a Food Bank</h1>
+    <h1><?=$Language["View_Foodbank"]?></h1>
     <?php if ($foodbank) : ?>
         <main class="general">
             <fieldset>
-                <legend>Food Bank Information</legend>
+                <legend><?=$Language["Food_Bank_Information"]?></legend>
                 <?php if ($accessLevel >= 2) : ?>
                     <?php if ($accessLevel >= 3) : ?>
                         <form action=deleteFoodBankForm.php method="post">
@@ -68,11 +82,11 @@ if (isset($_GET["id"])) {
                     <?php endif ?>
                     <a class="button" href="editfoodbank.php?id=<?php echo $id ?>">Edit Food Bank</a>
                 <?php endif ?>
-                <label>Food Bank Name</label>
+                <label><?=$Language["Foodbank_Name"]?></label>
                 <!--NOTE: This was changed to fb_name, but this works for now-->
                 <p><?php echo $foodbank->get_first_name() ?> </p>
 
-                <label>Phone Number</label>
+                <label><?=$Language["Phone_Number"]?></label>
                 <p>
                     <!-- formatting phone number -->
                     <?php
@@ -81,7 +95,7 @@ if (isset($_GET["id"])) {
                     ?>
                 </p>
                 <?php if ($foodbank->get_phone2()) : ?>
-                    <label>Alternate Phone Number</label>
+                    <label><?=$Language["Alt_Phone_Number"]?></label>
                     <p>
                         <!-- formatting phone number -->
                         <?php
@@ -90,41 +104,41 @@ if (isset($_GET["id"])) {
                         ?>
                     </p>
                 <?php endif; ?>
-                <label>Website Link</label>
+                <label><?=$Language["Website_Link"]?></label>
                 <!-- Add Functionality/Field for Address -->
                 <p><?php echo $foodbank->get_website() ?> </p>
 
-                <label>Address</label>
+                <label><?=$Language["Address"]?></label>
                 <p><?php echo $foodbank->get_address() ?> </p>
                 <?php if ($foodbank->get_address2()) : ?>
-                    <label>Address 2</label>
+                    <label><?=$Language["Address"]?> 2</label>
                     <p><?php echo $foodbank->get_address2() ?> </p>
                 <?php endif; ?>
-                <label><em> </em>City</label>
+                <label><em> </em><?=$Language["City"]?></label>
                 <p><?php echo $foodbank->get_city() ?> </p>
 
-                <label><em> </em>County</label>
+                <label><em> </em><?=$Language["County"]?></label>
                 <p><?php echo $foodbank->get_county() ?> </p>
 
-                <label><em> </em>State</label>
+                <label><em><?=$Language["State"]?> </em></label>
                 <p><?php echo $foodbank->get_state() ?> </p>
 
-                <label><em> </em>Zip Code</label>
+                <label><em> </em><?=$Language["Zip_Code"]?></label>
                 <p><?php echo $foodbank->get_zip() ?> </p>
 
 
                 <!-- Decide which field for oppnotes and add getter -->
                 <?php if ($foodbank->get_notes()) : ?>
-                    <label for="opnotes">Operation Notes</label>
+                    <label for="opnotes"><?=$Language["Operation_Notes"]?></label>
                     <textarea wrap="soft" id="opnotes" name="opnotes" readonly><?php echo $foodbank->get_notes() ?></textarea>
                 <?php endif; ?>
                 <?php if ($foodbank->get_altServices()) : ?>
-                    <label for="adtl-services">Additional Services Offered</label>
+                    <label for="adtl-services"><?=$Language["Additional_Services"]?></label>
                     <p><?php echo $foodbank->get_altServices() ?> </p>
                 <?php endif; ?>
 
                 
-                <label for="tag"><em> </em>Tag</label>
+                <label for="tag"><em> </em><?=$Language["Tag"]?></label>
                 <!-- <?php
                     // include_once("sql/vms.sql");
                     // include_once('database/dbinfo.php');
@@ -198,43 +212,46 @@ if (isset($_GET["id"])) {
 
             <br>
             <fieldset>
-                <legend>Food Bank Schedule</legend>
-                <label><em> </em>Availability</label>
+                <legend><?=$Language["Schedule"]?></legend>
+                <label><em> </em><?=$Language["Availability"]?></label>
 
                 <?php if ($foodbank->get_sunday_availability_start()) : ?>
-                    <label>Sundays</label>
+                    <label><?=$Language["Sundays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_sunday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_sunday_availability_end()) ?></p>
                 <?php endif ?>
                 <?php if ($foodbank->get_monday_availability_start()) : ?>
-                    <label>Mondays</label>
+                    <label><?=$Language["Mondays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_monday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_monday_availability_end()) ?></p>
                 <?php endif ?>
                 <?php if ($foodbank->get_tuesday_availability_start()) : ?>
-                    <label>Tuedays</label>
+                    <label><?=$Language["Tuedays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_tuesday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_tuesday_availability_end()) ?></p>
                 <?php endif ?>
                 <?php if ($foodbank->get_wednesday_availability_start()) : ?>
-                    <label>Wednesdays</label>
+                    <label><?=$Language["Wednesdays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_wednesday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_wednesday_availability_end()) ?></p>
                 <?php endif ?>
                 <?php if ($foodbank->get_thursday_availability_start()) : ?>
-                    <label>Thursdays</label>
+                    <label><?=$Language["Thursdays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_thursday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_thursday_availability_end()) ?></p>
                 <?php endif ?>
                 <?php if ($foodbank->get_friday_availability_start()) : ?>
-                    <label>Fridays</label>
+                    <label><?=$Language["Fridays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_friday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_friday_availability_end()) ?></p>
                 <?php endif ?>
                 <?php if ($foodbank->get_saturday_availability_start()) : ?>
-                    <label>Saturdays</label>
+                    <label><?=$Language["Saturdays"]?></label>
                     <p><?php echo time24hTo12h($foodbank->get_saturday_availability_start()) . ' - ' . time24hTo12h($foodbank->get_saturday_availability_end()) ?></p>
                 <?php endif ?>
 
-                <label><em> </em>Frequency</label>
+                <label><em> </em><?=$Language["Frequency"]?></label>
                 <p><?php echo $foodbank->get_start_date() ?></p>
             </fieldset>
         </main>
     <?php endif; ?>
+    <a href = "?lang=eng">English</a>
+    <a href = "?lang=esp">Espanol</a>
+    <a href = "?lang=dar">&#1583;&#1585;&#1740;</a>
 </body>
 
 </html>
