@@ -119,10 +119,7 @@
             }
 
             $tag = $args['tag'];
-            if (!valueConstrainedTo($tag, ['Male', 'Female', 'Other'])) {
-                $errors = true;
-                echo 'bad tag';
-            }
+            
 
             $startDate = $args['frequency'];
 

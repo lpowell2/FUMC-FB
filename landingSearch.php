@@ -6,14 +6,13 @@
     session_cache_expire(30);
     session_start();
 
-    //require_once("/opt/lampp/htdocs/FUMC-FB/css/base.css");
-
-
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <?php require_once('universal.inc') ?>
+        <?php require_once('database/dbinfo.php')?>
         <title>FUMC/HAC Food Bank Finder</title>
 
         <style>
@@ -72,7 +71,7 @@
                     require_once('include/input-validation.php');
                     require_once('database/dbPersons.php');
                     $args = sanitize($_GET);
-                    $required = ['county', 'zipCode', 'tags'];
+                    $required = ['county', 'zipCode', 'tag'];
                     if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                         echo 'Missing expected form elements';
                     }
@@ -81,14 +80,14 @@
                     //$county = $_GET['county'];
 					$county = $args['county'];
                     $zipCode = $args['zipCode'];
-                    $tags = $args['tags'];
-                    if (!($zipCode || $county || $tags)) {
+                    $tag = $args['tag'];
+                    if (!($zipCode || $county || $tag)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
                        // var_dump($county);
-                        $foodbanks = find_fbank2($name,$zipCode, $tags, $county);
+                        $foodbanks = find_fbank2($name,$zipCode, $tag, $county);
                         //var_dump($county);w
                         //var_dump($tags);
                         //var_dump($zipCode);
@@ -141,9 +140,54 @@
                     <label for="zipCode">Zip Code</label>
                     <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
 
-                    <label for="tags">Keywords (Tags)</label>
-                    <input type="text" id="tags" name="tags" placeholder="Enter keywords or tags">
-               
+                   
+                    <label for="tag"><em>* </em>Tags</label>
+                    <?php
+                        $con=connect();
+
+                        $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        $tagValue;
+                        
+                        echo "<html>";
+                        echo "<body>";
+                        echo "<select id='tag' name='tag'>";
+
+                        if(($resulting->num_rows) <= 0){
+
+                            echo '<option disabled>No Tags Available</option>';
+
+                        }else{
+
+                            echo '<option value="">Select A Tag</option>';
+
+                            while ($row = $resulting->fetch_assoc()) {
+                                $id = $row['tagID'];
+                                $tagValue = $row['tagText']; 
+                                echo '<option value="'.htmlspecialchars($tagValue).'">'.htmlspecialchars($tagValue).'</option>';
+                            }
+
+                            //if tag value is not selected
+                          if(!$tagValue){
+                            echo "Error: No tag selected.";
+                          }
+
+                        }
+
+                        
+                          echo "</select>";
+                          echo "</body>";
+                          echo "</html>";
+
+                         
+
+                        $selectedTag = filter_input(INPUT_POST, 'tag');
+
+
+                          //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
+
+                    ?>
+
+
                 </div>
                 <div class="submit-buttons">
                     <input type="submit" value="Search">
