@@ -14,7 +14,7 @@
      $loggedIn = true;
      $accessLevel = $_SESSION['access_level'];
  }
- if ($accessLevel < 3) {
+ if ($accessLevel < 1) {
     header('Location: login.php');
     echo '<div class="error-toast"><p> Improper access level </p> </div>';
     die();

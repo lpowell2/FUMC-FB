@@ -686,7 +686,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
       
         if ($zipcode) {
           if (!$first) {
-            $where .= ' and ';
+            //$where .= ' and ';
           }
           $where .= "zip like '%$zipcode%'";
           //var_dump($where);
