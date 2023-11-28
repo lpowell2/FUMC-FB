@@ -8,21 +8,22 @@
  * @author Sarah Harrington and Nick Annunziata
  */
 include_once('dbinfo.php');
-include_once(dirname(__FILE__).'/../domain/Tag.php');
+include_once(dirname(__FILE__) . '/../domain/Tag.php');
 
 
-function make_a_tag($result_row) {
-	/*
+function make_a_tag($result_row)
+{
+    /*
 	 ($f, $l, $v, $a, $c, $s, $z, $p1, $p1t, $p2, $p2t, $e, $ts, $comp, $cam, $tran, $cn, $cpn, $rel,
 			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
 			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass)
 	 */
 
     $theTag = new Tag(
-                    $result_row['id'],
+        $result_row['tagID'],
 
-                    $result_row['tag']
-                );   
+        $result_row['tagText']
+    );
     return $theTag;
 }
 
@@ -32,7 +33,8 @@ function make_a_tag($result_row) {
  * add a person to dbPersons table: if already there, return false
  * essentially creating a new Person object
  */
-function create_tag($tag) {
+function create_tag($tag)
+{
     $connection = connect();
     $tagText = $tag;
     $query = "
@@ -49,29 +51,31 @@ function create_tag($tag) {
     return $id;
 }
 
-function make_tag($result_row){
-
-
+function make_tag($result_row)
+{
 }
 
-function add_tag($tag) {
+function add_tag($tag)
+{
 
     //id will autoincrement in table
-   // $id;
-    
+    // $id;
+
     if (!$tag instanceof Tag)
         die("Error: add_tag type mismatch, not an instance of Tag");
-    $con=connect();
+    $con = connect();
     $query = "SELECT * FROM dbTags WHERE tagID = '" . $tag->get_id() . "'";
-    $result = mysqli_query($con,$query);
+    $result = mysqli_query($con, $query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_query($con,'INSERT INTO dbTags VALUES("' .
-            //$id. '","' .
-            $tag->get_id(). '","' .
-            $tag->get_tag() . 
-            '");'
-        );							
+        mysqli_query(
+            $con,
+            'INSERT INTO dbTags VALUES("' .
+                //$id. '","' .
+                $tag->get_id() . '","' .
+                $tag->get_tag() .
+                '");'
+        );
         mysqli_close($con);
         return true;
     }
@@ -84,16 +88,17 @@ function add_tag($tag) {
  * remove a tag from dbTags table.  If already there, return false
  */
 
-function remove_tag($id) {
-    $con=connect();
-    $query = 'SELECT * FROM dbTags WHERE id = "' . $id . '"';
-    $result = mysqli_query($con,$query);
+function remove_tag($id)
+{
+    $con = connect();
+    $query = 'SELECT * FROM dbTags WHERE tagID = "' . $id . '"';
+    $result = mysqli_query($con, $query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);
         return false;
     }
-    $query = 'DELETE FROM dbTags WHERE id = "' . $id . '"';
-    $result = mysqli_query($con,$query);
+    $query = 'DELETE FROM dbTags WHERE tagID = "' . $id . '"';
+    $result = mysqli_query($con, $query);
     mysqli_close($con);
     return true;
 }
@@ -103,10 +108,11 @@ function remove_tag($id) {
  * if not in table, return false
  */
 
-function retrieve_tag($id) {
-    $con=connect();
-    $query = "SELECT * FROM dbTags WHERE id = '" . $id . "'";
-    $result = mysqli_query($con,$query);
+function retrieve_tag($id)
+{
+    $con = connect();
+    $query = "SELECT * FROM dbTags WHERE id = " . $id;
+    $result = mysqli_query($con, $query);
     if (mysqli_num_rows($result) !== 1) {
         mysqli_close($con);
         return false;
@@ -114,6 +120,28 @@ function retrieve_tag($id) {
     $result_row = mysqli_fetch_assoc($result);
     // var_dump($result_row);
     $theTag = make_a_tag($result_row);
-//    mysqli_close($con);
+    //    mysqli_close($con);
     return $theTag;
+}
+
+function retrieve_tags()
+{
+    $query = "SELECT * FROM dbTags";
+    $connection = connect();
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+
+    $raw = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $tags = [];
+
+    foreach ($raw as $row) {
+        $tags[] = make_a_tag($row);
+    }
+
+    mysqli_close($connection);
+    return $tags;
 }
