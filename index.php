@@ -9,7 +9,7 @@
         if (isset($_SESSION['change-password'])) {
             header('Location: changePassword.php');
         } else {
-            header('Location: login.php');
+            header('Location: landingSearch.php');
         }
         die();
     }
