@@ -142,6 +142,7 @@ function buildSelect($name, $disabled = false, $selected = null)
 
 
             <label for="tag"><em>* </em>Tags</label>
+            <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
             <?php
                 $con = connect();
 
