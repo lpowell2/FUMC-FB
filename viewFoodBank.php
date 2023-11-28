@@ -90,9 +90,6 @@ if (isset($_GET["id"])) {
                         ?>
                     </p>
                 <?php endif; ?>
-                <label>Website Link</label>
-                <!-- Add Functionality/Field for Address -->
-                <p><?php echo $foodbank->get_website() ?> </p>
 
                 <label>Address</label>
                 <p><?php echo $foodbank->get_address() ?> </p>
