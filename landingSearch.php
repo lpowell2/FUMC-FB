@@ -123,11 +123,13 @@
                                             <td>' . $foodbank->get_first_name(). '</td>
                                             <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
 											<td>' . $foodbank->get_zip() . '</td>
-                                            <td>' . $foodbank->get_city() . '</td>
-                                        
-                                            <td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">View</a></td>
+                                            <td>' . $foodbank->get_city() . '</td>'; 
 
-                                        </a></tr>';
+                                            if (isset($_SESSION['id']) || isset($_SESSION['access_level'])){
+                                               echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">View</a></td>';
+                                            }
+
+                                        echo '</a></tr>';
                             }
                             echo '
                                     </tbody>
