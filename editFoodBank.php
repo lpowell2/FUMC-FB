@@ -354,7 +354,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="tag"><em>* </em>Tags</label>
                     <?php
 
-                        
                         $con = connect();
 
                         $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
