@@ -352,6 +352,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php endif; ?>
 
                     <label for="tag"><em>* </em>Tags</label>
+                    <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
                     <?php
 
                         $con = connect();
