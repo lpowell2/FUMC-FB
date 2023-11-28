@@ -7,14 +7,15 @@ $times = [
     '11:59 PM'
 ];
 $values = [
-    "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", 
-    "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", 
-    "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", 
+    "00:00", "01:00", "02:00", "03:00", "04:00", "05:00",
+    "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
+    "12:00", "13:00", "14:00", "15:00", "16:00", "17:00",
     "18:00", "19:00", "20:00", "21:00", "22:00", "23:00",
     "23:59"
 ];
 
-function buildSelect($name, $disabled=false, $selected=null) {
+function buildSelect($name, $disabled = false, $selected = null)
+{
     global $times;
     global $values;
     if ($disabled) {
@@ -139,33 +140,57 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="adtl-services">Additional Services Offered</label>
             <input type="text" id="adtl-services" name="adtl-services">
 
-         
-            <!-- Show list of Tags-->
-            <label for="tag"><em>* </em>Tags</label>
-                    <?php
-                        $con=connect();
 
-                        $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
-                        
-                        while ($row = mysqli_fetch_array($resulting)) {
-                            echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText'];
-                        }
-                        //after submission, check if checkboxes checked, if so, add to dbFBTags
-                        //post only gets all checked 
-                        if(isset($_POST['tag'])){
-                            foreach ($_POST['tag'] as $selected) {
-                                // echo "<br>".$selected. "was checked.<br>";
-                                //TODO: Error checking to prevent repeat tags from being added
-                                mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
-                            }
-                        }
-                    ?>
-                     <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
+            <label for="tag"><em>* </em>Tags</label>
+            <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
+            <?php
+                $con = connect();
+
+                $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                $tagValue;
+
+                echo "<html>";
+                echo "<body>";
+                echo "<select id='tag' name='tag'>";
+
+                if (($resulting->num_rows) <= 0) {
+
+                    echo '<option disabled>No Tags Available</option>';
+                } else {
+
+                    echo '<option value="">Select A Tag</option>';
+
+                    while ($row = $resulting->fetch_assoc()) {
+                        $id = $row['tagID'];
+                        $tagValue = $row['tagText'];
+                        echo '<option value="' . htmlspecialchars($tagValue) . '">' . htmlspecialchars($tagValue) . '</option>';
+                    }
+
+                    //if tag value is not selected
+                    if (!$tagValue) {
+                        echo "Error: No tag selected.";
+                    }
+                }
+
+
+                echo "</select>";
+                echo "</body>";
+                echo "</html>";
+
+
+
+                $selectedTag = filter_input(INPUT_POST, 'tag');
+
+
+                //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
+
+            ?>
+            <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
 
         </fieldset>
 
-    
+
         <fieldset>
             <legend>Food Bank Schedule</legend>
 
@@ -173,7 +198,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
             <p>Please enter the days, times, and frequency of the food bank.</p>
 
-            
+
             <label><em>* </em>Availability</label>
             <p>Enter the days and times the food bank is available each week.</p>
 
@@ -181,7 +206,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-sundays" name="available-sundays" type="checkbox" >
+                        <input id="available-sundays" name="available-sundays" type="checkbox">
                         <label for="available-sundays">Sundays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -196,7 +221,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-mondays" name="available-mondays" type="checkbox" >
+                        <input id="available-mondays" name="available-mondays" type="checkbox">
                         <label for="available-mondays">Mondays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -211,7 +236,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-tuesdays" name="available-tuesdays" type="checkbox" >
+                        <input id="available-tuesdays" name="available-tuesdays" type="checkbox">
                         <label for="available-tuesdays">Tuesdays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -226,7 +251,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-wednesdays" name="available-wednesdays" type="checkbox" >
+                        <input id="available-wednesdays" name="available-wednesdays" type="checkbox">
                         <label for="available-wednesdays">Wednesdays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -241,7 +266,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-thursdays" name="available-thursdays" type="checkbox" >
+                        <input id="available-thursdays" name="available-thursdays" type="checkbox">
                         <label for="available-thursdays">Thursdays</label>
                     </p>
                     <p>From</p>
@@ -256,7 +281,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-fridays" name="available-fridays" type="checkbox" >
+                        <input id="available-fridays" name="available-fridays" type="checkbox">
                         <label for="available-fridays">Fridays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -271,7 +296,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
                 <div class="availability-day">
                     <p class="availability-day-header">
-                        <input id="available-saturdays" name="available-saturdays" type="checkbox" >
+                        <input id="available-saturdays" name="available-saturdays" type="checkbox">
                         <label for="available-saturdays">Saturdays</label>
                     </p>
                     <p><em class="hidden">* </em>From</p>
@@ -288,11 +313,11 @@ function buildSelect($name, $disabled=false, $selected=null) {
             </div>
 
         </fieldset>
-        
+
 
         <p>By pressing Submit below, the food bank and assciated information you have input will be added to the system.</p>
         <input type="submit" name="addfb-form" value="Submit">
     </form>
-        <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
-    
+    <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
+
 </main>
