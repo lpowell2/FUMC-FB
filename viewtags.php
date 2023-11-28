@@ -61,8 +61,8 @@ while ($row = mysqli_fetch_array($resulting)) {
                     <?php 
                         foreach($tags as $tag){
                             echo('<tr><td>'.$tag['tagText'].'</td>
-                            <td> <form action=deletetag.php method="post">
-                            <input type="hidden" name="id" value="'.$tag['tagText'].'">
+                            <td> <form action=deletetagform.php method="post">
+                            <input type="hidden" name="id" value="'.$tag['tagID'].'">
                             <input type="submit" class="button" value="Delete Food Bank">
                         </form> </td>
                             </tr>');

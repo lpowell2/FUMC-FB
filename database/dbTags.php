@@ -111,7 +111,7 @@ function remove_tag($id)
 function retrieve_tag($id)
 {
     $con = connect();
-    $query = "SELECT * FROM dbTags WHERE id = " . $id;
+    $query = "SELECT * FROM dbTags WHERE tagID = " . $id;
     $result = mysqli_query($con, $query);
     if (mysqli_num_rows($result) !== 1) {
         mysqli_close($con);
