@@ -61,7 +61,17 @@
     <body>
         <?php //require_once('header.php') ?>
         <div class="headings-all">
-        <h1>Search for Foodbanks in Area</h1>
+        
+                <h1>Search for Foodbanks in Area</h1> 
+                
+                    <?php
+                        //if not logged in, display log in button
+                        if (!isset($_SESSION['id']) && !isset($_SESSION['access_level'])) {
+                            echo '<a class="button" href="index.php">Log In</a>';
+                        }       
+                    ?>
+        
+        
         </div>
         <form id="person-search" class="general" method="get">
             <div class="headings-all">
