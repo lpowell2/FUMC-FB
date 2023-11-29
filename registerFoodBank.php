@@ -54,7 +54,7 @@
             // }
 
             $required = array(
-                'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
+                'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tags[]',
                 'available-sundays', 'available-mondays', 'available-tuesdays', 'available-wednesday', 'available-thursdays', 'available-fridays',
                 'available-saturdays' 
             );
@@ -118,7 +118,12 @@
                 $altServices = $args['adtl-services'];
             }
 
-            $tag = $args['tag'];
+            //array of tag ids selected 
+            if(isset($_POST['tags[]'])){
+                $tags = implode(' ',$_POST['tags[]']);
+
+            }
+            
             
 
             $startDate = $args['frequency'];
@@ -204,7 +209,7 @@
 
             $email=$fbName . $phone . $address;
 
-            // need to incorporate availability here
+            // make a new Person object to be added to dbPersons
             $newperson = new Person($fbName, " ", 'portland', 
                 $address, $city, $state, $zipcode, "",
                 $phone, null, null, null, $email, 
@@ -218,10 +223,24 @@
                 $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
                 $saturdaysStart, $saturdaysEnd, 0, "", 
 
-                $address2, $county, $website, $altServices, $tag
+                $address2, $county, $website, $altServices
             );
 
             $result = add_Person($newperson);
+
+            //if add food bank successful, connect tags to new food bank id
+            if($result){
+                foreach($tags as $tag){
+
+                    //pass new food bank id and current tag id to joining function
+                    $tagsResult = join_fbTags($newperson->get_id(), $tag);
+
+                    if(!$tagsResult){
+                        echo "Error adding tag " . $tag .".";
+                    }
+
+                }
+            }
 
             if (!$result) {
                 echo '<div class="error-toast"><p>Failed to add food bank.</p></div>';

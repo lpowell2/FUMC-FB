@@ -36,7 +36,7 @@ class Person {
 	private $zip;    // zip code - integer
 	private $website;
 	private $altServices;
-	private $tag;
+	//private $tags[];
 
   	private $profile_pic; // image link
 	private $phone1;   // primary phone -- home, cell, or work
@@ -98,7 +98,7 @@ class Person {
 			$bd, $sd, $hdyh, $notes, $pass,
 			$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
 			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender, 
-			$a2, $co, $w, $as, $ta) {
+			$a2, $co, $w, $as) {
 
 		$this->id = $e;
 		$this->start_date = $sd;
@@ -188,7 +188,7 @@ class Person {
 		$this->address2 = $a2;
 		$this->county = $co;
 		$this->altServices = $as;
-		$this->tag = $ta;
+		//$this->tag = $ta;
 	}
 
 
@@ -250,7 +250,7 @@ class Person {
 	}
 
 	function get_tag() {
-		return $this->tag;
+		//return $this->tag;
 	}
 
   function get_profile_pic() {

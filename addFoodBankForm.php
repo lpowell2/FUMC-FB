@@ -141,49 +141,30 @@ function buildSelect($name, $disabled = false, $selected = null)
             <input type="text" id="adtl-services" name="adtl-services">
 
 
-            <label for="tag"><em>* </em>Tags</label>
-            <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
+            <label for="tags[]"><em>* </em>Tags</label>
             <?php
                 $con = connect();
 
                 $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                $id;
                 $tagValue;
-
-                echo "<html>";
-                echo "<body>";
-                echo "<select id='tag' name='tag'>";
 
                 if (($resulting->num_rows) <= 0) {
 
-                    echo '<option disabled>No Tags Available</option>';
+                    echo '<p><i>No Tags Available: Please add a new tag and refresh this page.</i></p>'
+                    ;
                 } else {
-
-                    echo '<option value="">Select A Tag</option>';
 
                     while ($row = $resulting->fetch_assoc()) {
                         $id = $row['tagID'];
-                        $tagValue = $row['tagText'];
-                        echo '<option value="' . htmlspecialchars($tagValue) . '">' . htmlspecialchars($tagValue) . '</option>';
-                    }
-
-                    //if tag value is not selected
-                    if (!$tagValue) {
-                        echo "Error: No tag selected.";
+                        $tagValue = $row['tagText'];                   
+                        echo '<label for="tags[]">';
+                        //pass the tag id to the array of tag options selected
+                        echo '<input type="checkbox" name="tags" id="tags[]" value="' . $id .'"/>';  
+                        echo $tagValue;   
+                        echo '</label>';              
                     }
                 }
-
-
-                echo "</select>";
-                echo "</body>";
-                echo "</html>";
-
-
-
-                $selectedTag = filter_input(INPUT_POST, 'tag');
-
-
-                //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
-
             ?>
             <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 

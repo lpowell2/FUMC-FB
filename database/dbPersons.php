@@ -88,8 +88,7 @@ function add_person($person) {
             $person->get_address2() . '","' .
             $person->get_county() . '","' .
             $person->get_website() . '","' .
-            $person->get_altServices() . '","' .
-            $person->get_tag() . 
+            $person->get_altServices() . 
 
             '");'
         );							
@@ -100,7 +99,33 @@ function add_person($person) {
     return false;
 }
 
+/*
+* connect a food bank to associated tags
+*/
 
+function join_fbTags($fbid, $tagid){
+
+    $con=connect();
+    $query = 'SELECT * FROM dbPersons WHERE id = "' . $fbid . '"';
+    $result = mysqli_query($con,$query);
+
+    //if no food bank with the passed id
+    if ($result == null || mysqli_num_rows($result) == 0) {
+        mysqli_close($con);
+        return false;
+    }
+
+    $query = mysqli_query($con,'INSERT INTO dbFBTags VALUES("' .
+        $fbid . '","' .
+        $tagid .
+        
+        '");'
+    );
+
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+    return true;
+}
 
 
 /*
