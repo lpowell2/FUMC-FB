@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // }
 
     $required = array(
-        'fb-name', 'phone', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
+        'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
         'available-sundays', 'available-mondays', 'available-tuesdays', 'available-wednesday', 'available-thursdays', 'available-fridays',
         'available-saturdays'
     );
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'bad phone';
     }
 
-   
+    $website = $args['website'];
 
     $address = $args['address'];
 
@@ -210,12 +210,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // $result = update_food_bank($id,$fbName,$address,$city,$state,$zipcode,$phone,$startDate,$notes,$sundaysStart,$sundaysEnd,$mondaysStart,$mondaysEnd,$tuesdaysStart,$tuesdaysEnd,$wednesdaysStart,$wednesdaysEnd,$thursdaysStart,$thursdaysEnd,$fridaysStart,$fridaysEnd,$saturdaysStart,$saturdaysEnd,null,$address2,$county,$website,$altServices);
-    $result = update_person_profile($id, $fbName,NULL, '', $address, $city, $state, $zipcode, $id, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, null, $altServices, $startDate, $notes);
+    $result = update_person_profile($id, $fbName,NULL, '', $address, $city, $state, $zipcode, $id, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, $website, $altServices, $startDate, $notes);
     if (!$result) {
         echo '<div class="error-toast"><p>Failed to  update food bank.</p></div>';
     } else {
         echo '<div class="happy-toast"<p>Food bank updated successfully!</p></div>';
-        Header("refresh:2;url=viewfoodbank.php?id=" . $id);
+        // Header("refresh:2;url=viewfoodbank.php?id=" . $id);
     }
 }
 ?>
@@ -293,7 +293,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="phone"><em>* </em>Phone Number</label>
                     <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Ex. (555) 555-5555" value="<?php echo '(' . substr($foodbank->get_phone1(), 0, 3) . ') ' . substr($foodbank->get_phone1(), 3, 3) . '-' . substr($foodbank->get_phone1(), 6); ?>">
 
-    
+                    <label for="website"><em>* </em>Website Link</label>
+                    <input type="text" id="website" name="website" required placeholder="Enter the food bank website link" value="<?php echo $foodbank->get_website(); ?>">
+
                     <label for="address"><em>* </em>Address</label>
                     <input type="text" id="address" name="address" required placeholder="Enter the food bank address" value=<?php echo $foodbank->get_address(); ?>>
 
@@ -360,43 +362,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo "<html>";
                         echo "<body>";
-                        echo "<select id='tag' name='tag'>";
 
                         if (($resulting->num_rows) <= 0) {
 
-                            echo '<option disabled>No Tags Available</option>';
-                        } else {
-
-                            if($foodbank->get_tag()){
-                            
-                                echo '<option value="' . $foodbank->get_tag() . '">' . $foodbank->get_tag() . '</option>';
-
+                            echo '<p>No Tags Available</p>';
+                        } else {                                                        
+                            while ($row = mysqli_fetch_array($resulting)) {
+                                echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText']."<br>";
                             }
-
-                            echo '<option disabled value="">----Select A Tag----</option>';
-
-                            while ($row = $resulting->fetch_assoc()) {
-                                $id = $row['tagID'];
-                                $tagValue = $row['tagText'];
-                                echo '<option value="' . htmlspecialchars($tagValue) . '">' . htmlspecialchars($tagValue) . '</option>';
+                            //after submission, check if checkboxes checked, if so, add to dbFBTags
+                            //post only gets all checked 
+                            if(isset($_POST['tag'])){
+                                foreach ($_POST['tag'] as $selected) {
+                                    //checks if tag already exists on this 
+                                    $sq="SELECT * FROM dbFBTags WHERE id='$selected' AND userID='$id'";
+                                    if ($result=mysqli_query($con,$sq)){
+                                        //if the result returns anything
+                                        if(mysqli_num_rows($result)>0){
+                                            //echo "<br><p>tag ".$selected." already exists</p>";
+                                        } else{
+                                            echo "<br><p>tag added</p>";
+                                            mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
+                                        }
+                                    }
+                                }
                             }
-
-                            //if tag value is not selected
-                            if (!$tagValue) {
-                                echo "Error: No tag selected.";
-                            }
-                            
                         }
 
-                        echo "</select>";
                         echo "</body>";
                         echo "</html>";
 
+                        //not sure if this is necessary
                         $selectedTag = filter_input(INPUT_POST, 'tag');
-
-                        //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
-
                     ?>
+                    
+                    <p> <i> If you wish to add to the list of possible tags to add, click below. </i></p>
                     <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
                 </fieldset>
