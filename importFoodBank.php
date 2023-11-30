@@ -8,7 +8,10 @@
         /* reading in file */
         if($_FILES["file"]["size"]>0){
             $file = fopen($filename,"r");
+            $num = 0;
             while(($getData = fgetcsv($file,10000000,","))!==FALSE){
+                $num = $num +1;
+                if($num > 1){
                     $day = $getData[10];
                     /* getting rid of (,), and - in phone number field */
                     $arry=array("(",")","-"," ");
@@ -19,7 +22,6 @@
                     $notes=str_replace("'","",$getData[8]);
                     $namephone=$parsename . $phone;
                     $id=$namephone . $getData[1];
-                    var_dump($id);
 
                     /* checking if id is in database */
                     $sql = "SELECT id FROM dbpersons WHERE id='$id'";
@@ -108,8 +110,30 @@
                                 echo "foodbank not added";
                         }
                     }
+
+                    $tagText = $getData[19];
+                     /* checking if tagID is in database */
+                     $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText'";
+                     $tagID = mysqli_query($con,$sql);
+
+                     if(mysqli_num_rows($tagID) >0){
+                        $row = mysqli_fetch_row($tagID);
+                        $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
+                        $tagfbresult = mysqli_query($con,$sql);
+                     }else{
+                        $sql = "INSERT into dbtags (tagText) values ('".$tagText."')";
+                        $tagresult = mysqli_query($con,$sql);
+
+                        $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText'";
+                        $tagID = mysqli_query($con,$sql);
+                        $row = mysqli_fetch_row($tagID);
+
+                        $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
+                        $tagfbresult = mysqli_query($con,$sql);
+                     }
+                    
                     /* pop up results */
-                    if(!isset($result)){
+                    if(!isset($result)&& !isset($tagresult)){
                         echo "<script type=\"text/javascript\">
                         alert(\"Invalid File:Please Upload CSV File.\");
                         window.location = \"index.php\"
@@ -121,6 +145,7 @@
                         window.location = \"index.php\"
                         </script>";
                     }
+                }
             }
             fclose($file); 
         }
