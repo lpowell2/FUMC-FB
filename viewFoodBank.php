@@ -2,6 +2,10 @@
 <?php
 include_once('database/dbPersons.php');
 require_once('include/output.php');
+require_once('universal.inc');
+require_once('header.php');
+
+
 session_cache_expire(30);
 session_start();
 
@@ -48,12 +52,10 @@ if (isset($_GET["id"])) {
 <html>
 
 <head>
-    <?php require_once('universal.inc') ?>
     <title>FUMC FB VMS | View Food Bank</title>
 </head>
 
 <body>
-    <?php require_once('header.php') ?>
     <h1>View a Food Bank</h1>
     <?php if ($foodbank) : ?>
         <main class="general">

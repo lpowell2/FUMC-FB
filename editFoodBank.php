@@ -1,5 +1,10 @@
 <!-- Add check for logged in and privleges -->
 <?php
+
+session_cache_expire(30);
+session_start();
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 include_once('database/dbPersons.php');
 require_once('include/output.php');
 require_once('domain/Person.php');
@@ -7,11 +12,6 @@ require_once('include/input-validation.php');
 require_once('universal.inc');
 require_once('header.php');
 
-session_cache_expire(30);
-session_start();
-
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
 
 $loggedIn = false;
 $accessLevel = 0;
