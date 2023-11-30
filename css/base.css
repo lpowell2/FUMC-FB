@@ -918,11 +918,12 @@ img.profile-pic {
 
 /*Tags*/
 .tag-btn{
-    
-    display: inline-block;
-    border-radius: 50%;
+    border:none;
+    padding:20px;
+    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
+    border-radius: 50%;
     white-space: nowrap;
     width: fit-content;
 
