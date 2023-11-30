@@ -1,16 +1,15 @@
 <!-- Add check for logged in and privleges -->
 <?php
+session_cache_expire(30);
+session_start();
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+
 include_once('database/dbPersons.php');
 require_once('include/output.php');
 require_once('universal.inc');
 require_once('header.php');
 
-
-session_cache_expire(30);
-session_start();
-
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
 
 $loggedIn = false;
 $accessLevel = 0;
@@ -187,10 +186,11 @@ if (isset($_GET["id"])) {
                 <p><?php echo $foodbank->get_start_date() ?></p>
             </fieldset>
         </main>
+    <a href = "?lang=eng&id=<?php echo $id?>">English</a>
+    <a href = "?lang=esp&id=<?php echo $id?>">Espanol</a>
+    <a href = "?lang=dar&id=<?php echo $id?>">&#1583;&#1585;&#1740;</a>
     <?php endif; ?>
-    <a href = "?lang=eng">English</a>
-    <a href = "?lang=esp">Espanol</a>
-    <a href = "?lang=dar">&#1583;&#1585;&#1740;</a>
+
 </body>
 
 </html>
