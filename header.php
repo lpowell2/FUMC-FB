@@ -13,13 +13,14 @@
     <?PHP
     //Log-in security
     //If they aren't logged in, display our log-in form.
+    //TODO: Need to change gwyneth's gifts to FUMC
     $showing_login = false;
     if (!isset($_SESSION['logged_in'])) {
         echo '
         <nav>
             <span id="nav-top">
                 <span class="logo">
-                    <img src="images/gwynethsgift.png">
+                    <img src="images/fumc-logo.png">
                     <span id="vms-logo">VMS</span>
                 </span>
                 <img id="menu-toggle" src="images/menu.png">
@@ -30,7 +31,6 @@
             </ul>
         </nav>';
     } else if ($_SESSION['logged_in']) {
-
         /*         * Set our permission array.
          * anything a guest can do, a volunteer and manager can also do
          * anything a volunteer can do, a manager can do.
@@ -45,6 +45,7 @@
         $permission_array['apply.php'] = 0;
         $permission_array['logout.php'] = 0;
         $permission_array['register.php'] = 0;
+        
         //pages volunteers can view
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
@@ -58,6 +59,16 @@
         $permission_array['viewprofile.php'] = 1;
         $permission_array['viewnotification.php'] = 1;
         $permission_array['volunteerreport.php'] = 1;
+        $permission_array['registerfoodbank.php'] = 1 ; //standard and super admin can add food banks
+        $permission_array['fbanksearch.php'] = 1;
+        $permission_array['viewfoodbank.php']=1;
+        $permission_array['registernewtag.php']=1;
+        $permission_array['viewtags.php']=1;
+        $permission_array['deletetag.php']=1;
+        $permission_array['deletefoodbankform.php']= 1;
+        $permission_array['importfoodbankform.php']= 1;
+        $permission_array['editfoodbank.php']=1;
+
         //pages only managers can view
         $permission_array['personsearch.php'] = 2;
         $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
@@ -73,6 +84,8 @@
         $permission_array['report.php'] = 2;
         $permission_array['reportspage.php'] = 2;
         $permission_array['resetpassword.php'] = 2;
+        
+        $permission_array['landingsearch.php'] = 0; // set as 0 so anyone can use search
 
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strpos($_SERVER['PHP_SELF'],"/")+1));
@@ -97,28 +110,25 @@
         }
         else {
             echo('<nav>');
-            echo('<span id="nav-top"><span class="logo"><a class="navbar-brand" href="' . $path . 'index.php"><img src="images/gwynethsgift.png"></a>');
-            echo('<a class="navbar-brand" id="vms-logo">VMS</a></span><img id="menu-toggle" src="images/menu.png"></span>');
+            echo('<span id="nav-top"><span class="logo"><a class="navbar-brand" href="' . $path . 'index.php"><img src="images/Food_Services.png"></a>');
+            echo('<a class="navbar-brand" id="vms-logo"></a></span><img id="menu-toggle" src="images/menu.png"></span>');
             echo('<ul>');
-            //echo " <br><b>"."Gwyneth's Gift Homebase"."</b>|"; //changed: 'Homebase' to 'Gwyneth's Gift Homebase'
+            
 	        if ($_SESSION['access_level'] >= 1) {
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
                 // echo('<li class="nav-item"><a class="nav-link active" aria-current="page" href="' . $path . 'about.php">About</a></li>');
                 // echo('<li class="nav-item"><a class="nav-link active" aria-current="page" href="' . $path . 'help.php?helpPage=' . $current_page . '" target="_BLANK">Help</a></li>');
                 echo('<span class="nav-divider">|</span>');
-                echo('<span class="navbar-brand">Events</span>');
-                echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'calendar.php">Calendar</a></li>');
-                echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'eventSearch.php">Search</a></li>');
+                echo('<span class="navbar-brand">Food Banks</span>');
+                echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'fbankSearch.php">Search</a></li>');
                 //echo('<button type="button" class="btn btn-link"><a href="' . $path . 'index.php" class="link-primary">home</a></button>');
 	        	//echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'about.php">about</a></button>');
 	            //echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'help.php?helpPage=' . $current_page . '" target="_BLANK">help</a></button>');
 	            //echo(' | calendars: <a href="' . $path . 'calendar.php?venue=bangor'.''.'">Bangor, </a>');
 	            //echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'calendar.php?venue=portland'.''.'">calendar</a></button>'); //added before '<a': |, changed: 'Portland' to 'calendar'
-	        }
-	        if ($_SESSION['access_level'] >= 2) {
 	            //echo('<br>master schedules: <a href="' . $path . 'viewSchedule.php?venue=portland'."".'">Portland, </a>');
 	            //echo('<a href="' . $path . 'viewSchedule.php?venue=bangor'."".'">Bangor</a>');
-	            echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'addEvent.php">Add</a></li>');
+	            echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'registerFoodBank.php">Add</a></li>');
 	            echo('<span class="nav-divider">|</span>');
 	            echo('<span class="navbar-brand">Volunteers</span>');
                 echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'personSearch.php">Search</a></li>

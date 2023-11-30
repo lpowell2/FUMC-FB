@@ -43,7 +43,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: #ffffff;
+    --page-background-color: #D0D4C8 ;
     --page-font-color: #333333;
     --inactive-font-color: #d0d0d0;
     --inactive-background-color: #f0f0f0;
@@ -60,9 +60,10 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #2f4159;
-    --accent-color: #f5c16e;
-    --secondary-accent-color: #f6a4b5;
+    --main-color: #25408f;
+    --accent-color: #009ac6;
+    --secondary-accent-color: #f6871f;
+    --tertiary-accent-color:#5a8da4;
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
@@ -221,7 +222,7 @@ main:not(.login):not(.calendar-view):not(.dashboard) {
 
 /* Form Controls */
 
-input[type=text], input[type=password], input[type=date], input[type=email], input[type=number], 
+input[type=text], input[type=textarea], input[type=password], input[type=date], input[type=email], input[type=number], 
 input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     border: var(--text-field-border);
     border-radius: 0;
@@ -232,16 +233,17 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     scroll-margin: 7.5rem;
 }
 
-input[type=text]:disabled, input[type=password]:disabled, input[type=date]:disabled, input[type=number]:disabled,
+input[type=text]:disabled, input[type=textarea]:disabled, input[type=password]:disabled, input[type=date]:disabled, input[type=number]:disabled,
 input[type=email]:disabled, input[type=tel]:disabled, select:disabled, textarea:disabled,
 .pseudo-input-disabled {
     background-color: var(--inactive-background-color);
     color: var(--inactive-font-color);
 }
 
-input[type=text]:focus, input[type=password]:active, input[type=email]:focus, input[type=date]:focus, input[type=tel]:focus, input[type=number]:focus, select:active, textarea:focus {
+input[type=text]:focus, input[type=textarea]:focus, input[type=password]:active, input[type=email]:focus, input[type=date]:focus, input[type=tel]:focus, input[type=number]:focus, select:active, textarea:focus {
     outline: var(--text-field-border);
 }
+
 
 input[type=submit], button, .button {
     color: var(--button-font-color);
@@ -518,7 +520,11 @@ button.cancel, a.cancel {
     background-color: var(--cancel-button-background-color);
 }
 
-button.cancel:hover, a.cancel:hover {
+button.cancel:hover, a.can
+
+
+
+cel:hover {
     background-color: var(--accent-color);
 }
 
@@ -568,11 +574,19 @@ main.dashboard > p {
     background-color: var(--accent-color);
     cursor: pointer;
     text-shadow: 0px 0px .25rem black;
+    color: var(--secondary-accent-color)
 }
 
 .dashboard-item > img {
     filter: invert();
     height: 4rem;
+}
+
+.dashboard-item:hover > img{
+    /* change color of img */
+    filter: invert();
+    filter: invert(64%) sepia(38%) saturate(3921%) hue-rotate(348deg) brightness(101%) contrast(93%);
+
 }
 
 @media only screen and (max-width: 680px) {
@@ -900,4 +914,19 @@ img.profile-pic {
     .no-print {
         display: none;
     }
+}
+
+/*Tags*/
+.tag-btn{
+    
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: fit-content;
+
+    /*Margins, likely to be edited*/
+    margin-right: 10px;
+    
 }

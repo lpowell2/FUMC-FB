@@ -26,10 +26,18 @@ class Person {
 	private $venue;      // portland or bangor
 	private $first_name; // first name as a string
 	private $last_name;  // last name as a string
+
+	private $fbName;
 	private $address;   // address - string
+	private $address2;
 	private $city;    // city - string
+	private $county; //county - string
 	private $state;   // state - string
 	private $zip;    // zip code - integer
+	private $website;
+	private $altServices;
+	private $tag;
+
   	private $profile_pic; // image link
 	private $phone1;   // primary phone -- home, cell, or work
 	private $phone1type; // home, cell, or work
@@ -79,11 +87,19 @@ class Person {
 	private $mustChangePassword;
 	private $gender;
 
-	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, $ts, $comp, $cam, $tran, $cn, $cpn, $rel,
-			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
-			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass,
+
+	//Person constructor; also construct food banks
+	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, 
+			$p1, $p1t, $p2, $p2t, $e, 
+			$ts, $comp, $cam, $tran, $cn, $cpn, $rel,
+			$ct, $t, $st, $cntm, $pos, $credithours, 
+			$comm, $mot, $spe, $convictions, 
+			$av, $sch, $hrs, 
+			$bd, $sd, $hdyh, $notes, $pass,
 			$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
-			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender) {
+			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender, 
+			$a2, $co, $w, $as, $ta) {
+
 		$this->id = $e;
 		$this->start_date = $sd;
 		$this->venue = $v;
@@ -117,19 +133,27 @@ class Person {
 		$this->specialties = $spe;
 		$this->convictions = $convictions;
 		$this->mustChangePassword = $mcp;
-		if ($t !== "") {
+		//if ($t !== "") {
+		//	$this->type = explode(',', $t);
+		//	global $accessLevelsByRole;
+		//	$this->access_level = $accessLevelsByRole[$t];
+		if (!empty($t)) {
 			$this->type = explode(',', $t);
 			global $accessLevelsByRole;
 			$this->access_level = $accessLevelsByRole[$t];
-		} else {
+		  }
+		 else {
 			$this->type = array();
 			$this->access_level = 0;
 		}
+
 		$this->status = $st;
-		if ($av == "")
+
+		if ($av !== "")
 			$this->availability = array();
 		else
 			$this->availability = explode(',', $av);
+
 		if ($sch !== "")
 			$this->schedule = explode(',', $sch);
 		else
@@ -158,7 +182,19 @@ class Person {
 		$this->saturdaysStart = $sats;
 		$this->saturdaysEnd = $sate;
 		$this->gender = $gender;
+
+
+		$this->website = $w;
+		$this->address2 = $a2;
+		$this->county = $co;
+		$this->altServices = $as;
+		$this->tag = $ta;
 	}
+
+
+
+
+	
 
 	function get_id() {
 		return $this->id;
@@ -180,12 +216,21 @@ class Person {
 		return $this->last_name;
 	}
 
+
 	function get_address() {
 		return $this->address;
 	}
 
+	function get_address2() {
+		return $this->address2;
+	}
+
 	function get_city() {
 		return $this->city;
+	}
+
+	function get_county() {
+		return $this->county;
 	}
 
 	function get_state() {
@@ -194,6 +239,18 @@ class Person {
 
 	function get_zip() {
 		return $this->zip;
+	}
+	
+	function get_website() {
+		return $this->website;
+	}
+
+	function get_altServices() {
+		return $this->city;
+	}
+
+	function get_tag() {
+		return $this->tag;
 	}
 
   function get_profile_pic() {

@@ -25,7 +25,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Gwyneth's Gift VMS | User Search</title>
+        <title>FUMC-First United Methodist Church | User Search</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -56,6 +56,7 @@
                     } else {
                         echo "<h3>Search Results</h3>";
                         $persons = find_users($name, $id, $phone, $zip, $role, $status);
+                        
                         require_once('include/output.php');
                         if (count($persons) > 0) {
                             echo '
