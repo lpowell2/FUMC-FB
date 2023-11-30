@@ -121,13 +121,25 @@ if (isset($_GET["id"])) {
                 <?php endif; ?>
 
                 
-                <label for="tag"><em> </em>Tag</label>
+                <label for="tag"><em> </em>Tags</label>
+                
                 <?php
-                     if($foodbank->get_tag()){
-                            
-                        echo '<option value="' . $foodbank->get_tag() . '">' . $foodbank->get_tag() . '</option>';
-
-                    }
+                     //SQL edited from dbPersons
+                     $con=connect();
+                     //working query to get from dbTags directly
+                     // $result = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                     $result = mysqli_query($con, "SELECT a.id, b.tagID, a.userID, b.tagText
+                     FROM dbTags b
+                     INNER JOIN dbFBTags a
+                     ON b.tagID = a.id
+                     ORDER BY b.tagID
+                     ");
+                     while ($row = mysqli_fetch_array($result)) {
+                         if ($row['userID']==$id):
+                             echo "<p>" .$row['tagText'] . "</p>";
+                         endif;
+                     }
+                    //  echo "</select>";
                 ?>
                 <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
