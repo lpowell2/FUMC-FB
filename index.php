@@ -50,12 +50,8 @@
                     }
                 ?>
                 <div class="dashboard-item" data-link="viewtags.php">
-                    <img src="images/<?php echo $inboxIcon ?>">
-                    <span>View Tags<?php 
-                        if ($unreadMessageCount > 0) {
-                            echo ' (' . $unreadMessageCount . ')';
-                        }
-                    ?></span>
+                    <img src="images/tag2.png">
+                    <span>View Tags</span>
                 </div>
 
                 <?php if ($_SESSION['access_level'] >= 1): ?>

@@ -31,7 +31,7 @@
         <?php require_once('header.php') ?>
         <h1>User Search</h1>
         <form id="person-search" class="general" method="get">
-            <h2>Find Foodbank</h2>
+            <h2>Find User</h2>
             <?php 
                 if (isset($_GET['name'])) {
                     require_once('include/input-validation.php');
