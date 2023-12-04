@@ -97,33 +97,10 @@
                 <legend>General Information</legend>
                 <label>Username</label>
                 <p><?php echo $user->get_id() ?></p>
-                <label>Profile Picture</label>
-                <img class="profile-pic" src="<?php
-                    $profile_pic = $user -> get_profile_pic();
-                    if ($profile_pic) {
-                        echo $profile_pic;
-                    } else {
-                        echo 'images/default-profile-picture.svg';
-                    }
-                  ?>"width="140" height="140">
-                <form class="media-form hidden" method="post" id="edit-profile-picture-form">
-                    <label>Edit Photo</label>
-                    <label for="url">URL</label>
-                    <input type="text" id="url" name="url" placeholder="Paste link to media" required>
-                    <p class="error hidden" id="url-error">Please enter a valid URL.</p>
-                    <input type="hidden" name="id" value="<?php echo $id ?>">
-                    <input type="submit" name="edit-profile-picture-submit" value="Attach">
-                </form>
-                <a id="edit-profile-picture" class="link-like">Edit Photo</a>
-                <?php
-                  echo '<a href="viewProfile.php?id='.$id.'&removePic=true" style="color:inherit">Remove Photo</a>'
-                ?>
-                <label>Gender</label>
-                <p><?php echo $user->get_gender(); ?></p>
-                <label>Date of Birth</label>
-                <p><?php echo date('d/m/Y', strtotime($user->get_birthday())) ?></p>
-                <label>Address</label>
-                <p><?php echo $user->get_address() . ', ' . $user->get_city() . ', ' . $user->get_state() . ' ' . $user->get_zip() ?></p>
+                <label>First Name</label>
+                <p><?php echo $user->get_first_name() ?></p>
+                <label>Last Name</label>
+                <p><?php echo $user->get_last_name() ?></p>
                 <label>Role</label>
                 <p><?php echo ucfirst($user->get_type()[0]) ?></p>
                 <label>Status</label>
@@ -139,7 +116,7 @@
                 <?php if ($id != $userID && $accessLevel >= 2): ?>
                     <?php if ($accessLevel >= 3): ?>
                         <a href="modifyUserRole.php?id=<?php echo $id ?>" class="button">Change Role/Status</a>
-                        <a href="deleteFoodBankForm.php?id=<?php echo $id ?>" class="button">Delete Person/FoodBank</a>
+                        <a href="deleteFoodBankForm.php?id=<?php echo $id ?>" class="button">Delete Person</a>
                     <?php else: ?>
                         <a href="modifyUserRole.php?id=<?php echo $id ?>" class="button">Change Status</a>
                     <?php endif ?>
@@ -150,85 +127,18 @@
                 <label>E-mail</label>
                 <p><a href="mailto:<?php echo $user->get_email() ?>"><?php echo $user->get_email() ?></a></p>
                 <label>Phone Number</label>
-                <p><a href="tel:<?php echo $user->get_phone1() ?>"><?php echo formatPhoneNumber($user->get_phone1()) ?></a> (<?php echo ucfirst($user->get_phone1type()) ?>)</p>
-                <label>Preferred Contact Method</label>
-                <p><?php echo ucfirst($user->get_cMethod()) ?></p>
-                <label>Best Time to Contact</label>
-                <p><?php echo ucfirst($user->get_contact_time()) ?></p>
+                <p><a href="tel:<?php echo $user->get_phone1() ?>"><?php echo formatPhoneNumber($user->get_phone1()) ?></a></p>
+                
             </fieldset>
-            <fieldset>
-                <legend>Emergency Contact</legend>
-                <label>Name</label>
-                <p><?php echo $user->get_contact_name() ?></p>
-                <label>Relation</label>
-                <p><?php echo $user->get_relation() ?></p>
-                <label>Phone Number</label>
-                <p><a href="tel:<?php echo $user->get_contact_num() ?>"><?php echo formatPhoneNumber($user->get_contact_num()) ?></a></p>
-            </fieldset>
-            <fieldset>
-                <legend>Volunteer Information</legend>
-                <label>Availability</label>
-                <?php if ($user->get_sunday_availability_start()): ?>
-                    <label>Sundays</label>
-                    <p><?php echo time24hTo12h($user->get_sunday_availability_start()) . ' - ' . time24hTo12h($user->get_sunday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_monday_availability_start()): ?>
-                    <label>Mondays</label>
-                    <p><?php echo time24hTo12h($user->get_monday_availability_start()) . ' - ' . time24hTo12h($user->get_monday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_tuesday_availability_start()): ?>
-                    <label>Tuedays</label>
-                    <p><?php echo time24hTo12h($user->get_tuesday_availability_start()) . ' - ' . time24hTo12h($user->get_tuesday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_wednesday_availability_start()): ?>
-                    <label>Wednesdays</label>
-                    <p><?php echo time24hTo12h($user->get_wednesday_availability_start()) . ' - ' . time24hTo12h($user->get_wednesday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_thursday_availability_start()): ?>
-                    <label>Thursdays</label>
-                    <p><?php echo time24hTo12h($user->get_thursday_availability_start()) . ' - ' . time24hTo12h($user->get_thursday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_friday_availability_start()): ?>
-                    <label>Fridays</label>
-                    <p><?php echo time24hTo12h($user->get_friday_availability_start()) . ' - ' . time24hTo12h($user->get_friday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_saturday_availability_start()): ?>
-                    <label>Saturdays</label>
-                    <p><?php echo time24hTo12h($user->get_saturday_availability_start()) . ' - ' . time24hTo12h($user->get_saturday_availability_end()) ?></p>
-                <?php endif ?>
-                <label>Skills</label>
-                <p><?php echo str_replace("\r\n", '<br>', $user->get_specialties()) ?></p>
-                <label>Additional Information</label>
-                <p><?php if ($user->get_computer()) echo 'Owns a computer'; else echo 'Does NOT own a computer'; ?></p>
-                <p><?php if ($user->get_camera()) echo 'Owns a camera'; else echo 'Does NOT own a camera'; ?></p>
-                <p><?php if ($user->get_transportation()) echo 'Has access to transportation'; else echo 'Does NOT have access to transportation'; ?></p>
-                <label>T-Shirt Size</label>
-                <p>
-                    <?php 
-                        $sizes = [
-                            null => '',
-                            '' => '',
-                            'S' => 'Small',
-                            'M' => 'Medium',
-                            'L' => 'Large',
-                            'XL' => 'Extra Large',
-                            'XXL' => '2X Large',
-                        ];
-                        $size = $sizes[$user->get_shirt_size()];
-                        echo $size;
-                    ?>
-                </p>
-            </fieldset>
+            
             <a class="button" href="editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>">Edit Profile</a>
             <?php if ($id != $userID): ?>
                 <?php if (($accessLevel == 2 && $user->get_access_level() == 1) || $accessLevel >= 3): ?>
                     <a class="button" href="resetPassword.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Reset Password</a>
                 <?php endif ?>
-                <a class="button" href="volunteerReport.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">View Volunteer Hours</a>
                 <a class="button cancel" href="personSearch.php">Return to User Search</a>
             <?php else: ?>
                 <a class="button" href="changePassword.php">Change Password</a>
-                <a class="button" href="volunteerReport.php">View Volunteer Hours</a>
                 <a class="button cancel" href="index.php">Return to Dashboard</a>
             <?php endif ?>
         </main>

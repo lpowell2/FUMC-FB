@@ -733,7 +733,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
       }
       
    
-    function find_users($name, $id, $phone, $zip, $type, $status) {
+    function find_users($name, $id, $phone) {
         $where = 'where ';
         //if (!($name || $id || $phone || $zip || $type || $status)) {
           //  return [];
@@ -764,27 +764,38 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             $where .= "phone1 like '%$phone%'";
             $first = false;
         }
-		if ($zip) {
-			if (!$first) {
-                $where .= ' and ';
-            }
-            $where .= "zip like '%$zip%'";
-            $first = false;
-		}
-        if ($type) {
-            if (!$first) {
-                $where .= ' and ';
-            }
-            $where .= "type='$type'";
-            $first = false;
+        if (!$first) {
+            $where .= ' and ';
         }
-        if ($status) {
-            if (!$first) {
-                $where .= ' and ';
-            }
-            $where .= "status='$status'";
-            $first = false;
+        $where .= "position <> 'foodbank'";
+        $query = "select * from dbPersons $where order by last_name, first_name";
+        // echo $query;
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+    
+        if (!$result) {
+            mysqli_close($connection);
+            return [];
         }
+        $raw = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $persons = [];
+        foreach ($raw as $row) {
+            if ($row['id'] == 'vmsroot') {
+                continue;
+            }
+            $persons []= make_a_person($row);
+        }
+        mysqli_close($connection);
+        return $persons;
+    }
+
+    function find_all_users() {
+        $where = 'where ';
+        //if (!($name || $id || $phone || $zip || $type || $status)) {
+          //  return [];
+        //}
+        
+        $where .= "position <> 'foodbank'";
         $query = "select * from dbPersons $where order by last_name, first_name";
         // echo $query;
         $connection = connect();
