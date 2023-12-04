@@ -42,6 +42,8 @@ function buildSelect($name, $disabled = false, $selected = null)
     $select .= '</select>';
     return $select;
 }
+
+
 ?>
 
 <h1>Add a Food Bank</h1>
@@ -141,29 +143,23 @@ function buildSelect($name, $disabled = false, $selected = null)
             <input type="text" id="adtl-services" name="adtl-services">
 
 
-            <label for="tags[]"><em>* </em>Tags</label>
+            <label for="tag"><em>* </em>Tags</label>
+            <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
             <?php
+
                 $con = connect();
 
                 $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
-                $id;
-                $tagValue;
 
                 if (($resulting->num_rows) <= 0) {
-
-                    echo '<p><i>No Tags Available: Please add a new tag and refresh this page.</i></p>'
-                    ;
+                    echo '<p>No Tags Available</p>';
                 } else {
-
-                    while ($row = $resulting->fetch_assoc()) {
-                        $id = $row['tagID'];
-                        $tagValue = $row['tagText'];                   
-                        echo '<label for="tags[]">';
-                        //pass the tag id to the array of tag options selected
-                        echo '<input type="checkbox" name="tags" id="tags[]" value="' . $id .'"/>';  
-                        echo $tagValue;   
-                        echo '</label>';              
+                    while ($row = mysqli_fetch_array($resulting)) {
+                  
+                            echo "<input id='tag' name='tag[]' type='checkbox' value='" . $row['tagID'] . "'/> " . $row['tagText'] . "<br>";
+                        
                     }
+                    
                 }
             ?>
             <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>

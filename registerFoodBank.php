@@ -44,7 +44,11 @@
         require_once('domain/Person.php');
         require_once('database/dbPersons.php');
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
             // make every submitted field SQL-safe except for password
+            //implode the array tag input to a string for sanitizing, else it errors
+            $_POST['tag'] = implode(",", $_POST['tag']);
             $ignoreList = array('password');
             $args = sanitize($_POST, $ignoreList);
 
@@ -54,7 +58,7 @@
             // }
 
             $required = array(
-                'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tags[]',
+                'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services',
                 'available-sundays', 'available-mondays', 'available-tuesdays', 'available-wednesday', 'available-thursdays', 'available-fridays',
                 'available-saturdays' 
             );
@@ -117,14 +121,6 @@
             }else{
                 $altServices = $args['adtl-services'];
             }
-
-            //array of tag ids selected 
-            if(isset($_POST['tags[]'])){
-                $tags = implode(' ',$_POST['tags[]']);
-
-            }
-            
-            
 
             $startDate = $args['frequency'];
 
@@ -228,18 +224,29 @@
 
             $result = add_Person($newperson);
 
-            //if add food bank successful, connect tags to new food bank id
+            //if add food bank successful, connect selected tags to new food bank id
             if($result){
-                foreach($tags as $tag){
+                     //after submission, check if checkboxes checked, if so, add to dbFBTags
+                    if (isset($_POST['tag'])) {
+                        $con = connect();
 
-                    //pass new food bank id and current tag id to joining function
-                    $tagsResult = join_fbTags($newperson->get_id(), $tag);
-
-                    if(!$tagsResult){
-                        echo "Error adding tag " . $tag .".";
+                        //explode the tags back to an array
+                        $_POST['tag'] = explode(",", $_POST['tag']);
+                      
+                        foreach ($_POST['tag'] as $selected) {
+                            $id = $newperson->get_id();
+                            //checks if tag already exists on this food bank
+                            $sq = "SELECT * FROM dbFBTags WHERE tagID='$selected' AND fbID='$id'";
+                            if ($result = mysqli_query($con, $sq)) {
+                                if (mysqli_num_rows($result) > 0) {
+                                    echo "<br><p>tag ".$selected." already associated with this food bank</p>";
+                                } else {
+                                    echo "<br><p>tag added</p>";
+                                    mysqli_query($con, "INSERT INTO dbFBTags(tagID, fbID) VALUES ('$selected','$id')");
+                                }
+                            }
+                        }
                     }
-
-                }
             }
 
             if (!$result) {

@@ -118,7 +118,6 @@ function join_fbTags($fbid, $tagid){
     $query = mysqli_query($con,'INSERT INTO dbFBTags VALUES("' .
         $fbid . '","' .
         $tagid .
-        
         '");'
     );
 
