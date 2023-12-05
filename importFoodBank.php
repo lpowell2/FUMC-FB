@@ -112,6 +112,22 @@
                     }
 
                     $tagText = $getData[19];
+                    $tagText2 = "";
+                    $tagText3 = "";
+                    $if(str_contains($tagText,';')){
+                        $first = stripos($tagText, ';');
+                        $last = strrpos($tagText,';');
+                        substr($tagText, 0, $first-1);
+                        $tagText2=(substr($tagText, $first+1, strlen($tagText)-1));
+                        if($first!=$last){
+                            for($i = 0; $i<strlen($tagText2); $i++){
+                                if(str[$i]==';'){
+                                    substr($tagText2, 0, $i-1);
+                                    $tagText3=(substr($tagText2, $i+1, strlen($tagText2)-1));
+                                }
+                            }
+                        }
+                    }
                      /* checking if tagID is in database */
                      $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText'";
                      $tagID = mysqli_query($con,$sql);
@@ -131,7 +147,44 @@
                         $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
                         $tagfbresult = mysqli_query($con,$sql);
                      }
-                    
+                    if(!empty($tagText2)){
+                        $tagID = mysqli_query($con,$sql);
+
+                     if(mysqli_num_rows($tagID) >0){
+                        $row = mysqli_fetch_row($tagID);
+                        $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
+                        $tagfbresult = mysqli_query($con,$sql);
+                     }else{
+                        $sql = "INSERT into dbtags (tagText) values ('".$tagText2."')";
+                        $tagresult = mysqli_query($con,$sql);
+
+                        $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText2'";
+                        $tagID = mysqli_query($con,$sql);
+                        $row = mysqli_fetch_row($tagID);
+
+                        $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
+                        $tagfbresult = mysqli_query($con,$sql);
+                     }
+                    }
+                    if(!empty($tagText3)){
+                        $tagID = mysqli_query($con,$sql);
+
+                     if(mysqli_num_rows($tagID) >0){
+                        $row = mysqli_fetch_row($tagID);
+                        $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
+                        $tagfbresult = mysqli_query($con,$sql);
+                     }else{
+                        $sql = "INSERT into dbtags (tagText) values ('".$tagText3."')";
+                        $tagresult = mysqli_query($con,$sql);
+
+                        $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText3'";
+                        $tagID = mysqli_query($con,$sql);
+                        $row = mysqli_fetch_row($tagID);
+
+                        $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
+                        $tagfbresult = mysqli_query($con,$sql);
+                     }
+                    }
                     /* pop up results */
                     if(!isset($result)&& !isset($tagresult)){
                         echo "<script type=\"text/javascript\">
