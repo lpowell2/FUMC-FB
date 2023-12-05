@@ -221,7 +221,7 @@
         <?php
                         //if not logged in, display log in button
                         if (!isset($_SESSION['id']) && !isset($_SESSION['access_level'])) {
-                            echo '<a class="button" href="login.php">Log In</a>';
+                            echo '<a class="button" href="login.php">Admin Log In</a>';
                         }       
                     ?>
     </body>
