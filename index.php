@@ -49,13 +49,9 @@
                         $inboxIcon = 'inbox-unread.svg';
                     }
                 ?>
-                <div class="dashboard-item" data-link="inbox.php">
-                    <img src="images/<?php echo $inboxIcon ?>">
-                    <span>Notifications<?php 
-                        if ($unreadMessageCount > 0) {
-                            echo ' (' . $unreadMessageCount . ')';
-                        }
-                    ?></span>
+                <div class="dashboard-item" data-link="viewtags.php">
+                    <img src="images/tag2.png">
+                    <span>View Tags</span>
                 </div>
 
                 <?php if ($_SESSION['access_level'] >= 1): ?>
@@ -81,6 +77,11 @@
                     <span>Find Food Bank</span>
                 </div>
 
+                <div class="dashboard-item" data-link="personSearch.php">
+                    <img src="images/person-search.svg">
+                    <span>Find Person</span>
+                </div>
+
                 <?php if ($_SESSION['access_level'] >= 2): ?>
                     <div class="dashboard-item" data-link="fbankSearch.php">
                         <img src="images/person-search.svg">
@@ -103,10 +104,6 @@
                     </div>
                 <?php endif ?>
                 <?php if ($notRoot) : ?>
-                    <div class="dashboard-item" data-link="volunteerReport.php">
-                        <img src="images/volunteer-history.svg">
-                        <span>View My Hours</span>
-                    </div>
                 <?php endif ?>
                 <div class="dashboard-item" data-link="changePassword.php">
                     <img src="images/change-password.svg">
