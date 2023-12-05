@@ -135,16 +135,35 @@ if (isset($_GET["id"])) {
                     <p><?php echo $foodbank->get_altServices() ?> </p>
                 <?php endif; ?>
 
-                
-                <label for="tag"><em> </em><?=$Language["Tag"]?></label>
-                <?php
-                     if($foodbank->get_tag()){
-                            
-                        echo '<option value="' . $foodbank->get_tag() . '">' . $foodbank->get_tag() . '</option>';
 
+                <label for="tag"><em> </em>Tag</label>
+                <select id="tag" name="tag" required>
+                    <!-- Show list of Tags-->
+                    <option value="">Choose an option</option>
+                    <!--For tags in tagDB, loop through
+                        get from tagDB in vms.sql, foreach data in row-->
+                    <?php
+                    include_once("sql/vms.sql");
+                    include_once('database/dbinfo.php');
+
+                    //SQL edited from dbPersons
+                    $con = connect();
+                    //working query to get from dbTags directly
+                    // $result = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                    $result = mysqli_query($con, "SELECT a.id, b.tagID, a.userID, b.tagText
+                        FROM dbTags b
+                        INNER JOIN dbFBTags a
+                        ON b.tagID = a.id
+                        ORDER BY b.tagID
+                        ");
+                    while ($row = mysqli_fetch_array($result)) {
+                        if ($row['userID'] == $id) :
+                            echo "<option value='" . $row['id'] . "'> " . $row['tagText'] . "</option>";
+                        endif;
                     }
-                ?>
-                <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
+                    echo "</select>";
+                    ?>
+                    <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
             </fieldset>
 

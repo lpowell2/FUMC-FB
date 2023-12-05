@@ -84,7 +84,8 @@ CREATE TABLE IF NOT EXISTS `dbTags` (
 
 CREATE TABLE IF NOT EXISTS `dbFBTags` (
   `ID` int(11) NOT NULL,
-  `userID` varchar(256) NOT NULL
+  `userID` varchar(256) CHARACTER SET utf8mb4 NOT NULL
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -169,8 +170,7 @@ CREATE TABLE IF NOT EXISTS `dbPersons` (
   `address2` text,
   `county` text NOT NULL,
   `website` text NOT NULL,
-  `alt_services` text,
-  `tag` text NOT NULL
+  `alt_services` text
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

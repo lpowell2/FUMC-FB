@@ -42,6 +42,8 @@ function buildSelect($name, $disabled = false, $selected = null)
     $select .= '</select>';
     return $select;
 }
+
+
 ?>
 
 <h1>Add a Food Bank</h1>
@@ -144,46 +146,21 @@ function buildSelect($name, $disabled = false, $selected = null)
             <label for="tag"><em>* </em>Tags</label>
             <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
             <?php
+
                 $con = connect();
 
                 $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
-                $tagValue;
-
-                echo "<html>";
-                echo "<body>";
-                echo "<select id='tag' name='tag'>";
 
                 if (($resulting->num_rows) <= 0) {
-
-                    echo '<option disabled>No Tags Available</option>';
+                    echo '<p>No Tags Available</p>';
                 } else {
-
-                    echo '<option value="">Select A Tag</option>';
-
-                    while ($row = $resulting->fetch_assoc()) {
-                        $id = $row['tagID'];
-                        $tagValue = $row['tagText'];
-                        echo '<option value="' . htmlspecialchars($tagValue) . '">' . htmlspecialchars($tagValue) . '</option>';
+                    while ($row = mysqli_fetch_array($resulting)) {
+                  
+                            echo "<input id='tag' name='tag[]' type='checkbox' value='" . $row['tagID'] . "'/> " . $row['tagText'] . "<br>";
+                        
                     }
-
-                    //if tag value is not selected
-                    if (!$tagValue) {
-                        echo "Error: No tag selected.";
-                    }
+                    
                 }
-
-
-                echo "</select>";
-                echo "</body>";
-                echo "</html>";
-
-
-
-                $selectedTag = filter_input(INPUT_POST, 'tag');
-
-
-                //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
-
             ?>
             <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
