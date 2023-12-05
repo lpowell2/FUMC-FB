@@ -17,12 +17,6 @@ if (isset($_SESSION['_id'])) {
     $accessLevel = $_SESSION['access_level'];
     $userID = $_SESSION['_id'];
 }
-// Require admin privileges
-if ($accessLevel < 1) {
-    header('Location: login.php');
-    echo '<div class="error-toast"><p> Improper access level </p> </div>';
-    die();
-}
 
 $foodbank = NULL;
 //id is fbname,phone number, address for some reason, think it has to do with the Person constructor in Person.php, works fine though
@@ -140,8 +134,9 @@ if (isset($_GET["id"])) {
                      }
     
                 ?>
+                <?php if($accessLevel >= 1):?>
                 <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
-
+                <?php endif; ?>
             </fieldset>
 
             <br>

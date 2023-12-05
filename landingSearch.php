@@ -120,7 +120,6 @@
 											<th>'.$thZip.'</th>
                                             <th>'.$thCity.'</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="standout">';
@@ -131,10 +130,8 @@
                                             <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
 											<td>' . $foodbank->get_zip() . '</td>
                                             <td>' . $foodbank->get_city() . '</td>'; 
-
-                                            if (isset($_SESSION['id']) || isset($_SESSION['access_level'])){
-                                               echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>';
-                                            }
+                                            echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>';
+                                            
 
                                         echo '</a></tr>';
                             }
