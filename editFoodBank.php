@@ -1,5 +1,10 @@
 <!-- Add check for logged in and privleges -->
 <?php
+
+session_cache_expire(30);
+session_start();
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 include_once('database/dbPersons.php');
 require_once('include/output.php');
 require_once('domain/Person.php');
@@ -7,11 +12,6 @@ require_once('include/input-validation.php');
 require_once('universal.inc');
 require_once('header.php');
 
-session_cache_expire(30);
-session_start();
-
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
 
 $loggedIn = false;
 $accessLevel = 0;
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // }
 
     $required = array(
-        'fb-name', 'phone', 'website', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
+        'fb-name', 'phone', 'address', 'address2', 'city', 'county', 'state', 'zip', 'opnotes', 'adtl-services', 'tag',
         'available-sundays', 'available-mondays', 'available-tuesdays', 'available-wednesday', 'available-thursdays', 'available-fridays',
         'available-saturdays'
     );
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'bad phone';
     }
 
-    $website = $args['website'];
+   
 
     $address = $args['address'];
 
@@ -210,12 +210,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // $result = update_food_bank($id,$fbName,$address,$city,$state,$zipcode,$phone,$startDate,$notes,$sundaysStart,$sundaysEnd,$mondaysStart,$mondaysEnd,$tuesdaysStart,$tuesdaysEnd,$wednesdaysStart,$wednesdaysEnd,$thursdaysStart,$thursdaysEnd,$fridaysStart,$fridaysEnd,$saturdaysStart,$saturdaysEnd,null,$address2,$county,$website,$altServices);
-    $result = update_person_profile($id, $fbName,NULL, '', $address, $city, $state, $zipcode, $id, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, $website, $altServices, $startDate, $notes);
+    $result = update_person_profile($id, $fbName,NULL, '', $address, $city, $state, $zipcode, $id, $phone, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd, $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd, $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd, $saturdaysStart, $saturdaysEnd, null, $address2, $county, null, $altServices, $startDate, $notes);
     if (!$result) {
         echo '<div class="error-toast"><p>Failed to  update food bank.</p></div>';
     } else {
         echo '<div class="happy-toast"<p>Food bank updated successfully!</p></div>';
-        // Header("refresh:2;url=viewfoodbank.php?id=" . $id);
+        Header("refresh:2;url=viewfoodbank.php?id=" . $id);
     }
 }
 ?>
@@ -293,9 +293,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="phone"><em>* </em>Phone Number</label>
                     <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Ex. (555) 555-5555" value="<?php echo '(' . substr($foodbank->get_phone1(), 0, 3) . ') ' . substr($foodbank->get_phone1(), 3, 3) . '-' . substr($foodbank->get_phone1(), 6); ?>">
 
-                    <label for="website"><em>* </em>Website Link</label>
-                    <input type="text" id="website" name="website" required placeholder="Enter the food bank website link" value="<?php echo $foodbank->get_website(); ?>">
-
+    
                     <label for="address"><em>* </em>Address</label>
                     <input type="text" id="address" name="address" required placeholder="Enter the food bank address" value=<?php echo $foodbank->get_address(); ?>>
 
@@ -568,7 +566,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>By pressing Submit below, the food bank and assciated information you have input will be added to the system.</p>
                 <input type="submit" name="editfb-form" value="Submit">
             </form>
-            <a class="button cancel" href="viewfoodbank.php?id=<?php echo $id ?>" style="margin-top: .5rem">Cancel</a>
+            <a class="button cancel" href="viewfoodbank.php?id=<?php echo $_GET['id'] ?>" style="margin-top: .5rem">Cancel</a>
 
         </main>
     <?php endif; ?>

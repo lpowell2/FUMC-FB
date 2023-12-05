@@ -63,7 +63,7 @@ while ($row = mysqli_fetch_array($resulting)) {
                             echo('<tr><td>'.$tag['tagText'].'</td>
                             <td> <form action=deletetagform.php method="post">
                             <input type="hidden" name="id" value="'.$tag['tagID'].'">
-                            <input type="submit" class="button" value="Delete Food Bank">
+                            <input type="submit" class="button" value="Delete Tags">
                         </form> </td>
                             </tr>');
                             

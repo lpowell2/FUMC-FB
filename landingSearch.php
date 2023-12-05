@@ -11,7 +11,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php require_once('universal.inc') ?>
+        <?php
+        if(isset($_GET["lang"])){
+            $_SESSION['lang']=$_GET["lang"];
+            $lang=$_GET["lang"];
+        }
+        else if(isset($_SESSION['lang'])){
+            $lang=$_SESSION['lang'];
+        }
+        else{
+        $lang="eng";
+        }
+        $Language=parse_ini_file("languages/$lang.ini");
+        require_once('universal.inc') ?>
         <?php require_once('database/dbinfo.php')?>
         <title>FUMC/HAC Food Bank Finder</title>
 
@@ -62,7 +74,7 @@
         <?php //require_once('header.php') ?>
         <div class="headings-all">
         
-                <h1>Search for Foodbanks in Area</h1> 
+                <h1><?=$Language["Search_for_Foodbanks_in_Area"]?></h1> 
                 
                    
         
@@ -85,16 +97,17 @@
 					$county = $args['county'];
                     $zipCode = $args['zipCode'];
                     $tag = $args['tag'];
+                    $thName=$Language["Foodbank_Name"];
+                    $thZip=$Language["Zip_Code"];
+                    $thCounty=$Language["County"];
+                    $thPhone=$Language["Phone_Number"];
+                    $thCity=$Language["City"];
                     if (!($zipCode || $county || $tag)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
                     } else {
                         echo "<h3>Search Results</h3>";
-                       // var_dump($county);
                         $foodbanks = find_fbank2($name,$zipCode, $tag, $county);
-                        //var_dump($county);w
-                        //var_dump($tags);
-                        //var_dump($zipCode);
                         require_once('include/output.php');
                         if (count($foodbanks) > 0) {
                             echo '
@@ -102,11 +115,11 @@
                                 <table class="general">
                                     <thead>
                                         <tr>
-                                            <th>Name </th>
-                                            <th>| Phone Number |</th>
-											<th> Zip Code |</th>
-                                        
-                                            <th> City</th>
+                                            <th>'.$thName.'</th>
+                                            <th>'.$thPhone.'</th>
+											<th>'.$thZip.'</th>
+                                            <th>'.$thCity.'</th>
+                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -120,7 +133,7 @@
                                             <td>' . $foodbank->get_city() . '</td>'; 
 
                                             if (isset($_SESSION['id']) || isset($_SESSION['access_level'])){
-                                               echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">View</a></td>';
+                                               echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>';
                                             }
 
                                         echo '</a></tr>';
@@ -131,23 +144,23 @@
                             </div>';
 
                         } else {
-                            echo '<div class="error-toast">Your search returned no results.</div>';
+                            echo '<div class="error-toast">'.$Language["Found_No_Results"].'</div>';
                         }
                     }
-                    echo '<h3>Search Again</h3>';
+                    echo '<h3>'.$Language["Search"].'</h3>';
                 }
             ?>
-            <p>Use the fields bellow to find food or food assistance in your area.</p>
+            <p><?=$Language["Use_the_form_below_to_find"]?></p>
             <div class="foodbank-search">
                 <div class="search-fields">
-                    <label for="county">County</label>
-                    <input type="text" id="county" name="county" placeholder="Enter the county">
+                    <label for="county"><?=$Language["County"]?></label>
+                    <input type="text" id="county" name="county" placeholder=<?=$Language["Enter_County"]?>>
 
-                    <label for="zipCode">Zip Code</label>
-                    <input type="text" id="zipCode" name="zipCode" placeholder="Enter the zip code">
+                    <label for="zipCode"><?=$Language["Zip_Code"]?></label>
+                    <input type="text" id="zipCode" name="zipCode" placeholder=<?=$Language["Enter_Zip_Code"]?>>
 
                    
-                    <label for="tag"><em>* </em>Tags</label>
+                    <label for="tag"><em>* </em><?=$Language["Tag"]?></label>
                     <?php
                         $con=connect();
 
@@ -196,7 +209,7 @@
 
                 </div>
                 <div class="submit-buttons">
-                    <input type="submit" value="Search">
+                    <input type="submit" value=<?=$Language["Search"]?>>
                     
                     
                 </div>
@@ -205,6 +218,9 @@
             </div>
         </div>    
         </form>
+        <a href = "?lang=eng">English</a>
+        <a href = "?lang=esp">Espanol</a>
+        <a href = "?lang=dar">&#1583;&#1585;&#1740;</a>
         <?php
                         //if not logged in, display log in button
                         if (!isset($_SESSION['id']) && !isset($_SESSION['access_level'])) {
