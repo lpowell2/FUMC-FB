@@ -23,7 +23,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
 // Require admin privileges
-if ($accessLevel < 2) {
+if ($accessLevel < 1) {
     header('Location: login.php');
     echo '<div class="error-toast"><p> Improper access level </p> </div>';
     die();
@@ -124,6 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     echo 'bad tag';
     // }
     
+
+
 
     $startDate = $args['frequency'];
 
@@ -348,34 +350,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php else : ?>
                         <?php echo '<input type="text" id="adtl-services" name="adtl-services">'; ?>
                     <?php endif; ?>
-                    <!-- <label for="tag"><em>* </em>Tag</label>
-                    <select id="tag" name="tag" required>
-                        <option value="">Choose an option</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select> -->
 
-                    <!-- Show list of Tags-->
                     <label for="tag"><em>* </em>Tags</label>
+                    <p> <i> If no tags are available, please add a new one and refresh this page. </i></p>
                     <?php
-                        $con=connect();
+
+                        $con = connect();
 
                         $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                        $tagValue;
                         
-                        while ($row = mysqli_fetch_array($resulting)) {
-                            echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText'];
-                        }
-                        //after submission, check if checkboxes checked, if so, add to dbFBTags
-                        //post only gets all checked 
-                        if(isset($_POST['tag'])){
-                            foreach ($_POST['tag'] as $selected) {
-                                // echo "<br>".$selected. "was checked.<br>";
-                                //TODO: Error checking to prevent repeat tags from being added
-                                mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
+
+                        echo "<html>";
+                        echo "<body>";
+
+                        if (($resulting->num_rows) <= 0) {
+                            echo '<p>No Tags Available</p>';
+                        } else {                                                        
+                            while ($row = mysqli_fetch_array($resulting)) {
+                                //check if that tag already exists on that food bank
+                                $prechecked=mysqli_query($con, "SELECT id FROM dbFBTags WHERE id=".$row['tagID']." AND userID='$id'");
+                                //if it is, check it, otherwise, don't
+                                if ($prechecked){
+                                    echo "<input name='tag[]' type='checkbox' checked value='" .$row['tagID']."'/> ".$row['tagText']."<br>";
+                                }else{
+                                    echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText']."<br>";
+                                }
+                            }
+                            //after submission, check if checkboxes checked, if so, add to dbFBTags
+                            //post only gets all checked 
+                            if(isset($_POST['tag'])){
+                                foreach ($_POST['tag'] as $selected) {
+                                    //checks if tag already exists on this food bank
+                                    $sq="SELECT * FROM dbFBTags WHERE id='$selected' AND userID='$id'";
+                                    if ($result=mysqli_query($con,$sq)){
+                                        if(mysqli_num_rows($result)>0){
+                                            //echo "<br><p>tag ".$selected." already exists</p>";
+                                        } else{
+                                            echo "<br><p>tag added</p>";
+                                            mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
+                                        }
+                                    }
+                                }
                             }
                         }
+
+                        echo "</body>";
+                        echo "</html>";
+
+                        //not sure if this is necessary
+                        $selectedTag = filter_input(INPUT_POST, 'tag');
                     ?>
+                    
+                    <p> <i> If you wish to add to the list of possible tags to add, click below. </i></p>
+                    <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
                 </fieldset>
 

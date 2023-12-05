@@ -98,6 +98,8 @@
                 <input type="password" name="password" placeholder="Enter your password" required>
                 <input type="submit" name="login" value="Log in">
                 <p>Or <a href="register.php">register as a new volunteer</a>!</p>
+                <br>
+                <a class="button" href="landingSearch.php">Search for a food bank</a>
             </form>
         </main>
     </body>

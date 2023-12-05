@@ -9,7 +9,7 @@
         if (isset($_SESSION['change-password'])) {
             header('Location: changePassword.php');
         } else {
-            header('Location: login.php');
+            header('Location: landingSearch.php');
         }
         die();
     }
@@ -57,16 +57,30 @@
                         }
                     ?></span>
                 </div>
-                <?php if ($_SESSION['access_level'] >= 2): ?>
+
+                <?php if ($_SESSION['access_level'] >= 1): ?>
                     <div class="dashboard-item" data-link="registerFoodBank.php">
                         <img src="images/new-event.svg">
                         <span>Add Food Bank</span>
                     </div>
+
+                    <div class="dashboard-item" data-link="importFoodBankForm.php">
+                        <img src="images/create-report.svg">
+                        <span>Import Food Banks</span>
+                    </div>
+                    
+                    <div class="dashboard-item" data-link="registerNewTag.php">
+                    <img src="images/plus.svg">
+                    <span>Add Tag</span>
+                    </div>
+
                 <?php endif ?>
-                <div class="dashboard-item" data-link="fBankSearch.php">
+
+                <div class="dashboard-item" data-link="fbankSearch.php">
                     <img src="images/search.svg">
                     <span>Find Food Bank</span>
                 </div>
+
                 <?php if ($_SESSION['access_level'] >= 2): ?>
                     <div class="dashboard-item" data-link="fbankSearch.php">
                         <img src="images/person-search.svg">
@@ -76,14 +90,7 @@
                         <img src="images/add-person.svg">
                         <span>Register Volunteer</span>
                     </div>
-                    <div class="dashboard-item" data-link="importfoodbankform.php">
-                        <img src="images/create-report.svg">
-                        <span>Import Food Banks</span>
-                    </div>
-                    <div class="dashboard-item" data-link="registernewtag.php">
-                    <img src="images/plus.svg">
-                    <span>Add Tag</span>
-                </div>
+                    
                 <?php endif ?>
                 <?php if ($notRoot) : ?>
                     <div class="dashboard-item" data-link="viewProfile.php">
