@@ -1,5 +1,10 @@
 <!-- Add check for logged in and privleges -->
 <?php
+
+session_cache_expire(30);
+session_start();
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 include_once('database/dbPersons.php');
 require_once('include/output.php');
 require_once('domain/Person.php');
@@ -7,11 +12,6 @@ require_once('include/input-validation.php');
 require_once('universal.inc');
 require_once('header.php');
 
-session_cache_expire(30);
-session_start();
-
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
 
 $loggedIn = false;
 $accessLevel = 0;
@@ -359,7 +359,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
                         $tagValue;
-                        
+
 
                         echo "<html>";
                         echo "<body>";
@@ -401,11 +401,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         //not sure if this is necessary
                         $selectedTag = filter_input(INPUT_POST, 'tag');
                     ?>
-                    
+
                     <p> <i> If you wish to add to the list of possible tags to add, click below. </i></p>
                     <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
-                </fieldset>
+                 </fieldset>
 
 
                 <fieldset>
@@ -572,7 +572,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>By pressing Submit below, the food bank and assciated information you have input will be added to the system.</p>
                 <input type="submit" name="editfb-form" value="Submit">
             </form>
-            <a class="button cancel" href="viewfoodbank.php?id=<?php echo $id ?>" style="margin-top: .5rem">Cancel</a>
+            <a class="button cancel" href="viewfoodbank.php?id=<?php echo $_GET['id'] ?>" style="margin-top: .5rem">Cancel</a>
 
         </main>
     <?php endif; ?>

@@ -126,8 +126,7 @@ if (isset($_GET["id"])) {
                 <?php
                      //SQL edited from dbPersons
                      $con=connect();
-                     //working query to get from dbTags directly
-                     // $result = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
+                
                      $result = mysqli_query($con, "SELECT a.id, b.tagID, a.userID, b.tagText
                      FROM dbTags b
                      INNER JOIN dbFBTags a
@@ -139,7 +138,7 @@ if (isset($_GET["id"])) {
                              echo "<p>" .$row['tagText'] . "</p>";
                          endif;
                      }
-                    //  echo "</select>";
+    
                 ?>
                 <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 

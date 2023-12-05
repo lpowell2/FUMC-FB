@@ -931,3 +931,8 @@ img.profile-pic {
     margin-right: 10px;
     
 }
+
+.multiselect, select:selection{
+
+    color: #5a8da4;
+}

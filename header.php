@@ -31,7 +31,6 @@
             </ul>
         </nav>';
     } else if ($_SESSION['logged_in']) {
-
         /*         * Set our permission array.
          * anything a guest can do, a volunteer and manager can also do
          * anything a volunteer can do, a manager can do.
@@ -127,17 +126,14 @@
 	            //echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'help.php?helpPage=' . $current_page . '" target="_BLANK">help</a></button>');
 	            //echo(' | calendars: <a href="' . $path . 'calendar.php?venue=bangor'.''.'">Bangor, </a>');
 	            //echo(' | <button type="button" class="btn btn-link"><a href="' . $path . 'calendar.php?venue=portland'.''.'">calendar</a></button>'); //added before '<a': |, changed: 'Portland' to 'calendar'
-	        }
-	        if ($_SESSION['access_level'] >= 2) {
 	            //echo('<br>master schedules: <a href="' . $path . 'viewSchedule.php?venue=portland'."".'">Portland, </a>');
 	            //echo('<a href="' . $path . 'viewSchedule.php?venue=bangor'."".'">Bangor</a>');
 	            echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'registerFoodBank.php">Add</a></li>');
-	            echo('<span class="nav-divider">|</span>');
-	            echo('<span class="navbar-brand">Volunteers</span>');
+	            echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'importfoodbankform.php">Import</a></li>');	           
+                echo('<span class="nav-divider">|</span>');
+	            echo('<span class="navbar-brand">Admins</span>');
                 echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'personSearch.php">Search</a></li>
-			        <li class="sub-item"><a class="nav-link active" aria-current="page" href="register.php">Add</a></li>'); 
-	            echo('<li class="sub-item"><a class="nav-link active" aria-current="page" href="' . $path . 'report.php">Reports</a></li>');
-	        }
+			        <li class="sub-item"><a class="nav-link active" aria-current="page" href="register.php">Add</a></li>'); 	        }
 	        echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'logout.php">Log out</a></li>');
             echo '</ul></nav>';
         }

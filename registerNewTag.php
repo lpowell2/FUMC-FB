@@ -1,6 +1,12 @@
 <?php
-    // Author: Sarah Harrington
+
+// Author: Sarah Harrington
     // Description: Registration page for new tags 
+    session_cache_expire(30);
+    session_start();
+
+    ini_set("display_errors", 1);
+    error_reporting(E_ALL);
     require_once('universal.inc');
     require_once('include/input-validation.php');
     require_once('header.php');
@@ -8,11 +14,7 @@
     require_once('database/dbTags.php');
     require_once('include/input-validation.php');
   
-    session_cache_expire(30);
-    session_start();
 
-    ini_set("display_errors", 1);
-    error_reporting(E_ALL);
 
     $loggedIn = false;
     $accessLevel = 0;
