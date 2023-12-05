@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `dbTags` (
 --
 
 CREATE TABLE IF NOT EXISTS `dbFBTags` (
-  `tagID` int(11) NOT NULL,
-  `fbID` varchar(256) CHARACTER SET utf8mb4 NOT NULL
+  `ID` int(11) NOT NULL,
+  `userID` varchar(256) CHARACTER SET utf8mb4 NOT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

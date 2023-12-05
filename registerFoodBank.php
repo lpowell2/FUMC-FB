@@ -234,15 +234,15 @@
                         $_POST['tag'] = explode(",", $_POST['tag']);
                       
                         foreach ($_POST['tag'] as $selected) {
-                            $id = $newperson->get_id();
+                            $fbid = $newperson->get_id();
                             //checks if tag already exists on this food bank
-                            $sq = "SELECT * FROM dbFBTags WHERE tagID='$selected' AND fbID='$id'";
+                            $sq = "SELECT * FROM dbFBTags WHERE ID='$selected' AND userID='$fbid'";
                             if ($result = mysqli_query($con, $sq)) {
                                 if (mysqli_num_rows($result) > 0) {
                                     echo "<br><p>tag ".$selected." already associated with this food bank</p>";
                                 } else {
                                     echo "<br><p>tag added</p>";
-                                    mysqli_query($con, "INSERT INTO dbFBTags(tagID, fbID) VALUES ('$selected','$id')");
+                                    mysqli_query($con, "INSERT INTO dbFBTags(ID, userID) VALUES ('$selected','$fbid')");
                                 }
                             }
                         }
