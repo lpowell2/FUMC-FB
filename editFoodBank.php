@@ -358,48 +358,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $resulting = mysqli_query($con, "SELECT tagID, tagText FROM dbTags");
                         $tagValue;
 
+
                         echo "<html>";
                         echo "<body>";
-                        echo "<select id='tag' name='tag'>";
 
                         if (($resulting->num_rows) <= 0) {
-
-                            echo '<option disabled>No Tags Available</option>';
-                        } else {
-
-                            if($foodbank->get_tag()){
-                            
-                                echo '<option value="' . $foodbank->get_tag() . '">' . $foodbank->get_tag() . '</option>';
-
+                            echo '<p>No Tags Available</p>';
+                        } else {                                                        
+                            while ($row = mysqli_fetch_array($resulting)) {
+                                //check if that tag already exists on that food bank
+                                $prechecked=mysqli_query($con, "SELECT id FROM dbFBTags WHERE id=".$row['tagID']." AND userID='$id'");
+                                //if it is, check it, otherwise, don't
+                                if ($prechecked){
+                                    echo "<input name='tag[]' type='checkbox' checked value='" .$row['tagID']."'/> ".$row['tagText']."<br>";
+                                }else{
+                                    echo "<input name='tag[]' type='checkbox' value='" .$row['tagID']."'/> ".$row['tagText']."<br>";
+                                }
                             }
-
-                            echo '<option disabled value="">----Select A Tag----</option>';
-
-                            while ($row = $resulting->fetch_assoc()) {
-                                $id = $row['tagID'];
-                                $tagValue = $row['tagText'];
-                                echo '<option value="' . htmlspecialchars($tagValue) . '">' . htmlspecialchars($tagValue) . '</option>';
+                            //after submission, check if checkboxes checked, if so, add to dbFBTags
+                            //post only gets all checked 
+                            if(isset($_POST['tag'])){
+                                foreach ($_POST['tag'] as $selected) {
+                                    //checks if tag already exists on this food bank
+                                    $sq="SELECT * FROM dbFBTags WHERE id='$selected' AND userID='$id'";
+                                    if ($result=mysqli_query($con,$sq)){
+                                        if(mysqli_num_rows($result)>0){
+                                            //echo "<br><p>tag ".$selected." already exists</p>";
+                                        } else{
+                                            echo "<br><p>tag added</p>";
+                                            mysqli_query($con, "INSERT INTO dbFBTags(id, userID) VALUES ('$selected','$id')");
+                                        }
+                                    }
+                                }
                             }
-
-                            //if tag value is not selected
-                            if (!$tagValue) {
-                                echo "Error: No tag selected.";
-                            }
-                            
                         }
 
-                        echo "</select>";
                         echo "</body>";
                         echo "</html>";
 
+                        //not sure if this is necessary
                         $selectedTag = filter_input(INPUT_POST, 'tag');
-
-                        //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
-
                     ?>
+
+                    <p> <i> If you wish to add to the list of possible tags to add, click below. </i></p>
                     <a class="button" target="_blank" href="registerNewTag.php">Add New Tag</a>
 
-                </fieldset>
+                 </fieldset>
 
 
                 <fieldset>
