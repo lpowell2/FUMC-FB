@@ -36,7 +36,7 @@
             <?php if (isset($_GET['pcSuccess'])): ?>
                 <div class="happy-toast">Password changed successfully!</div>
             <?php elseif (isset($_GET['registerSuccess'])): ?>
-                <div class="happy-toast">Volunteer registered successfully!</div>
+                <div class="happy-toast">Admin registered successfully!</div>
             <?php endif ?>
             <p>Welcome back, <?php echo $person->get_first_name() ?>!</p>
             <p>Today is <?php echo date('l, F j, Y'); ?>.</p>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="dashboard-item" data-link="register.php">
                         <img src="images/add-person.svg">
-                        <span>Register Volunteer</span>
+                        <span>Register Admin</span>
                     </div>
                     
                 <?php endif ?>

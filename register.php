@@ -30,7 +30,7 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Hunger Actions Coalition VMS | Register <?php if ($loggedIn) echo ' New Volunteer' ?></title>
+    <title>Hunger Actions Coalition VMS | Register <?php if ($loggedIn) echo ' New Admin' ?></title>
 </head>
 <body>
     <?php
@@ -49,7 +49,6 @@
 
             $required = array(
                 'first-name', 'last-name',
-                'address', 'city', 'state', 'zip', 
                 'email', 'phone', 'password'
             );
             $errors = false;
@@ -64,21 +63,21 @@
             //    echo 'bad dob';
             //}
 
-            $address = $args['address'];
-            $city = $args['city'];
-            $state = $args['state'];
-            if (!valueConstrainedTo($state, array('AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
-                    'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME',
-                    'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM',
-                    'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
-                    'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'))) {
-                $errors = true;
-            }
-            $zipcode = $args['zip'];
-            if (!validateZipcode($zipcode)) {
-                $errors = true;
-                echo 'bad zip';
-            }
+            // $address = $args['address'];
+            // $city = $args['city'];
+            // $state = $args['state'];
+            // if (!valueConstrainedTo($state, array('AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
+            //         'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME',
+            //         'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM',
+            //         'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
+            //         'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'))) {
+            //     $errors = true;
+            // }
+            // $zipcode = $args['zip'];
+            // if (!validateZipcode($zipcode)) {
+            //     $errors = true;
+            //     echo 'bad zip';
+            // }
             $email = strtolower($args['email']);
             $email = validateEmail($email);
             if (!$email) {
@@ -214,7 +213,7 @@
         
             // need to incorporate availability here
             $newperson = new Person($first, $last, 'portland', 
-                $address, $city, $state, $zipcode, "",
+            null, null, null, null, "",
                 $phone, null, null, null,
                 $email, null, null, null, null, null, null, null, 
                 null, 'admin', 'Active', null, null, null,

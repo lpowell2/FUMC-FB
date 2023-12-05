@@ -43,11 +43,11 @@ function buildSelect($name, $disabled=false, $selected=null) {
 }
 ?>
 
-<h1>New Volunteer Registration</h1>
+<h1>New Admin Registration</h1>
 <main class="signup-form">
     <form class="signup-form" method="post">
         <h2>Registration Form</h2>
-        <p>Please fill out each section of the following form if you would like to volunteer for the organization.</p>
+        <p>Please fill out each section of the following form if you would like to Admin for the organization.</p>
         <p>An asterisk (<label><em>*</em></label>) indicates a required field.</p>
         <fieldset>
             <legend>Personal Information</legend>
@@ -63,7 +63,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
 
 
-            <label for="address"><em>* </em>Street Address</label>
+            <!-- <label for="address"><em>* </em>Street Address</label>
             <input type="text" id="address" name="address" required placeholder="Enter your street address">
 
             <label for="city"><em>* </em>City</label>
@@ -126,7 +126,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             </select>
 
             <label for="zip"><em>* </em>Zip Code</label>
-            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code"> -->
         </fieldset>
         <fieldset>
             <legend>Contact Information</legend>
@@ -155,7 +155,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="password" id="password-reenter" name="password-reenter" placeholder="Re-enter password" required>
             <p id="password-match-error" class="error hidden">Passwords do not match!</p>
         </fieldset>
-        <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>
+        <p>By pressing Submit below, you are agreeing to Admin for the organization.</p>
         <input type="submit" name="registration-form" value="Submit">
     </form>
     <?php if ($loggedIn): ?>
