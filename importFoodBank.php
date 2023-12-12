@@ -14,6 +14,8 @@
                 $num = $num +1;
                 if($num > 1){
                     $day = $getData[10];
+                    $days=explode(';', $day);
+                    $week = count($days);
                     /* getting rid of (,), and - in phone number field */
                     $arry=array("(",")","-"," ");
                     $phone=str_replace($arry,'', $getData[6]);
@@ -24,13 +26,14 @@
                     $namephone=$parsename . $phone;
                     $id=$namephone . $getData[1];
 
+                    label: 
                     /* checking if id is in database */
                     $sql = "SELECT id FROM dbpersons WHERE id='$id'";
                     $idresult = mysqli_query($con,$sql); 
                     
                     /* updating only the days and times of foodbanks already in the database */
                     if(mysqli_num_rows($idresult) >0){
-                        switch($day){
+                        switch($days[0]){
                             case "Sunday":
                                 $sql = "UPDATE dbpersons SET sundays_start = '".$getData[11]."', sundays_end = '".$getData[12]."' WHERE id = '".$id."'";
                                 $result = mysqli_query($con, $sql);
@@ -62,9 +65,10 @@
                             default:
                                 echo "foodbank not added";
                         }
+                    
                     /* food bank not already in the database added based off of time and day of the week */
                     }else{
-                        switch($day){
+                        switch($days[0]){
                             case "Sunday":
                                 /* inserting new foodbank into database */
                                 $sql = "INSERT into dbpersons (id,first_name,address,address2,city,state,zip,phone1,notes,alt_services,sundays_start,sundays_end,start_date,county,venue,email,position,type,status,password,schedule,hours)
@@ -111,10 +115,19 @@
                                 echo "foodbank not added";
                         }
                     }
+                    $week = $week -1;
+                    if($week>0){
+                        array_shift($days);
+                        goto label;
+                    }
 
                     $tagText = $getData[19];
+                    $tag= explode('; ',$tagText);
+                    $tagCount = count($tag);
+
+                    label2:
                      /* checking if tagID is in database based off of tagText */
-                     $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText'";
+                     $sql = "SELECT tagID FROM dbtags WHERE tagText='$tag[0]'";
                      $tagID = mysqli_query($con,$sql);
 
                      /* if the tagId is already in the dbtags database just add it to the junction table (dbfbtags) that connects to food bank */
@@ -127,16 +140,22 @@
                     /* if tagId is not in the database... */
                      }else{
                         /* insert new tag into dbtags database */
-                        $sql = "INSERT into dbtags (tagText) values ('".$tagText."')";
+                        $sql = "INSERT into dbtags (tagText) values ('".$tag[0]."')";
                         $tagresult = mysqli_query($con,$sql);
 
                         /* fetch tagId connected to the tagText */
-                        $sql = "SELECT tagID FROM dbtags WHERE tagText='$tagText'";
+                        $sql = "SELECT tagID FROM dbtags WHERE tagText='$tag[0]'";
                         $tagID = mysqli_query($con,$sql);
                         $row = mysqli_fetch_row($tagID);
                         /* insert tagId and foodbank id into junction table dbfbtags */
                         $sql = "INSERT into dbfbtags (ID, userID) values ('".$row[0]."', '".$id."')";
                         $tagfbresult = mysqli_query($con,$sql);
+                     }
+
+                     $tagCount=$tagCount -1;
+                     if($tagCount>0){
+                        array_shift($tag);
+                        goto label2;
                      }
                     
                     /* pop up results */
