@@ -113,8 +113,8 @@
 
                     $tagText = $getData[19];
                     $tagText2 = "";
-                    $tagText3 = "";
-                    $if(str_contains($tagText,';')){
+                    $tagText3 = "";                   
+                    if(str_contains($tagText,';')){
                         $first = stripos($tagText, ';');
                         $last = strrpos($tagText,';');
                         substr($tagText, 0, $first-1);
