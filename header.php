@@ -65,6 +65,7 @@
         $permission_array['registernewtag.php']=1;
         $permission_array['viewtags.php']=1;
         $permission_array['deletetag.php']=1;
+        $permission_array['deletetagform.php']=1;
         $permission_array['deletefoodbankform.php']= 1;
         $permission_array['importfoodbankform.php']= 1;
         $permission_array['editfoodbank.php']=1;

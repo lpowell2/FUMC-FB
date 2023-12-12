@@ -666,7 +666,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           //var_dump($where);
         }
         //var_dump($county);
-        $query = "select * from dbPersons $where order by first_name";
+        $query = "select * from dbPersons $where AND position='food bank' order by first_name";
       
         $connection = connect();
         $result = mysqli_query($connection, $query);
@@ -699,7 +699,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $fbanks;
       }
       
-      function find_fbank2($name, $zipcode, $tag, $county) {
+      function find_fbank2($name, $zipcode, $county) {
         $first = true;
         $where = 'where ';
       
@@ -733,7 +733,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           //var_dump($where);
         }
       
-        $query = "select * from dbPersons $where order by last_name, first_name";
+        $query = "select * from dbPersons $where AND position='food bank' order by last_name, first_name";
         $connection = connect();
         $result = mysqli_query($connection, $query);
       

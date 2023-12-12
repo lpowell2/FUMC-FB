@@ -51,14 +51,12 @@ if (isset($_POST["id"])) {
         <?php if ($tag) : ?>
             <fieldset>
                 <legend>Delete Information</legend>
-                <?php
-                
-                ?>
                 <h2>Are you sure you want to delete "<?php echo $tag['tagText'] ?>"?</h2>
                 <a class="button" href="viewtags.php">Cancel</a>
-                <form method="post" action="deletetag.php">
-                    <input type="submit" name="submit" value="Delete">
-                    <input type="hidden" name="id" value="<? echo ($tag['tagID']) ?>">
+                <form action='deletetag.php' method="post">
+                    <?php
+                    echo "<button type='submit' id='id' name='id' value='".$tag['tagID'] ."'>Delete</button>";
+                    ?>
                 </form>
             </fieldset>
         <?php endif; ?>
