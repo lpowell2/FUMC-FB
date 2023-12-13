@@ -628,6 +628,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
 
     //custom version of find user
     function find_fbank($name = null, $zip = null, $county = null) {
+
         //var_dump($name);
         //var_dump($county);
         //var_dump($tag);
@@ -647,8 +648,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           $where .= "zip like '%$zip%'";
           //var_dump($where);
         }
-      
-      
+
         if ($county !== "") {
             //var_dump($county);
           if (!empty($where)) {
@@ -691,12 +691,14 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $fbanks;
       }
       
-      function find_fbank2($name, $zipcode, $county) {
+
+    function find_fbank2($name, $zipcode, $tag, $county) {
+
         $first = true;
         $where = 'where ';
       
         if ($name) {
-          $where .= "first_name like '%$name%'";
+          $where .= "dbPersons.first_name like '%$name%'";
           //var_dump($where);
         }
       
@@ -704,19 +706,31 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           if (!$first) {
             //$where .= ' and ';
           }
-          $where .= "zip like '%$zipcode%'";
+          $where .= "dbPersons.zip like '%$zipcode%'";
           //var_dump($where);
         }
       
+
+        if ($tag) {
+          if (!$first) {
+            $where .= ' and ';
+          }
+          
+          $where .= "dbTags.tagText like '%$tag%'";
+          //var_dump($where);
+        }
+  
         if ($county) {
           if (!$first) {
             $where .= ' and ';
           }
-          $where .= "county='$county'";
+          $where .= "dbPersons.county='$county'";
           //var_dump($where);
         }
       
-        $query = "select * from dbPersons $where AND position='food bank' order by last_name, first_name";
+
+        // $query = "select * from dbPersons $where order by last_name, first_name";
+        $query = "select * from dbPersons inner join dbFBTags on dbPersons.id=dbFBTags.userID inner join dbTags on dbFBTags.ID=dbTags.tagID $where group by dbPersons.id order by dbPersons.last_name, dbPersons.first_name";
         $connection = connect();
         $result = mysqli_query($connection, $query);
       
@@ -734,6 +748,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           }
           $persons[] = make_a_person($row);
         }
+        
       
         mysqli_close($connection);
         return $persons;
