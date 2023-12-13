@@ -383,8 +383,7 @@ function make_a_person($result_row) {
                     $result_row['address2'],
                     $result_row['county'],
                     $result_row['website'],
-                    $result_row['alt_services'],
-                    $result_row['tag']
+                    $result_row['alt_services']
                 );   
     return $thePerson;
 }
