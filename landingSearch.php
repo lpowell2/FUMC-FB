@@ -102,6 +102,8 @@
                     $thCounty=$Language["County"];
                     $thPhone=$Language["Phone_Number"];
                     $thCity=$Language["City"];
+                    // echo "tag is".$tag;
+                    // $thTag=$Language["Tags"];
                     if (!($zipCode || $county || $tag)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
                     
@@ -120,7 +122,6 @@
 											<th>'.$thZip.'</th>
                                             <th>'.$thCity.'</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="standout">';
@@ -130,7 +131,9 @@
                                             <td>' . $foodbank->get_first_name(). '</td>
                                             <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
 											<td>' . $foodbank->get_zip() . '</td>
-                                            <td>' . $foodbank->get_city() . '</td>'; 
+                                            <td>' . $foodbank->get_city() . '</td>
+                                            '
+                                            ; 
 
                                             if (isset($_SESSION['id']) || isset($_SESSION['access_level'])){
                                                echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>';
@@ -180,27 +183,40 @@
                             echo '<option value="">Select A Tag</option>';
 
                             while ($row = $resulting->fetch_assoc()) {
-                                $id = $row['tagID'];
+                                $tagID = $row['tagID'];
                                 $tagValue = $row['tagText']; 
-                                echo '<option value="'.htmlspecialchars($tagValue).'">'.htmlspecialchars($tagValue).'</option>';
+                                echo '<option name= "tags" value="'.htmlspecialchars($tagValue).'">'.htmlspecialchars($tagValue).'</option>';
                             }
 
                             //if tag value is not selected
                           if(!$tagValue){
                             echo "Error: No tag selected.";
                           }
-
                         }
-
                         
-                          echo "</select>";
-                          echo "</body>";
-                          echo "</html>";
+                        echo "</select>";
+                        echo "</body>";
+                        echo "</html>";
 
                          
 
-                        $selectedTag = filter_input(INPUT_POST, 'tag');
-
+                        $selectedTag = filter_input(INPUT_GET, 'tag');
+                        
+                         //after search, get tag that's searched, get it's id, and get foodbanks from dbfbtags where it's connected
+                        // if(isset($_GET['tag'])){
+                        //     $result_tag=mysqli_query($con,"SELECT *
+                        //     FROM dbTags b
+                        //     INNER JOIN dbFBTags a
+                        //     ON b.tagID = a.ID
+                        //     INNER JOIN dbPersons c
+                        //     ON c.id=a.userID");
+                        //     while ($row = $result_tag->fetch_assoc()) {
+                        //         if ($row['tagText']==$selectedTag){
+                        //             $rowUser=$row['id'];
+                        //             echo $rowUser;
+                        //         }
+                        //     }
+                        // }
 
                           //mysqli_query($con, 'SELECT * FROM dbPersons WHERE tag ="'  . $selectedTag . '"');
 
