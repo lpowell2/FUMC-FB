@@ -627,7 +627,8 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
     }
 
     //custom version of find user
-    function find_fbank($name = null, $zip = null,$county = null) {
+    function find_fbank($name = null, $zip = null, $county = null) {
+
         //var_dump($name);
         //var_dump($county);
         //var_dump($tag);
@@ -647,9 +648,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           $where .= "zip like '%$zip%'";
           //var_dump($where);
         }
-      
-    
-      
+
         if ($county !== "") {
             //var_dump($county);
           if (!empty($where)) {
@@ -659,7 +658,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           //var_dump($where);
         }
         //var_dump($county);
-        $query = "select * from dbPersons $where order by first_name";
+        $query = "select * from dbPersons $where AND position='food bank' order by first_name";
       
         $connection = connect();
         $result = mysqli_query($connection, $query);
@@ -692,7 +691,9 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         return $fbanks;
       }
       
+
     function find_fbank2($name, $zipcode, $tag, $county) {
+
         $first = true;
         $where = 'where ';
       
@@ -709,6 +710,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           //var_dump($where);
         }
       
+
         if ($tag) {
           if (!$first) {
             $where .= ' and ';
@@ -717,7 +719,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           $where .= "dbTags.tagText like '%$tag%'";
           //var_dump($where);
         }
-      
+  
         if ($county) {
           if (!$first) {
             $where .= ' and ';
@@ -726,6 +728,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           //var_dump($where);
         }
       
+
         // $query = "select * from dbPersons $where order by last_name, first_name";
         $query = "select * from dbPersons inner join dbFBTags on dbPersons.id=dbFBTags.userID inner join dbTags on dbFBTags.ID=dbTags.tagID $where group by dbPersons.id order by dbPersons.last_name, dbPersons.first_name";
         $connection = connect();
