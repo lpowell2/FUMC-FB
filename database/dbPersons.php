@@ -383,8 +383,7 @@ function make_a_person($result_row) {
                     $result_row['address2'],
                     $result_row['county'],
                     $result_row['website'],
-                    $result_row['alt_services'],
-                    $result_row['tag']
+                    $result_row['alt_services']
                 );   
     return $thePerson;
 }
@@ -628,7 +627,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
     }
 
     //custom version of find user
-    function find_fbank($name = null, $zip = null, $tag = null, $county = null) {
+    function find_fbank($name = null, $zip = null,$county = null) {
         //var_dump($name);
         //var_dump($county);
         //var_dump($tag);
@@ -649,13 +648,7 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           //var_dump($where);
         }
       
-        if ($tag !== "") {
-          if (!empty($where)) {
-            //$where .= ' and ';
-          }
-          $where .= "tag like '%$tag%'";
-          //var_dump($where);
-        }
+    
       
         if ($county !== "") {
             //var_dump($county);
@@ -750,8 +743,6 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
           if ($row['id'] == 'vmsroot') {
             continue;
           }
-          //if duplicate ids, drop from persons
-
           $persons[] = make_a_person($row);
         }
         

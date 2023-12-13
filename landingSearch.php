@@ -131,13 +131,9 @@
                                             <td>' . $foodbank->get_first_name(). '</td>
                                             <td><a href="tel:' . $foodbank->get_phone1() . '">' . formatPhoneNumber($foodbank->get_phone1()) .  '</td>
 											<td>' . $foodbank->get_zip() . '</td>
-                                            <td>' . $foodbank->get_city() . '</td>
-                                            '
-                                            ; 
-
-                                            if (isset($_SESSION['id']) || isset($_SESSION['access_level'])){
-                                               echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>';
-                                            }
+                                            <td>' . $foodbank->get_city() . '</td>'; 
+                                            echo '<td> <a class="button" href="viewFoodBank.php?id=' . $foodbank->get_id() . '">'.$Language["View"].'</a></td>';
+                                            
 
                                         echo '</a></tr>';
                             }
@@ -240,7 +236,7 @@
         <?php
                         //if not logged in, display log in button
                         if (!isset($_SESSION['id']) && !isset($_SESSION['access_level'])) {
-                            echo '<a class="button" href="login.php">Log In</a>';
+                            echo '<a class="button" href="login.php">Admin Log In</a>';
                         }       
                     ?>
     </body>

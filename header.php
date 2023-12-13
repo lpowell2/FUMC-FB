@@ -27,7 +27,6 @@
             </span>
             <ul>
                 <li><a href="login.php">Log in</a></li>
-                <li><a href="register.php">Register</a></li>
             </ul>
         </nav>';
     } else if ($_SESSION['logged_in']) {
@@ -42,9 +41,9 @@
         //pages guests are allowed to view
         $permission_array['index.php'] = 0;
         $permission_array['about.php'] = 0;
-        $permission_array['apply.php'] = 0;
+        $permission_array['apply.php'] = 1;
         $permission_array['logout.php'] = 0;
-        $permission_array['register.php'] = 0;
+        $permission_array['register.php'] = 1;
         
         //pages volunteers can view
         $permission_array['help.php'] = 1;
@@ -61,7 +60,7 @@
         $permission_array['volunteerreport.php'] = 1;
         $permission_array['registerfoodbank.php'] = 1 ; //standard and super admin can add food banks
         $permission_array['fbanksearch.php'] = 1;
-        $permission_array['viewfoodbank.php']=1;
+        $permission_array['viewfoodbank.php']=0;
         $permission_array['registernewtag.php']=1;
         $permission_array['viewtags.php']=1;
         $permission_array['deletetag.php']=1;
@@ -71,7 +70,7 @@
 
         //pages only managers can view
         $permission_array['personsearch.php'] = 2;
-        $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
+        $permission_array['personedit.php'] = 1; // changed to 0 so that applicants can apply
         $permission_array['viewschedule.php'] = 2;
         $permission_array['addweek.php'] = 2;
         $permission_array['log.php'] = 2;
